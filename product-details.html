@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+
+<html class="h-full w-full bg-[#0b1118]" lang="en"><head>
+  <script>
+    // Product screen removed for consumer app; redirecting to customer home
+    window.location.replace('customer-home.html');
+  </script>
+  <meta http-equiv="refresh" content="0; url=customer-home.html">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Product Details - Esston Technology</title>
+<!-- Tailwind CSS v3 with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#fff7ed',
+              100: '#ffedd5',
+              500: '#f97316',
+              600: '#ea580c',
+              primary: '#FF5E00',
+              primaryHover: '#E55400',
+              navy: '#0F172A',
+              slate: '#1E293B',
+            }
+          },
+          fontFamily: {
+            sans: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+          },
+          boxShadow: {
+            'soft': '0 2px 10px rgba(0,0,0,0.04)',
+            'card': '0 4px 20px -2px rgba(15, 23, 42, 0.06)',
+            'nav': '0 -4px 16px rgba(0, 0, 0, 0.05)',
+          }
+        }
+      }
+    }
+  </script>
+<!-- BEGIN: Custom Page Styles -->
+<style data-purpose="base-layout">
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    body {
+      -webkit-tap-highlight-color: transparent;
+    }
+  </style>
+<style data-purpose="transitions">
+    .tab-content {
+      transition: opacity 0.2s ease-in-out;
+    }
+    .thumb-btn.active {
+      border-color: #FF5E00;
+      box-shadow: 0 0 0 1px #FF5E00;
+    }
+  </style>
+<!-- END: Custom Page Styles -->
+</head>
+<body class="h-screen w-screen text-slate-800 antialiased flex flex-col justify-center items-center p-0 m-0 bg-[#0b1118] select-none overflow-hidden">
+<!-- Mobile View Container (Straight Edges, No Round Border) -->
+<div class="w-full max-w-[430px] h-full h-screen bg-[#F8FAFC] shadow-2xl flex flex-col overflow-hidden relative border-x border-slate-700/50">
+<!-- BEGIN: TopBrandHeader (HOME SCREEN MATCH) -->
+<header class="sticky top-0 z-40 px-5 pt-2 pb-3.5 flex items-center justify-between bg-white border-b border-slate-100 shadow-xs flex-shrink-0" data-purpose="app-top-header">
+<!-- Esston Technology Logo -->
+<a aria-label="Esston Technology Home" class="flex flex-col items-start select-none group" href="customer-home.html">
+<div class="flex items-center space-x-1">
+<!-- Stylized ET Logo Mark -->
+<div class="relative w-11 h-7 flex items-center justify-center">
+<svg class="w-full h-full" fill="none" viewBox="0 0 64 36">
+<!-- Orange 'E' & Upper Slant Arrow -->
+<path d="M4 4H32L24 16H8L4 22H28L20 34H0L4 4Z" fill="#F9570C"></path>
+<!-- Navy 'T' Bar & Directional Head -->
+<path d="M22 4H56L62 4L54 16H36V34H26V4Z" fill="#092140"></path>
+<!-- Arrow accent line -->
+<path d="M50 0L64 0L58 10L50 0Z" fill="#F9570C"></path>
+</svg>
+</div>
+</div>
+<span class="text-[10px] font-extrabold tracking-tight text-slate-800 uppercase pl-0.5">Esston Technology®</span>
+</a>
+<!-- Right Action Items: Notifications & User Profile Capsule -->
+<div class="flex items-center space-x-3">
+<!-- Notification Bell Button with Red Alert Badge -->
+<button aria-label="Notifications" class="relative w-10 h-10 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-700 shadow-sm tap-effect">
+<svg class="w-5 h-5 text-slate-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<!-- Notification Active Dot Indicator -->
+<span class="absolute top-2 right-2.5 w-2.5 h-2.5 bg-red-500 rounded-full ring-2 ring-white"></span>
+</button>
+<!-- User Profile Pill -->
+<div class="flex items-center pl-1 pr-3 py-1 bg-slate-50 border border-slate-100 rounded-full shadow-sm space-x-2 tap-effect cursor-pointer">
+<!-- Profile Avatar -->
+<div class="w-7 h-7 rounded-full bg-slate-200 overflow-hidden flex items-center justify-center border border-orange-200"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJxubfdJ74NBvh-qW8zk9XvcBB5B8PQaVXFrBbfL8jpwZHOMJyhyq5ebKYyD-GO1ukfuZvv90jzXKjFUg_lhvLK6yJ-VfrBm3BGwJJKaqYoSqOV0T2oU_59rmsVlavBsREcAXELXWipMLgpsRx_JTpzCMD9FZ-lDjpWT8JyEZGpLUtrCHdV35H-UrJKC8VVc9sCMDDI7k0u2iRzBwMK0ssdUA5d-yWgnUIvxyUo-0jCka8WyBRApPa" alt="Aditya profile" class="w-full h-full object-cover object-center"></div>
+<!-- User Details & Role Dropdown -->
+<div class="flex flex-col text-left">
+<div class="flex items-center space-x-1">
+<span class="text-xs font-bold text-slate-800 leading-tight">Hello, Aditya</span>
+</div>
+<div class="flex items-center space-x-0.5 text-[10.5px] font-medium text-slate-500 leading-none">
+<span class="">Customer</span>
+<svg class="w-2.5 h-2.5 text-slate-400" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+<path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- END: TopBrandHeader -->
+<!-- BEGIN: SubHeader (Product Details Header) -->
+<div class="bg-white/95 backdrop-blur-md border-b border-slate-100 shadow-sm flex-shrink-0" data-purpose="app-header">
+<div class="max-w-md mx-auto px-4 h-14 flex items-center justify-between">
+<!-- Back Button -->
+<button aria-label="Go Back" class="w-9 h-9 rounded-full flex items-center justify-center -ml-1 text-slate-800 hover:bg-slate-100 active:scale-95 transition-transform" onclick="history.back()" type="button">
+<svg class="w-6 h-6 stroke-[2.5]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M15.75 19.5L8.25 12l7.5-7.5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+<!-- Screen Title -->
+<h1 class="text-[17px] font-bold text-slate-900 tracking-tight text-center">
+        Product Details
+      </h1>
+<!-- Right Header Actions (Wishlist & Share) -->
+<div class="flex items-center space-x-1 -mr-1">
+<!-- Wishlist Button -->
+<button aria-label="Add to Wishlist" class="w-9 h-9 rounded-full flex items-center justify-center text-slate-700 hover:bg-slate-100 active:scale-90 transition-all" id="btn-wishlist" onclick="toggleWishlist()" type="button">
+<svg class="w-5 h-5 stroke-[2] transition-colors" fill="none" id="icon-wishlist" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+<!-- Share Button -->
+<button aria-label="Share Product" class="w-9 h-9 rounded-full flex items-center justify-center text-slate-700 hover:bg-slate-100 active:scale-90 transition-all" onclick="shareProduct()" type="button">
+<svg class="w-5 h-5 stroke-[2]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+<!-- END: SubHeader -->
+<!-- BEGIN: MainContent -->
+<main class="w-full flex-1 pb-44 overflow-y-auto no-scrollbar">
+<!-- BEGIN: GallerySection -->
+<section class="p-4" data-purpose="gallery-carousel">
+<!-- Big Hero Showcase Image Container -->
+<div class="relative w-full aspect-[4/3] rounded-2xl overflow-hidden bg-slate-900 shadow-sm border border-slate-200">
+<!-- Main Product Display Image -->
+<img alt="Esston GSM Motor Starter Mounted in Farm Field" class="w-full h-full object-cover transition-opacity duration-300" id="main-product-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuChe-1WhESSP6i70mtd4GAOKPGXjfxgar_F8tLnWi2zu619jDYQfH6_YbV75I2Px7DYjnmPY-v9k4JLop_JIuingYbaBdWoTwEuFWkn_gkwhz-uHwgsNrAhF04SFv28MCDIr_DgsdzEys7038Ib7Y0tk3FZtcIkzR0f8omMJ1vnEuA6pE14AoXqQcZGq5Faf1lOT0z4tdJluo6eFBbJa8mDXCI7QFdaiNxrdk5p6CYXVchbe_8UaAsA"/>
+<!-- Overlayed Controller Box Graphic Overlay for Crisp Simulation -->
+<div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 pointer-events-none"></div>
+<!-- Left Navigation Arrow -->
+<button aria-label="Previous slide" class="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/60 backdrop-blur-sm text-white flex items-center justify-center hover:bg-black/80 active:scale-95 transition shadow" onclick="prevSlide()" type="button">
+<svg class="w-4 h-4 stroke-[3]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M15.75 19.5L8.25 12l7.5-7.5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+<!-- Right Navigation Arrow -->
+<button aria-label="Next slide" class="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/60 backdrop-blur-sm text-white flex items-center justify-center hover:bg-black/80 active:scale-95 transition shadow" onclick="nextSlide()" type="button">
+<svg class="w-4 h-4 stroke-[3]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M8.25 4.5l7.5 7.5-7.5 7.5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+<!-- Slide Index Pill -->
+<div class="absolute bottom-3 right-3 bg-black/70 backdrop-blur-md text-white text-[11px] font-semibold tracking-wider px-2.5 py-1 rounded-full border border-white/20">
+<span id="slide-counter">1/5</span>
+</div>
+</div>
+<!-- Thumbnail Carousel Strip -->
+<div class="flex items-center gap-2.5 mt-3 overflow-x-auto no-scrollbar py-0.5">
+<!-- Thumb 1 -->
+<button class="thumb-btn active relative flex-shrink-0 w-16 h-16 rounded-xl overflow-hidden border-2 transition-all bg-white" data-index="0" onclick="setSlide(0)">
+<img alt="Field perspective" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJ5LZqhJ0DDIcPCFl3AQYg5fYMjgkrX1oxgmGgXDfo_yeQ_I07d7F0R6ccXI5-gs2SF5kG5wE607hHPgYUaqMuPiYhCEx-WQfcq89E7E6yoHDsdT_J5s5au_Yo26uD7bpjbpQTfcm83eI9rFjcFXTIdJKORcRaMJ7nsZdwR3Vjj78gYlV7z0GWuIqvp_x7TPPIuub3pmHJadf0Q0LxWmJUSMiKselzhGv9iqX2wzZAVmpK7ZQRtcwX"/>
+</button>
+<!-- Thumb 2 -->
+<button class="thumb-btn border-slate-200 relative flex-shrink-0 w-16 h-16 rounded-xl overflow-hidden border-2 transition-all bg-white" data-index="1" onclick="setSlide(1)">
+<img alt="Internal components" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8DvNpJgcppwUN8WvUCsTvNY9wEPm4Ey8yE0L8MOQvqc4621WYQ43U6hMrVz8xMw1mvkO9Vn1TDExNG0o3N-6xn5TL8c92sBniBjURs45cqFb0tOi__oMuehNEaWQoUhz_NMQHwvpqKHj9zRQ9CPOpSh4LqXx0jyE0ZZkEppOIZK4bHYK3aJd9wmZ4RYYF2DJ-Cuamv24Ltwc6JxWUvDjXotHc74hrw2j5ueaST0atB9aoXPYzgPjJ"/>
+</button>
+<!-- Thumb 3 -->
+<button class="thumb-btn border-slate-200 relative flex-shrink-0 w-16 h-16 rounded-xl overflow-hidden border-2 transition-all bg-white" data-index="2" onclick="setSlide(2)">
+<img alt="Enclosure front" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdLknt64M1g2nGKls4bGL54hfzOZHtBSabzFpTI4mtyHYtzMAT6drbrcrlNe8O1ibk3Q62mbpTi3tfrbqWLvHyoTu9OlxoqtAhnxR7Ps0HN7YubepdO2QV4X5-_GF9Lfbw-M4cO1WpA-EwcG2MeOwGeZcNsFKYMK4seUYgRm-3xENkeIltHo8AeVkpzfR-ve9e7uYfEiquOFWHtwbYaFotXpmWAvpvktWgUioGFeI8pZ1KAxWcurgy"/>
+</button>
+<!-- Thumb 4 -->
+<button class="thumb-btn border-slate-200 relative flex-shrink-0 w-16 h-16 rounded-xl overflow-hidden border-2 transition-all bg-white" data-index="3" onclick="setSlide(3)">
+<img alt="Mounting bracket rear" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWZaWHvdweplgRTqFCdt33JWEjlxE4A3vOrELwax7fvHD8Poeu9GQnssQK8KF6iiZZJPCUe8xiLvxRnSK_SSmilbwv2QGb1QMZ3-yffXaoWuddjiEHtNxzrdvP_Tp2hzHqpT714OLK4-sBRX6k-v8YV2rnPjF9_DVEPqVzl-DtcE-NP-2BOplsQM_WUoC-8aqYTgD96OYg6FfwBN4VLwX7XVXZ5Twpk9m5faq_NB4Rh6YIO1UxXk9d"/>
+</button>
+<!-- Thumb 5 -->
+<button class="thumb-btn border-slate-200 relative flex-shrink-0 w-16 h-16 rounded-xl overflow-hidden border-2 transition-all bg-white" data-index="4" onclick="setSlide(4)">
+<img alt="Lock and indicator details" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDF-NFcLwLNq-t1XhrkJZ1wo6VbZatrswSDYrFVwRLsSjrJlp07clRxP-YK37TOuEGmFv9TXQNqJ7bjU_0XFK6lk9yR5haJJJuZU0zH6MOuSZ3o4Fkz58Yv0ClxBATLNPWNkWS70TS2guYNJ45ypPyWRRB7McKWtEm7U5UGR-d6XAfEtYnKqr3Q95iApf2Bns77DTXHl9Lz7QaHQ8IYf5O-nwJ1PdlQnKFOzlMhHST-SML6Uah1kzkI"/>
+</button>
+</div>
+</section>
+<!-- END: GallerySection -->
+<!-- BEGIN: TitleAndMetaSection -->
+<section class="px-4 pb-2" data-purpose="product-meta">
+<div class="flex items-start justify-between gap-3">
+<!-- Title & Subtitle -->
+<div class="flex-1">
+<h1 class="text-[20px] leading-tight font-extrabold text-slate-900 tracking-tight">
+            Esston GSM Motor Starter<br/>(1 Phase)
+          </h1>
+<p class="text-xs text-slate-500 font-medium mt-1.5 leading-snug">
+            Control your single phase motor remotely via SMS
+          </p>
+</div>
+<!-- Add to Enquiry Button Badge -->
+<button class="flex items-center gap-1.5 px-3 py-1.5 bg-[#FFF0F0] text-[#E53E3E] rounded-full text-xs font-bold border border-[#FFDADA] hover:bg-[#FFE5E5] active:scale-95 transition-all shadow-2xs whitespace-nowrap" onclick="toggleEnquiryBadge(this)" type="button">
+<svg class="w-3.5 h-3.5 fill-current" viewbox="0 0 24 24">
+<path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
+</svg>
+<span>Add to Enquiry</span>
+</button>
+</div>
+</section>
+<!-- END: TitleAndMetaSection -->
+<!-- BEGIN: QuickSpecsGrid -->
+<section class="px-4 my-3" data-purpose="quick-features-bar">
+<div class="bg-white rounded-2xl p-3 shadow-soft border border-slate-100 grid grid-cols-4 gap-1.5 text-center">
+<!-- Item 1: Power -->
+<div class="flex flex-col items-center">
+<div class="w-9 h-9 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-600 mb-1">
+<svg class="w-4 h-4 fill-emerald-600" viewbox="0 0 24 24">
+<path d="M7 2v11h3v9l7-12h-4l4-8z"></path>
+</svg>
+</div>
+<span class="text-[11px] font-bold text-slate-900 leading-tight">1 HP - 2 HP</span>
+<span class="text-[10px] text-slate-400 font-medium">Motor Rating</span>
+</div>
+<!-- Item 2: GSM Control -->
+<div class="flex flex-col items-center">
+<div class="w-9 h-9 rounded-full bg-cyan-50 flex items-center justify-center text-cyan-600 mb-1">
+<svg class="w-4 h-4 stroke-[2.2]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<rect height="20" rx="2" ry="2" width="14" x="5" y="2"></rect>
+<line x1="12" x2="12.01" y1="18" y2="18"></line>
+</svg>
+</div>
+<span class="text-[11px] font-bold text-slate-900 leading-tight">GSM</span>
+<span class="text-[10px] text-slate-400 font-medium">Control</span>
+</div>
+<!-- Item 3: Protection -->
+<div class="flex flex-col items-center">
+<div class="w-9 h-9 rounded-full bg-orange-50 flex items-center justify-center text-brand-primary mb-1">
+<svg class="w-4 h-4 fill-orange-500" viewbox="0 0 24 24">
+<path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"></path>
+</svg>
+</div>
+<span class="text-[11px] font-bold text-slate-900 leading-tight">Overload</span>
+<span class="text-[10px] text-slate-400 font-medium">Protection</span>
+</div>
+<!-- Item 4: Installation -->
+<div class="flex flex-col items-center">
+<div class="w-9 h-9 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 mb-1">
+<svg class="w-4 h-4 stroke-[2.2]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-linecap="round" stroke-linejoin="round"></path>
+<path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<span class="text-[11px] font-bold text-slate-900 leading-tight">Easy</span>
+<span class="text-[10px] text-slate-400 font-medium">Installation</span>
+</div>
+</div>
+</section>
+<!-- END: QuickSpecsGrid -->
+<!-- BEGIN: TabsNavigation -->
+<nav class="px-4 border-b border-slate-200 mt-2 bg-transparent" data-purpose="content-tabs">
+<div class="flex items-center justify-between text-xs font-semibold">
+<!-- Overview Tab (Active Default) -->
+<button class="tab-link pb-2.5 text-brand-primary border-b-2 border-brand-primary transition-all font-bold" onclick="switchTab('overview', this)">
+          Overview
+        </button>
+<!-- Specifications Tab -->
+<button class="tab-link pb-2.5 text-slate-500 hover:text-slate-800 border-b-2 border-transparent transition-all" onclick="switchTab('specifications', this)">
+          Specifications
+        </button>
+<!-- Features Tab -->
+<button class="tab-link pb-2.5 text-slate-500 hover:text-slate-800 border-b-2 border-transparent transition-all" onclick="switchTab('features', this)">
+          Features
+        </button>
+<!-- Brochures Tab -->
+<button class="tab-link pb-2.5 text-slate-500 hover:text-slate-800 border-b-2 border-transparent transition-all" onclick="switchTab('brochures', this)">
+          Brochures
+        </button>
+</div>
+</nav>
+<!-- END: TabsNavigation -->
+<!-- BEGIN: TabPanels -->
+<section class="p-4" data-purpose="tab-panels">
+<!-- Panel: Overview -->
+<div class="tab-content block space-y-4" id="tab-overview">
+<!-- Product Overview Box -->
+<div class="bg-white rounded-2xl p-4 shadow-soft border border-slate-100">
+<h2 class="text-sm font-bold text-slate-900 mb-2">
+            Product Overview
+          </h2>
+<p class="text-xs text-slate-600 leading-relaxed">
+            The Esston GSM Motor Starter (1 Phase) allows you to start and stop your single phase agricultural motor remotely using simple SMS commands. It is designed for farmers with easy installation, reliable performance, and advanced protection features.
+          </p>
+</div>
+<!-- Key Specifications Card -->
+<div class="bg-white rounded-2xl p-4 shadow-soft border border-slate-100">
+<div class="flex items-center justify-between mb-3">
+<h2 class="text-sm font-bold text-slate-900">
+              Key Specifications
+            </h2>
+<button class="text-xs font-semibold text-brand-primary flex items-center gap-0.5 hover:underline" onclick="switchTabByName('specifications')">
+<span>View All</span>
+<svg class="w-3.5 h-3.5 stroke-[2.5]" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M8.25 4.5l7.5 7.5-7.5 7.5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+</div>
+<!-- Specs Table -->
+<div class="divide-y divide-slate-100 text-xs">
+<!-- Spec Row 1 -->
+<div class="py-2.5 flex items-center justify-between">
+<div class="flex items-center gap-2 text-slate-600">
+<span class="text-amber-500 font-bold">⚡</span>
+<span class="font-medium">Motor Rating</span>
+</div>
+<span class="font-semibold text-slate-800">1 HP - 2 HP</span>
+</div>
+<!-- Spec Row 2 -->
+<div class="py-2.5 flex items-center justify-between">
+<div class="flex items-center gap-2 text-slate-600">
+<span class="text-emerald-500 font-bold">⚡</span>
+<span class="font-medium">Input Voltage</span>
+</div>
+<span class="font-semibold text-slate-800">180V - 260V AC</span>
+</div>
+<!-- Spec Row 3 -->
+<div class="py-2.5 flex items-center justify-between">
+<div class="flex items-center gap-2 text-slate-600">
+<span class="text-cyan-500">⚙️</span>
+<span class="font-medium">Control Method</span>
+</div>
+<span class="font-semibold text-slate-800">GSM (SMS)</span>
+</div>
+<!-- Spec Row 4 -->
+<div class="py-2.5 flex items-center justify-between">
+<div class="flex items-center gap-2 text-slate-600">
+<span class="text-purple-500">🛡️</span>
+<span class="font-medium">Protection</span>
+</div>
+<span class="font-semibold text-slate-800 text-right">Overload, Dry Run, Single Phasing</span>
+</div>
+<!-- Spec Row 5 -->
+<div class="py-2.5 flex items-center justify-between">
+<div class="flex items-center gap-2 text-slate-600">
+<span class="text-red-500">🌡️</span>
+<span class="font-medium">Operating Temperature</span>
+</div>
+<span class="font-semibold text-slate-800">-10°C to 60°C</span>
+</div>
+<!-- Spec Row 6 -->
+<div class="py-2.5 flex items-center justify-between">
+<div class="flex items-center gap-2 text-slate-600">
+<span class="text-slate-500">📦</span>
+<span class="font-medium">Enclosure</span>
+</div>
+<span class="font-semibold text-slate-800">Weather Proof (IP65)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Panel: Specifications (Hidden by default) -->
+<div class="tab-content hidden space-y-3" id="tab-specifications">
+<div class="bg-white rounded-2xl p-4 shadow-soft border border-slate-100">
+<h3 class="text-sm font-bold text-slate-900 mb-3">Complete Technical Specs</h3>
+<div class="space-y-2 text-xs divide-y divide-slate-100">
+<div class="flex justify-between py-1.5"><span class="text-slate-500">Phase</span><span class="font-semibold text-slate-800">Single Phase (1Φ)</span></div>
+<div class="flex justify-between py-1.5"><span class="text-slate-500">Network Band</span><span class="font-semibold text-slate-800">2G / 4G Fallback SIM</span></div>
+<div class="flex justify-between py-1.5"><span class="text-slate-500">Max Current</span><span class="font-semibold text-slate-800">25 Amps Contactor</span></div>
+<div class="flex justify-between py-1.5"><span class="text-slate-500">Auto Restart</span><span class="font-semibold text-slate-800">Configurable Timer</span></div>
+<div class="flex justify-between py-1.5"><span class="text-slate-500">Antenna</span><span class="font-semibold text-slate-800">High Gain Magnetic Mount</span></div>
+</div>
+</div>
+</div>
+<!-- Panel: Features (Hidden by default) -->
+<div class="tab-content hidden space-y-3" id="tab-features">
+<div class="bg-white rounded-2xl p-4 shadow-soft border border-slate-100">
+<h3 class="text-sm font-bold text-slate-900 mb-2">Key Highlights</h3>
+<ul class="text-xs text-slate-600 space-y-2 list-disc list-inside">
+<li>Instant feedback SMS with power voltage and motor current status.</li>
+<li>In-built dry-run prevention saves pump from burnt coils.</li>
+<li>Rugged powder-coated metal body with key lock system.</li>
+<li>Authorised phone number memory protection up to 5 users.</li>
+</ul>
+</div>
+</div>
+<!-- Panel: Brochures (Hidden by default) -->
+<div class="tab-content hidden space-y-3" id="tab-brochures">
+<div class="bg-white rounded-2xl p-4 shadow-soft border border-slate-100">
+<h3 class="text-sm font-bold text-slate-900 mb-2">User Manuals &amp; Brochures</h3>
+<div class="flex items-center justify-between p-2.5 bg-slate-50 rounded-xl border border-slate-200">
+<div class="flex items-center gap-2">
+<span class="text-red-500 text-lg">📄</span>
+<div>
+<p class="text-xs font-bold text-slate-800">Esston_GSM_Starter_Manual.pdf</p>
+<p class="text-[10px] text-slate-400">1.8 MB • PDF document</p>
+</div>
+</div>
+<button class="text-brand-primary text-xs font-bold px-2.5 py-1 rounded bg-brand-50 hover:bg-brand-100" onclick="downloadBrochureAction()">Get</button>
+</div>
+</div>
+</div>
+</section>
+<!-- END: TabPanels -->
+</main>
+<!-- END: MainContent -->
+<!-- BEGIN: StickyBottomBarAndNavigation -->
+<div class="fixed md:absolute bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 shadow-nav" data-purpose="dual-bottom-actions">
+<div class="max-w-md mx-auto">
+<!-- Top Action Row: Download Brochure & Send Enquiry CTAs -->
+<div class="px-4 pt-3 pb-2 grid grid-cols-2 gap-3">
+<!-- Download Brochure Button -->
+<button class="h-11 rounded-xl border-2 border-brand-primary bg-white text-brand-primary text-xs font-bold flex items-center justify-center gap-1.5 active:bg-orange-50 active:scale-[0.98] transition-all shadow-sm" onclick="downloadBrochureAction()" type="button">
+<svg class="w-4 h-4 fill-brand-primary" viewbox="0 0 24 24">
+<path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"></path>
+</svg>
+<span>Download Brochure</span>
+</button>
+<!-- Send Enquiry Button -->
+<button class="h-11 rounded-xl bg-gradient-to-r from-[#FF5E00] to-[#FF4500] hover:from-[#E55400] hover:to-[#E53E00] text-white text-xs font-bold flex items-center justify-center gap-1.5 active:scale-[0.98] transition-all shadow-md shadow-orange-500/25" onclick="sendEnquiryAction()" type="button">
+<svg class="w-4 h-4 fill-white" viewbox="0 0 24 24">
+<path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"></path>
+</svg>
+<span>Send Enquiry</span>
+</button>
+</div>
+<!-- BEGIN: BottomNavigationBar (HOME SCREEN MATCH: Products Active) -->
+<nav class="max-w-md mx-auto w-full grid grid-cols-5 items-center text-center px-2 py-2" data-purpose="mobile-bottom-navigation">
+  <!-- Nav Item 1: Home -->
+  <a class="flex flex-col items-center justify-center text-slate-500 hover:text-slate-800 transition group py-1" href="customer-home.html">
+    <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+    <span class="text-[10px] font-medium tracking-tight">Home</span>
+  </a>
+
+  <!-- Nav Item 2: Motor Control -->
+  <a class="flex flex-col items-center justify-center text-slate-500 hover:text-slate-800 transition group py-1" href="motor-control.html">
+    <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+    <span class="text-[10px] font-medium tracking-tight">Motor Control</span>
+  </a>
+
+  <!-- Nav Item 3: Products (Active) -->
+  <a class="flex flex-col items-center justify-center text-[#f9570c] group relative py-1" href="products.html">
+    <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+    <span class="text-[10px] font-bold tracking-tight">Products</span>
+    <span class="w-8 h-0.5 bg-[#f9570c] rounded-full absolute -bottom-1"></span>
+  </a>
+
+  <!-- Nav Item 4: FAQs -->
+  <a class="flex flex-col items-center justify-center text-slate-500 hover:text-slate-800 transition group py-1" href="help-faq.html">
+    <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+    <span class="text-[10px] font-medium tracking-tight">FAQs</span>
+  </a>
+
+  <!-- Nav Item 5: Enquiry -->
+  <a class="flex flex-col items-center justify-center text-slate-500 hover:text-slate-800 transition group py-1" href="contact-enquiry.html">
+    <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+    <span class="text-[10px] font-medium tracking-tight">Enquiry</span>
+  </a>
+</nav>
+<!-- END: BottomNavigationBar -->
+</div>
+</div>
+</div>
+<!-- END: StickyBottomBarAndNavigation -->
+<!-- BEGIN: InteractiveToastNotification -->
+<div class="fixed top-16 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 opacity-0 pointer-events-none transform -translate-y-2" id="toast">
+<div class="bg-slate-900 text-white text-xs font-semibold px-4 py-2 rounded-full shadow-lg flex items-center gap-2">
+<span id="toast-icon">✓</span>
+<span id="toast-message">Item updated</span>
+</div>
+</div>
+<!-- END: InteractiveToastNotification -->
+<!-- BEGIN: GalleryAndTabsScript -->
+<script data-purpose="carousel-and-tabs">
+    // Gallery slide image list
+    const galleryImages = [
+      "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=900&q=80"
+    ];
+
+    let currentSlide = 0;
+
+    function setSlide(index) {
+      currentSlide = index;
+      const mainImg = document.getElementById('main-product-img');
+      const counter = document.getElementById('slide-counter');
+      const thumbBtns = document.querySelectorAll('.thumb-btn');
+
+      if (mainImg) mainImg.src = galleryImages[currentSlide];
+      if (counter) counter.innerText = `${currentSlide + 1}/${galleryImages.length}`;
+
+      thumbBtns.forEach((btn, idx) => {
+        if (idx === currentSlide) {
+          btn.classList.add('active', 'border-brand-primary');
+          btn.classList.remove('border-slate-200');
+        } else {
+          btn.classList.remove('active', 'border-brand-primary');
+          btn.classList.add('border-slate-200');
+        }
+      });
+    }
+
+    function prevSlide() {
+      const newIndex = (currentSlide - 1 + galleryImages.length) % galleryImages.length;
+      setSlide(newIndex);
+    }
+
+    function nextSlide() {
+      const newIndex = (currentSlide + 1) % galleryImages.length;
+      setSlide(newIndex);
+    }
+
+    // Tab Switching functionality
+    function switchTab(tabName, el) {
+      // Toggle button active styling
+      document.querySelectorAll('.tab-link').forEach(btn => {
+        btn.classList.remove('text-brand-primary', 'border-brand-primary', 'font-bold');
+        btn.classList.add('text-slate-500', 'border-transparent');
+      });
+
+      if (el) {
+        el.classList.add('text-brand-primary', 'border-brand-primary', 'font-bold');
+        el.classList.remove('text-slate-500', 'border-transparent');
+      }
+
+      // Hide all panels
+      document.querySelectorAll('.tab-content').forEach(panel => {
+        panel.classList.add('hidden');
+        panel.classList.remove('block');
+      });
+
+      // Show targeted panel
+      const targetPanel = document.getElementById(`tab-${tabName}`);
+      if (targetPanel) {
+        targetPanel.classList.remove('hidden');
+        targetPanel.classList.add('block');
+      }
+    }
+
+    function switchTabByName(tabName) {
+      const tabs = document.querySelectorAll('.tab-link');
+      if (tabName === 'specifications' && tabs[1]) {
+        switchTab('specifications', tabs[1]);
+      }
+    }
+
+    // Helper toast popup
+    function showToast(msg, icon = '✓') {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toast-message');
+      const toastIcon = document.getElementById('toast-icon');
+
+      toastMsg.innerText = msg;
+      toastIcon.innerText = icon;
+
+      toast.classList.remove('opacity-0', '-translate-y-2', 'pointer-events-none');
+      toast.classList.add('opacity-100', 'translate-y-0');
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', '-translate-y-2', 'pointer-events-none');
+        toast.classList.remove('opacity-100', 'translate-y-0');
+      }, 2200);
+    }
+
+    // Wishlist Toggle
+    let isWishlisted = false;
+    function toggleWishlist() {
+      isWishlisted = !isWishlisted;
+      const icon = document.getElementById('icon-wishlist');
+      if (isWishlisted) {
+        icon.classList.add('fill-red-500', 'text-red-500');
+        showToast('Saved to your favorites', '❤️');
+      } else {
+        icon.classList.remove('fill-red-500', 'text-red-500');
+        showToast('Removed from favorites', '✕');
+      }
+    }
+
+    // Add to Enquiry action
+    function toggleEnquiryBadge(btn) {
+      showToast('Added to Enquiry basket', '📋');
+      btn.classList.add('bg-emerald-50', 'text-emerald-600', 'border-emerald-300');
+      btn.innerHTML = `
+        <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+          <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+        </svg>
+        <span>Added</span>
+      `;
+    }
+
+    function downloadBrochureAction() {
+      showToast('Downloading Esston GSM Starter Brochure...', '⬇️');
+    }
+
+    function sendEnquiryAction() {
+      showToast('Enquiry inquiry form requested', '💬');
+    }
+
+    function shareProduct() {
+      if (navigator.share) {
+        navigator.share({
+          title: 'Esston GSM Motor Starter (1 Phase)',
+          text: 'Control your single phase agricultural motor remotely via SMS with Esston.',
+          url: window.location.href,
+        }).catch(() => {});
+      } else {
+        showToast('Link copied to clipboard!', '🔗');
+      }
+    }
+  </script>
+<!-- END: GalleryAndTabsScript -->
+<script id="esston-global-navigation">
+(function(){
+ const R={home:'customer-home.html',dashboard:'dealer-dashboard.html',products:'products.html',catalogue:'catalogue.html',dealerproducts:'dealer-catalogue.html',details:'product-details.html',starter:'my-starter.html',control:'motor-control.html',schedule:'schedule.html',faq:'help-faq.html',enquiry:'contact-enquiry.html',auth:'auth.html',splash:'splash.html',otp:'dealer-otp.html',dealerEnquiries:'dealer-enquiries.html',profile:'profile.html',dealerProfile:'dealer-profile.html'};
+ const p=(location.pathname.split('/').pop()||'index.html').toLowerCase();
+ const isDealer=/dealer-dashboard|dealer-catalogue|dealer-enquiries|dealer-profile|dealer-otp/.test(p);
+ const go=(key)=>{if(R[key]) location.href=R[key];};
+ const txt=e=>(e.innerText||e.textContent||'').replace(/\s+/g,' ').trim().toLowerCase();
+ // Route the existing bottom navigation and clearly named action buttons to the corresponding screens.
+ document.addEventListener('click',function(ev){
+   const el=ev.target.closest('a,button,[role="button"]'); if(!el) return;
+   const t=txt(el); const page=p;
+   // Common bottom/navigation links
+   if(/^(profile|settings)$/.test(t) || t.includes('my profile') || t.includes('hello, aditya') || t.includes('aditya traders')){ev.preventDefault();go(isDealer?'dealerProfile':'profile');return;}
+   if(/^(home|dashboard)$/.test(t) || t.startsWith('home ')){ev.preventDefault();go(isDealer?'dashboard':'home');return;}
+   if(t==='products' || t.includes('browse products') || t.includes('view products') || t==='all products' || t==='product catalogue'){ev.preventDefault();go(isDealer?'dealerproducts':'products');return;}
+   if(t==='enquiry' || t==='enquiries' || t.includes('my enquiries') || t.includes('recent enquiries') || t.includes('view all enquiries')){ev.preventDefault();go(isDealer?'dealerEnquiries':'enquiry');return;}
+   if(t==='faqs' || t==='help & faq' || t==='help & support' || t.includes('chat with faq bot') || t.includes('need help')){ev.preventDefault();go('faq');return;}
+   if(t==='motor control' || t==='control' || t.includes('check status') || t.includes('tap to start motor')){ if(!/motor_control|motor-control/.test(page)){ev.preventDefault();go('control');return;} }
+   if(t==='my starter' || t.includes('view my starter') || t.includes('starter details')){ev.preventDefault();go('starter');return;}
+   if(t.includes('motor schedule') || t.includes('set schedule') || t==='add slot' || t.includes('auto timer schedule')){ev.preventDefault();go('schedule');return;}
+   if(t==='view details' || t==='view product details' || t.includes('product details')){ev.preventDefault();go('details');return;}
+   if(t.includes('send enquiry') || t.includes('add to enquiry') || t==='submit enquiry' || t==='contact support' || t==='contact / enquiry'){ev.preventDefault();go('enquiry');return;}
+   if(t.includes('dealer b2b portal')){ev.preventDefault();go('auth');return;}
+   if(t.includes('customer iot app')){ev.preventDefault();go('auth');return;}
+   // Splash screen progresses to role selection when user taps the page.
+   if(page==='splash.html' && !el.closest('a[href^="http"]')){ev.preventDefault();go('auth');return;}
+   // Login: customer enters customer home; dealer login enters the OTP screen.
+   if(page==='auth.html' && (t.includes('login') || t.includes('continue'))){
+     const dealer=!!el.closest('section,form,div') && (el.closest('section,form,div').innerText||'').toLowerCase().includes('dealer login');
+     if(dealer || t.includes('dealer')){ev.preventDefault();go('otp');return;}
+     if(t.includes('login')){ev.preventDefault();go('home');return;}
+   }
+   if(page==='dealer-dashboard.html' && (t.includes('share quote') || t.includes('quick order'))){ev.preventDefault();go('dealerEnquiries');return;}
+ },true);
+ // Make all placeholder bottom-nav links meaningful even when their labels are nested in icon wrappers.
+ document.querySelectorAll('a[href="#"]').forEach(a=>{
+   const t=txt(a);
+   if(t==='home') a.href=R.home; else if(t==='dashboard') a.href=R.dashboard; else if(t==='products') a.href=isDealer?R.dealerproducts:R.products; else if(t==='motor control'||t==='control') a.href=R.control; else if(t==='my starter') a.href=R.starter; else if(t==='faqs'||t==='help & faq') a.href=R.faq; else if(t==='profile'||t==='settings') a.href=R.profile; else if(t==='enquiry'||t==='enquiries') a.href=isDealer?R.dealerEnquiries:R.enquiry; else if(t==='more') a.href=R.faq;
+ });
+})();
+</script>
+</body></html>

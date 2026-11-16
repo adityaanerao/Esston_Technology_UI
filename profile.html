@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full w-full bg-[#0b1118]">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Profile &amp; Settings - Esston Technology</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              orange: '#FF5E14',
+              orangeHover: '#E8520D',
+              orangeLight: '#FFF4EE',
+              navy: '#0E1E2E',
+              slate: '#1E293B',
+              border: '#E2E8F0',
+              bgLight: '#F8FAFC'
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', Inter, sans-serif;
+      background-color: #F8FAFC;
+      -webkit-font-smoothing: antialiased;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .tap-effect:active {
+      transform: scale(0.97);
+    }
+    /* Toggle switch transitions */
+    .toggle-checkbox:checked {
+      right: 2px;
+      border-color: #FF5E14;
+    }
+    .toggle-checkbox:checked + .toggle-label {
+      background-color: #FF5E14;
+    }
+  </style>
+
+<!-- ======================================================== -->
+<!-- CURVED ANIMATED BOTTOM NAVIGATION STYLES                 -->
+<!-- ======================================================== -->
+<style id="esston-curved-nav-style">
+  .esston-curved-nav-wrapper {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 100% !important;
+    max-width: 430px !important;
+    z-index: 50 !important;
+    filter: drop-shadow(0 -8px 24px rgba(0, 0, 0, 0.10)) !important;
+    user-select: none !important;
+    pointer-events: auto !important;
+    background: transparent !important;
+    border: none !important;
+  }
+  .esston-curved-nav-body {
+    position: relative !important;
+    background: #ffffff !important;
+    border-radius: 28px 28px 0 0 !important;
+    padding-top: 10px !important;
+    padding-bottom: 6px !important;
+  }
+  .esston-nav-sliding-indicator {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 20% !important;
+    height: 100% !important;
+    pointer-events: none !important;
+    transition: transform 0.42s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    transform: translateX(calc(100% * var(--active-tab, 0))) !important;
+    z-index: 10 !important;
+  }
+  .esston-nav-dome-svg {
+    position: absolute !important;
+    top: -24px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 96px !important;
+    height: 26px !important;
+    fill: #ffffff !important;
+    pointer-events: none !important;
+  }
+  .esston-nav-floating-circle {
+    position: absolute !important;
+    top: -20px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 50px !important;
+    height: 50px !important;
+    border-radius: 50% !important;
+    background: linear-gradient(135deg, #FF7A18 0%, #F9570C 55%, #D43E00 100%) !important;
+    box-shadow: 0 10px 22px rgba(249, 87, 12, 0.42), 0 2px 6px rgba(0, 0, 0, 0.12) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #ffffff !important;
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    animation: esstonPopBubble 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+  }
+  @keyframes esstonPopBubble {
+    0% { transform: translateX(-50%) scale(0.65); }
+    60% { transform: translateX(-50%) scale(1.12); }
+    100% { transform: translateX(-50%) scale(1); }
+  }
+  .esston-nav-floating-circle svg {
+    width: 24px !important;
+    height: 24px !important;
+    fill: currentColor !important;
+    stroke: currentColor !important;
+  }
+  .esston-nav-tabs-row {
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-around !important;
+    height: 60px !important;
+    z-index: 20 !important;
+  }
+  .esston-nav-tab-item {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-decoration: none !important;
+    cursor: pointer !important;
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    padding: 2px 0 0 0 !important;
+    transition: all 0.25s ease !important;
+  }
+  .esston-nav-tab-icon-wrap {
+    height: 26px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: opacity 0.2s ease, transform 0.2s ease !important;
+  }
+  .esston-nav-tab-item .esston-nav-tab-icon-wrap svg {
+    width: 22px !important;
+    height: 22px !important;
+    color: #94a3b8 !important;
+    stroke: currentColor !important;
+    transition: color 0.25s ease, transform 0.25s ease !important;
+  }
+  .esston-nav-tab-item:hover .esston-nav-tab-icon-wrap svg {
+    color: #475569 !important;
+    transform: translateY(-1px) !important;
+  }
+  .esston-nav-tab-item.active .esston-nav-tab-icon-wrap {
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+  .esston-nav-tab-label {
+    font-size: 10.5px !important;
+    font-weight: 600 !important;
+    color: #64748b !important;
+    margin-top: 2px !important;
+    letter-spacing: -0.01em !important;
+    transition: color 0.25s ease, font-weight 0.25s ease, transform 0.25s ease !important;
+  }
+  .esston-nav-tab-item.active .esston-nav-tab-label {
+    color: #F9570C !important;
+    font-weight: 800 !important;
+    transform: translateY(-2px) !important;
+  }
+  .esston-nav-home-indicator {
+    width: 120px !important;
+    height: 4px !important;
+    background: #0f172a !important;
+    border-radius: 9999px !important;
+    opacity: 0.18 !important;
+    margin: 4px auto 4px !important;
+  }
+</style>
+
+</head>
+<body class="h-screen w-screen text-slate-800 antialiased flex flex-col justify-center items-center p-0 m-0 bg-[#0b1118] overflow-hidden">
+
+  <!-- Mobile View Container (Straight Edges, No Round Border) -->
+  <div class="w-full max-w-[430px] h-full h-screen bg-[#F8FAFC] shadow-2xl flex flex-col overflow-hidden relative border-x border-slate-700/50">
+    
+    <!-- BEGIN: TopBrandHeader (HOME SCREEN MATCH) -->
+    <header class="sticky top-0 z-40 px-5 pt-2 pb-3.5 flex items-center justify-between bg-white border-b border-slate-100 shadow-xs" data-purpose="app-top-header">
+      <!-- Esston Technology Logo -->
+      <a aria-label="Esston Technology Home" class="flex flex-col items-start select-none group" href="customer-home.html">
+        <div class="flex items-center space-x-1">
+          <!-- Stylized ET Logo Mark -->
+          <div class="relative w-11 h-7 flex items-center justify-center">
+            <svg class="w-full h-full" fill="none" viewBox="0 0 64 36">
+              <!-- Orange 'E' & Upper Slant Arrow -->
+              <path d="M4 4H32L24 16H8L4 22H28L20 34H0L4 4Z" fill="#F9570C"></path>
+              <!-- Navy 'T' Bar & Directional Head -->
+              <path d="M22 4H56L62 4L54 16H36V34H26V4Z" fill="#092140"></path>
+              <!-- Arrow accent line -->
+              <path d="M50 0L64 0L58 10L50 0Z" fill="#F9570C"></path>
+            </svg>
+          </div>
+        </div>
+        <span class="text-[10px] font-extrabold tracking-tight text-slate-800 uppercase pl-0.5">Esston Technology®</span>
+      </a>
+
+      <!-- Right Action Items: Notifications & User Profile Capsule -->
+      <div class="flex items-center space-x-3">
+        <!-- Notification Bell Button with Red Alert Badge -->
+        <button aria-label="Notifications" onclick="showToast('No new notifications')" class="relative w-10 h-10 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-700 shadow-sm tap-effect">
+          <svg class="w-5 h-5 text-slate-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+          <!-- Notification Active Dot Indicator -->
+          <span class="absolute top-2 right-2.5 w-2.5 h-2.5 bg-red-500 rounded-full ring-2 ring-white"></span>
+        </button>
+
+        <!-- User Profile Pill (Active) -->
+        <a href="profile.html" class="flex items-center pl-1 pr-3 py-1 bg-orange-50 border border-orange-200 rounded-full shadow-sm space-x-2 tap-effect cursor-pointer">
+          <!-- Profile Avatar -->
+          <div class="w-7 h-7 rounded-full bg-slate-200 overflow-hidden flex items-center justify-center border border-orange-400">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJxubfdJ74NBvh-qW8zk9XvcBB5B8PQaVXFrBbfL8jpwZHOMJyhyq5ebKYyD-GO1ukfuZvv90jzXKjFUg_lhvLK6yJ-VfrBm3BGwJJKaqYoSqOV0T2oU_59rmsVlavBsREcAXELXWipMLgpsRx_JTpzCMD9FZ-lDjpWT8JyEZGpLUtrCHdV35H-UrJKC8VVc9sCMDDI7k0u2iRzBwMK0ssdUA5d-yWgnUIvxyUo-0jCka8WyBRApPa" alt="Aditya profile" class="w-full h-full object-cover object-center">
+          </div>
+          <!-- User Details -->
+          <div class="flex flex-col text-left">
+            <div class="flex items-center space-x-1">
+              <span class="text-xs font-bold text-orange-600 leading-tight">Aditya</span>
+            </div>
+            <div class="flex items-center space-x-0.5 text-[10.5px] font-medium text-slate-500 leading-none">
+              <span>Customer</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </header>
+    <!-- END: TopBrandHeader -->
+
+    <!-- SUB-HEADER TITLE BAR -->
+    <div class="bg-white px-4 py-3 border-b border-slate-100 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <button onclick="history.back()" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-slate-200 transition-colors tap-effect" aria-label="Go Back">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path>
+          </svg>
+        </button>
+        <div>
+          <h1 class="text-base font-bold text-slate-900 leading-tight">Farmer Profile</h1>
+          <p class="text-[11px] text-slate-500">Account management &amp; motor settings</p>
+        </div>
+      </div>
+      <div class="flex items-center space-x-1">
+        <button onclick="openEditModal()" class="px-2.5 py-1 rounded-lg bg-orange-50 text-[#FF5E14] text-xs font-bold hover:bg-orange-100 transition tap-effect flex items-center space-x-1">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+          <span>Edit</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- MAIN SCROLLABLE CONTENT -->
+    <main class="flex-1 overflow-y-auto no-scrollbar px-4 pt-3.5 pb-28 space-y-4">
+
+      <!-- ==================== SECTION 1: PROFILE INFO ==================== -->
+      <section id="section-profile" class="space-y-3.5">
+        
+        <!-- Profile Hero Card -->
+        <div class="bg-gradient-to-br from-slate-900 via-[#10213b] to-slate-900 text-white rounded-3xl p-5 shadow-lg relative overflow-hidden">
+          <!-- Background decorative shapes -->
+          <div class="absolute -right-8 -bottom-8 w-36 h-36 rounded-full bg-[#FF5E14]/20 blur-2xl pointer-events-none"></div>
+          <div class="absolute -left-6 -top-6 w-28 h-28 rounded-full bg-blue-500/10 blur-xl pointer-events-none"></div>
+
+          <div class="relative z-10 flex items-center space-x-4">
+            <!-- Big Avatar with Camera badge -->
+            <div class="relative">
+              <div class="w-[72px] h-[72px] rounded-full border-2 border-orange-400 p-0.5 shadow-md overflow-hidden bg-slate-800">
+                <img id="profile-avatar-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJxubfdJ74NBvh-qW8zk9XvcBB5B8PQaVXFrBbfL8jpwZHOMJyhyq5ebKYyD-GO1ukfuZvv90jzXKjFUg_lhvLK6yJ-VfrBm3BGwJJKaqYoSqOV0T2oU_59rmsVlavBsREcAXELXWipMLgpsRx_JTpzCMD9FZ-lDjpWT8JyEZGpLUtrCHdV35H-UrJKC8VVc9sCMDDI7k0u2iRzBwMK0ssdUA5d-yWgnUIvxyUo-0jCka8WyBRApPa" alt="Aditya Sharma" class="w-full h-full object-cover">
+              </div>
+              <button onclick="changePhotoToast()" class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-[#FF5E14] text-white flex items-center justify-center shadow-md tap-effect hover:bg-[#e04f00]" title="Update photo">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                  <path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <circle cx="12" cy="13" r="3"></circle>
+                </svg>
+              </button>
+            </div>
+
+            <!-- Profile Info & Badges -->
+            <div class="flex-1">
+              <div class="flex items-center space-x-1.5">
+                <h2 id="display-name" class="text-lg font-black tracking-tight leading-tight">Aditya Sharma</h2>
+                <span class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-emerald-500 text-white" title="Verified Customer">
+                  <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                </span>
+              </div>
+              <p class="text-xs text-slate-300 font-medium">Customer ID: <span class="font-mono text-orange-300 font-bold">EST-CUST-8842</span></p>
+              
+              <div class="flex flex-wrap items-center gap-1.5 mt-2">
+                <span class="px-2 py-0.5 rounded-full bg-orange-500/20 text-orange-300 border border-orange-500/30 text-[10.5px] font-bold">
+                  IoT Active
+                </span>
+                <span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10.5px] font-semibold">
+                  1 Starter Paired
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Summary Strip -->
+          <div class="mt-4 pt-3.5 border-t border-white/10 grid grid-cols-2 gap-3 text-xs">
+            <div>
+              <span class="text-[10px] text-slate-400 uppercase tracking-wider block">Farm Location</span>
+              <span class="font-semibold text-slate-200">Wagholi, Pune (12 Acres)</span>
+            </div>
+            <div>
+              <span class="text-[10px] text-slate-400 uppercase tracking-wider block">Registered Mobile</span>
+              <span class="font-semibold text-slate-200">+91 98765 43210</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Personal & Farm Details Card -->
+        <div class="bg-white rounded-2xl p-4 border border-slate-100 shadow-2xs space-y-3">
+          <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+            <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center space-x-1.5">
+              <svg class="w-4 h-4 text-[#FF5E14]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+              <span>Personal &amp; Farm Details</span>
+            </h3>
+            <button onclick="openEditModal()" class="text-xs text-[#FF5E14] font-bold hover:underline">Edit</button>
+          </div>
+
+          <div class="space-y-2.5 text-xs">
+            <div class="flex items-center justify-between py-1">
+              <span class="text-slate-500">Full Name</span>
+              <span id="detail-name" class="font-semibold text-slate-800">Aditya Sharma</span>
+            </div>
+            <div class="flex items-center justify-between py-1 border-t border-slate-50">
+              <span class="text-slate-500">Phone Number</span>
+              <span class="font-semibold text-slate-800">+91 98765 43210</span>
+            </div>
+            <div class="flex items-center justify-between py-1 border-t border-slate-50">
+              <span class="text-slate-500">Email Address</span>
+              <span class="font-semibold text-slate-800">aditya.sharma@agrifarm.in</span>
+            </div>
+            <div class="flex items-center justify-between py-1 border-t border-slate-50">
+              <span class="text-slate-500">Farm / Land Size</span>
+              <span class="font-semibold text-slate-800">12 Acres (Sugarcane &amp; Pomegranate)</span>
+            </div>
+            <div class="flex items-center justify-between py-1 border-t border-slate-50">
+              <span class="text-slate-500">Primary Dealer</span>
+              <span class="font-semibold text-slate-800">Aditya Traders (Pune)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Motor Settings Action Card -->
+        <div class="pt-1">
+          <a href="motor-settings.html" class="w-full bg-gradient-to-r from-orange-500 via-[#FF5E14] to-amber-600 hover:from-[#e04f00] hover:to-orange-600 text-white rounded-2xl p-4 shadow-lg shadow-orange-500/20 flex items-center justify-between tap-effect block transition-all group">
+            <div class="flex items-center space-x-3.5">
+              <div class="w-12 h-12 rounded-xl bg-white/20 backdrop-blur-md text-white flex items-center justify-center text-xl shrink-0 group-hover:scale-105 transition-transform border border-white/20">
+                <i class="fa-solid fa-sliders"></i>
+              </div>
+              <div>
+                <div class="flex items-center space-x-2">
+                  <h3 class="text-base font-extrabold text-white">Motor Settings</h3>
+                  <span class="text-[10px] font-bold text-orange-950 bg-white/90 px-2 py-0.5 rounded-full uppercase tracking-wider">10 Protections</span>
+                </div>
+                <p class="text-xs text-orange-100 font-medium mt-0.5">Dry-run, voltage, overload &amp; phase parameters</p>
+              </div>
+            </div>
+            <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white shrink-0 group-hover:translate-x-0.5 transition-transform border border-white/20">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            </div>
+          </a>
+        </div>
+
+        <!-- My Orders Action Card -->
+        <div class="pt-1">
+          <a href="my-orders.html" class="w-full bg-white hover:bg-slate-50 border border-slate-200/90 rounded-2xl p-4 shadow-xs flex items-center justify-between tap-effect block transition-all group">
+            <div class="flex items-center space-x-3.5">
+              <div class="w-12 h-12 rounded-xl bg-orange-50 text-[#FF5E14] border border-orange-200/60 flex items-center justify-center text-xl shrink-0 group-hover:scale-105 transition-transform">
+                <i class="fa-solid fa-box-archive"></i>
+              </div>
+              <div>
+                <div class="flex items-center space-x-2">
+                  <h3 class="text-base font-extrabold text-slate-800 group-hover:text-[#FF5E14] transition-colors">My Orders</h3>
+                  <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded-full uppercase tracking-wider">3 Orders</span>
+                </div>
+                <p class="text-xs text-slate-500 font-medium mt-0.5">Track starters, deliveries, invoices &amp; warranty</p>
+              </div>
+            </div>
+            <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 group-hover:text-[#FF5E14] group-hover:translate-x-0.5 transition-all shrink-0">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            </div>
+          </a>
+        </div>
+
+        <!-- Account Actions Card -->
+        <div class="bg-white rounded-2xl p-4 border border-slate-100 shadow-2xs space-y-2.5">
+          <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Account Actions</h3>
+          
+          <!-- Sign Out Button -->
+          <button onclick="confirmLogout()" class="w-full py-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 font-bold text-xs transition tap-effect flex items-center justify-center space-x-2">
+            <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            <span>Sign Out</span>
+          </button>
+
+          <!-- Delete Account Button (Requested) -->
+          <button onclick="openDeleteAccountModal()" class="w-full py-2.5 rounded-xl border border-red-200 bg-red-50/80 hover:bg-red-100 text-red-600 font-extrabold text-xs transition tap-effect flex items-center justify-center space-x-2">
+            <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+            </svg>
+            <span>Delete Account</span>
+          </button>
+        </div>
+
+        <div class="text-center pt-1 pb-2">
+          <p class="text-[10.5px] text-slate-400 font-mono">Esston Smart Agri Suite • v2.4.0</p>
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- EDIT PROFILE MODAL -->
+    <div id="editModal" class="fixed md:absolute inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
+      <div class="bg-white rounded-3xl p-5 max-w-[360px] w-full shadow-2xl space-y-4">
+        <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+          <h3 class="text-sm font-bold text-slate-900">Edit Profile</h3>
+          <button onclick="closeEditModal()" class="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-slate-200">✕</button>
+        </div>
+        <div class="space-y-3 text-xs">
+          <div>
+            <label class="block text-slate-600 font-semibold mb-1">Full Name</label>
+            <input id="edit-name-input" type="text" value="Aditya Sharma" class="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:border-[#FF5E14]">
+          </div>
+          <div>
+            <label class="block text-slate-600 font-semibold mb-1">Phone Number</label>
+            <input type="text" value="+91 98765 43210" class="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:border-[#FF5E14]">
+          </div>
+          <div>
+            <label class="block text-slate-600 font-semibold mb-1">Farm Location</label>
+            <input type="text" value="Wagholi, Pune (12 Acres)" class="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:border-[#FF5E14]">
+          </div>
+        </div>
+        <div class="flex space-x-2 pt-2">
+          <button onclick="closeEditModal()" class="flex-1 py-2 rounded-xl bg-slate-100 text-slate-700 font-bold text-xs hover:bg-slate-200">Cancel</button>
+          <button onclick="saveProfile()" class="flex-1 py-2 rounded-xl bg-[#FF5E14] text-white font-bold text-xs hover:bg-[#e04f00]">Save Changes</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- DELETE ACCOUNT CONFIRMATION MODAL -->
+    <div id="deleteModal" class="fixed md:absolute inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
+      <div class="bg-white rounded-3xl p-5 max-w-[360px] w-full shadow-2xl space-y-4 text-center">
+        <div class="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center mx-auto text-xl">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+          </svg>
+        </div>
+        <div>
+          <h3 class="text-base font-extrabold text-slate-900">Delete Account?</h3>
+          <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">
+            Are you sure you want to permanently delete your account? All farmer profile data, registered starters, and motor history will be removed.
+          </p>
+        </div>
+        <div class="space-y-2 pt-2">
+          <button onclick="executeDeleteAccount()" class="w-full py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-extrabold text-xs shadow-md shadow-red-600/20 tap-effect">
+            Yes, Permanently Delete
+          </button>
+          <button onclick="closeDeleteAccountModal()" class="w-full py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs tap-effect">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="appToast" class="fixed md:absolute bottom-24 left-1/2 -translate-x-1/2 w-[90%] max-w-[360px] bg-slate-900/95 backdrop-blur-md text-white p-3 rounded-2xl shadow-xl flex items-center space-x-3 transition-all duration-300 opacity-0 pointer-events-none translate-y-4 z-50">
+      <div class="w-7 h-7 rounded-full bg-[#FF5E14] flex items-center justify-center shrink-0">
+        <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+        </svg>
+      </div>
+      <div class="flex-1">
+        <p id="toastMessage" class="text-xs font-bold">Settings updated</p>
+      </div>
+    </div>
+
+    <!-- BEGIN: BottomNavigationBar (HOME SCREEN MATCH: Profile Active as 5th tab) -->
+    
+<!-- BEGIN: BottomNavigationBar (Curved Animated) -->
+<nav class="esston-curved-nav-wrapper" data-purpose="mobile-bottom-navigation" style="--active-tab: 4;">
+  <div class="esston-curved-nav-body">
+    <!-- Sliding Dome & Elevated Circle -->
+    <div class="esston-nav-sliding-indicator">
+      <svg class="esston-nav-dome-svg" viewBox="0 0 100 26" preserveAspectRatio="none">
+        <path d="M 0,26 C 14,26 22,20 28,12 C 36,1 42,0 50,0 C 58,0 64,1 72,12 C 78,20 86,26 100,26 L 100,28 L 0,28 Z"></path>
+      </svg>
+      <div class="esston-nav-floating-circle">
+        <span class="esston-floating-icon">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </span>
+      </div>
+    </div>
+
+    <!-- 5 Customer Navigation Tabs -->
+    <div class="esston-nav-tabs-row">
+      <!-- 0: Home -->
+      <a class="esston-nav-tab-item " data-index="0" href="customer-home.html">
+        <div class="esston-nav-tab-icon-wrap">
+          <svg fill="currentColor" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg>
+        </div>
+        <span class="esston-nav-tab-label">Home</span>
+      </a>
+
+      <!-- 1: Motor Control -->
+      <a class="esston-nav-tab-item " data-index="1" href="motor-control.html">
+        <div class="esston-nav-tab-icon-wrap">
+          <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <rect height="16" rx="2" stroke="currentColor" width="18" x="3" y="4"></rect>
+            <path d="M7 4V2m10 2V2M7 20v2m10-2v2" stroke-linecap="round"></path>
+            <circle cx="12" cy="12" r="3.5"></circle>
+          </svg>
+        </div>
+        <span class="esston-nav-tab-label">Motor Control</span>
+      </a>
+
+      <!-- 2: Schedule -->
+      <a class="esston-nav-tab-item " data-index="2" href="schedule.html">
+        <div class="esston-nav-tab-icon-wrap">
+          <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="9" stroke="currentColor"></circle>
+            <path d="M12 7v5l3 3" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </div>
+        <span class="esston-nav-tab-label">Schedule</span>
+      </a>
+
+      <!-- 3: FAQs -->
+      <a class="esston-nav-tab-item " data-index="3" href="help-faq.html">
+        <div class="esston-nav-tab-icon-wrap">
+          <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </div>
+        <span class="esston-nav-tab-label">FAQs</span>
+      </a>
+
+      <!-- 4: Profile -->
+      <a class="esston-nav-tab-item active" data-index="4" href="profile.html">
+        <div class="esston-nav-tab-icon-wrap">
+          <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </div>
+        <span class="esston-nav-tab-label">Profile</span>
+      </a>
+    </div>
+
+    <!-- Home Indicator -->
+    <div class="esston-nav-home-indicator"></div>
+  </div>
+</nav>
+<!-- END: BottomNavigationBar -->
+
+
+  </div>
+
+  <!-- INTERACTIVITY SCRIPT -->
+  <script>
+    function showToast(msg) {
+      const toast = document.getElementById('appToast');
+      document.getElementById('toastMessage').innerText = msg;
+      toast.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
+      toast.classList.add('opacity-100', 'translate-y-0');
+
+      setTimeout(() => {
+        toast.classList.remove('opacity-100', 'translate-y-0');
+        toast.classList.add('opacity-0', 'pointer-events-none', 'translate-y-4');
+      }, 3000);
+    }
+
+    function changePhotoToast() {
+      showToast('Photo upload dialog opened');
+    }
+
+    function openEditModal() {
+      const modal = document.getElementById('editModal');
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      modal.classList.add('opacity-100');
+    }
+
+    function closeEditModal() {
+      const modal = document.getElementById('editModal');
+      modal.classList.remove('opacity-100');
+      modal.classList.add('opacity-0', 'pointer-events-none');
+    }
+
+    function saveProfile() {
+      const newName = document.getElementById('edit-name-input').value.trim();
+      if (newName) {
+        document.getElementById('display-name').innerText = newName;
+        document.getElementById('detail-name').innerText = newName;
+      }
+      closeEditModal();
+      showToast('Profile updated successfully!');
+    }
+
+    function confirmLogout() {
+      if (confirm('Are you sure you want to log out from the Esston App?')) {
+        location.href = 'auth.html';
+      }
+    }
+
+    function openDeleteAccountModal() {
+      const modal = document.getElementById('deleteModal');
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      modal.classList.add('opacity-100');
+    }
+
+    function closeDeleteAccountModal() {
+      const modal = document.getElementById('deleteModal');
+      modal.classList.remove('opacity-100');
+      modal.classList.add('opacity-0', 'pointer-events-none');
+    }
+
+    function executeDeleteAccount() {
+      closeDeleteAccountModal();
+      showToast('Account deleted successfully');
+      setTimeout(() => {
+        location.href = 'auth.html';
+      }, 1000);
+    }
+  </script>
+
+  <script id="esston-global-navigation">
+  (function(){
+   const R={home:'customer-home.html',dashboard:'dealer-dashboard.html',products:'products.html',catalogue:'catalogue.html',dealerproducts:'dealer-catalogue.html',details:'product-details.html',starter:'my-starter.html',control:'motor-control.html',schedule:'schedule.html',faq:'help-faq.html',enquiry:'contact-enquiry.html',auth:'auth.html',splash:'splash.html',otp:'dealer-otp.html',dealerEnquiries:'dealer-enquiries.html',profile:'profile.html',dealerProfile:'dealer-profile.html',orders:'my-orders.html'};
+   const p=(location.pathname.split('/').pop()||'index.html').toLowerCase();
+   const isDealer=/dealer-dashboard|dealer-catalogue|dealer-enquiries|dealer-profile|dealer-otp/.test(p);
+   const go=(key)=>{if(R[key]) location.href=R[key];};
+   const txt=e=>(e.innerText||e.textContent||'').replace(/\s+/g,' ').trim().toLowerCase();
+   document.addEventListener('click',function(ev){
+     const el=ev.target.closest('a,button,[role="button"]'); if(!el) return;
+     const t=txt(el); const page=p;
+     if(t.includes('my order') || t.includes('my orders') || t==='orders'){ev.preventDefault();go('orders');return;}
+     if(/^(profile|settings)$/.test(t) || t.includes('my profile') || t.includes('hello, aditya') || t.includes('aditya traders')){ev.preventDefault();go(isDealer?'dealerProfile':'profile');return;}
+     if(/^(home|dashboard)$/.test(t) || t.startsWith('home ')){ev.preventDefault();go(isDealer?'dashboard':'home');return;}
+     if(t==='products' || t.includes('browse products') || t.includes('view products') || t==='all products' || t==='product catalogue'){ev.preventDefault();go(isDealer?'dealerproducts':'enquiry');return;}
+     if(t==='enquiry' || t==='enquiries' || t.includes('my enquiries') || t.includes('recent enquiries') || t.includes('view all enquiries')){ev.preventDefault();go(isDealer?'dealerEnquiries':'enquiry');return;}
+     if(t==='faqs' || t==='help & faq' || t==='help & support' || t.includes('chat with faq bot') || t.includes('need help')){ev.preventDefault();go('faq');return;}
+     if(t==='motor control' || t==='control' || t.includes('check status') || t.includes('tap to start motor')){ if(!/motor_control|motor-control/.test(page)){ev.preventDefault();go('control');return;} }
+     if(t==='my starter' || t.includes('view my starter') || t.includes('starter details')){ev.preventDefault();go('starter');return;}
+     if(t==='schedule' || t.includes('motor schedule') || t.includes('set schedule') || t==='add slot' || t.includes('auto timer schedule')){ev.preventDefault();go('schedule');return;}
+     if(t==='view details' || t==='view product details' || t.includes('product details')){ev.preventDefault();go('enquiry');return;}
+   },true);
+  })();
+  </script>
+</body>
+</html>

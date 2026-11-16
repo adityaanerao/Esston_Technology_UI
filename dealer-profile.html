@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full w-full bg-[#0b1118]">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Dealer Profile & Business Account - Esston Technology</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- FontAwesome 6.5.1 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              orange: '#FF5A00',
+              orangeHover: '#e04f00',
+              dark: '#111827',
+              navy: '#0E1E38',
+              muted: '#64748B'
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .tap-effect {
+      transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .tap-effect:active {
+      transform: scale(0.97);
+    }
+  </style>
+</head>
+<body class="h-screen w-screen text-slate-800 antialiased font-sans flex flex-col justify-center items-center p-0 m-0 bg-[#0b1118] overflow-hidden">
+
+  <!-- Main Container (Straight Edges, No Round Border) -->
+  <div class="w-full max-w-[430px] h-full h-screen bg-[#F8FAFC] shadow-2xl flex flex-col overflow-hidden relative border-x border-slate-700/50">
+
+    <!-- BEGIN: TopBrandHeader -->
+    <header class="sticky top-0 z-40 px-5 pt-2 pb-3.5 flex items-center justify-between bg-white border-b border-slate-100 shadow-xs flex-shrink-0" data-purpose="app-top-header">
+      <!-- Esston Technology Logo -->
+      <a aria-label="Esston Technology Home" class="flex flex-col items-start select-none group" href="dealer-dashboard.html">
+        <div class="flex items-center space-x-1">
+          <!-- Stylized ET Logo Mark -->
+          <div class="relative w-11 h-7 flex items-center justify-center">
+            <svg class="w-full h-full" fill="none" viewBox="0 0 64 36">
+              <path d="M4 4H32L24 16H8L4 22H28L20 34H0L4 4Z" fill="#F9570C"></path>
+              <path d="M22 4H56L62 4L54 16H36V34H26V4Z" fill="#092140"></path>
+              <path d="M50 0L64 0L58 10L50 0Z" fill="#F9570C"></path>
+            </svg>
+          </div>
+        </div>
+        <span class="text-[10px] font-extrabold tracking-tight text-slate-800 uppercase pl-0.5">Esston Technology®</span>
+      </a>
+
+      <!-- Right Action Items: Notifications & User Profile Capsule -->
+      <div class="flex items-center space-x-3">
+        <!-- Notification Bell Button -->
+        <button onclick="showToast('You have 3 active B2B updates from Super Admin', '🔔')" aria-label="Notifications" class="relative w-10 h-10 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-700 shadow-sm tap-effect">
+          <svg class="w-5 h-5 text-slate-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+          <span class="absolute top-2 right-2.5 w-2.5 h-2.5 bg-red-500 rounded-full ring-2 ring-white"></span>
+        </button>
+
+        <!-- User Profile Pill (Active) -->
+        <a href="dealer-profile.html" class="flex items-center pl-1 pr-3 py-1 bg-orange-50 border border-orange-200 rounded-full shadow-sm space-x-2 tap-effect cursor-pointer">
+          <div class="w-7 h-7 rounded-full bg-[#111A2E] text-white flex items-center justify-center font-bold text-xs shadow-sm border border-orange-400">A</div>
+          <div class="flex flex-col text-left">
+            <span class="text-xs font-bold text-orange-600 leading-tight">Aditya Traders</span>
+            <span class="text-[10px] font-bold text-orange-500 leading-none">Dealer</span>
+          </div>
+        </a>
+      </div>
+    </header>
+    <!-- END: TopBrandHeader -->
+
+    <!-- SUB-HEADER TITLE BAR -->
+    <div class="bg-white px-4 py-3 border-b border-slate-100 flex items-center justify-between flex-shrink-0">
+      <div class="flex items-center space-x-3">
+        <a href="dealer-dashboard.html" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-slate-200 transition-colors tap-effect" aria-label="Go Back to Dealer Dashboard">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path>
+          </svg>
+        </a>
+        <div>
+          <h1 class="text-base font-extrabold text-slate-900 leading-tight">Dealer Business Account</h1>
+          <p class="text-[11px] text-slate-500">Authorized B2B Partner profile & commercials</p>
+        </div>
+      </div>
+      <div class="flex items-center space-x-1">
+        <span class="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-black uppercase tracking-wider flex items-center gap-1">
+          <i class="fa-solid fa-circle-check text-[11px]"></i> Verified
+        </span>
+      </div>
+    </div>
+
+    <!-- MAIN SCROLLABLE CONTENT -->
+    <main class="flex-1 overflow-y-auto no-scrollbar px-4 pt-3.5 pb-28 space-y-4">
+
+      <!-- ==================== DEALER PROFILE HERO ==================== -->
+      <section class="bg-gradient-to-br from-slate-900 via-[#10213b] to-slate-900 text-white rounded-3xl p-5 shadow-lg relative overflow-hidden border border-slate-800">
+        <!-- Background decorative ambient circles -->
+        <div class="absolute -right-8 -bottom-8 w-36 h-36 rounded-full bg-orange-500/20 blur-2xl pointer-events-none"></div>
+        <div class="absolute -left-6 -top-6 w-28 h-28 rounded-full bg-blue-500/10 blur-xl pointer-events-none"></div>
+
+        <div class="relative z-10 flex items-start justify-between">
+          <div class="flex items-center space-x-3.5">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-orange-500 to-amber-600 text-white flex items-center justify-center font-black text-2xl shadow-md border-2 border-orange-300/40">
+              A
+            </div>
+            <div>
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <h2 class="text-lg font-black text-white leading-tight">Aditya Traders</h2>
+              </div>
+              <p class="text-xs text-orange-400 font-bold mt-0.5">Authorized Esston Dealership</p>
+              <div class="text-[11px] text-slate-400 font-medium">Partner ID: <span class="text-white font-mono font-bold">EST-DLR-4029</span></div>
+            </div>
+          </div>
+          <span class="px-2.5 py-1 rounded-lg bg-orange-500/20 border border-orange-400/40 text-orange-300 font-black text-[10px] uppercase tracking-wider">
+            Gold Tier
+          </span>
+        </div>
+
+        <!-- Quick Stats Ribbon -->
+        <div class="grid grid-cols-3 gap-2 mt-4 pt-4 border-t border-slate-800/80 text-center">
+          <div class="bg-slate-800/60 rounded-xl p-2 border border-slate-700/50">
+            <span class="block text-[9px] font-bold text-slate-400 uppercase tracking-wide">Margin Tier</span>
+            <span class="text-sm font-black text-white mt-0.5 block">35% Off</span>
+          </div>
+          <div class="bg-slate-800/60 rounded-xl p-2 border border-slate-700/50">
+            <span class="block text-[9px] font-bold text-slate-400 uppercase tracking-wide">Credit Line</span>
+            <span class="text-sm font-black text-emerald-400 mt-0.5 block">₹3.40 L</span>
+          </div>
+          <div class="bg-slate-800/60 rounded-xl p-2 border border-slate-700/50">
+            <span class="block text-[9px] font-bold text-slate-400 uppercase tracking-wide">YTD Orders</span>
+            <span class="text-sm font-black text-white mt-0.5 block">210 Units</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== COMMERCIAL & CREDIT TERMS ==================== -->
+      <section class="bg-white rounded-2xl p-4 shadow-xs border border-slate-100 space-y-3">
+        <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+          <div class="flex items-center space-x-2">
+            <div class="w-8 h-8 rounded-xl bg-orange-50 text-brand-orange flex items-center justify-center font-bold text-sm">
+              <i class="fa-solid fa-percent"></i>
+            </div>
+            <div>
+              <h3 class="text-sm font-bold text-slate-900 leading-tight">Commercial & Wholesale Terms</h3>
+              <p class="text-[10.5px] text-slate-500 font-medium">B2B pricing margins & payment schedule</p>
+            </div>
+          </div>
+          <span class="text-[10px] font-black text-brand-orange bg-orange-50 px-2 py-0.5 rounded border border-orange-200">Tier 1</span>
+        </div>
+
+        <div class="space-y-2 text-xs">
+          <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+            <span class="text-slate-500 font-medium">Standard Wholesale Discount</span>
+            <span class="font-black text-slate-900">35% off Catalogue MRP</span>
+          </div>
+          <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+            <span class="text-slate-500 font-medium">Bulk Slab (50+ Units)</span>
+            <span class="font-black text-emerald-600 font-mono">Extra 7% Incentive</span>
+          </div>
+          <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+            <span class="text-slate-500 font-medium">Payment Settlement Terms</span>
+            <span class="font-bold text-slate-800">Net 15 Days (Direct RTGS/NEFT)</span>
+          </div>
+          <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+            <span class="text-slate-500 font-medium">GST Input Credit</span>
+            <span class="font-black text-blue-600">18% ITC Factory Invoicing</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== GSTIN & BUSINESS CREDENTIALS ==================== -->
+      <section class="bg-white rounded-2xl p-4 shadow-xs border border-slate-100 space-y-3">
+        <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+          <div class="flex items-center space-x-2">
+            <div class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-sm">
+              <i class="fa-solid fa-building"></i>
+            </div>
+            <div>
+              <h3 class="text-sm font-bold text-slate-900 leading-tight">Registered Firm Details</h3>
+              <p class="text-[10.5px] text-slate-500 font-medium">Official GST & tax verification</p>
+            </div>
+          </div>
+          <button onclick="showToast('GSTIN details synced with Esston ERP', '✓')" class="text-xs font-bold text-brand-orange hover:underline">Edit</button>
+        </div>
+
+        <div class="space-y-2.5 text-xs">
+          <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+            <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wide">GSTIN Number</span>
+            <div class="flex items-center justify-between mt-1">
+              <span class="font-mono font-black text-sm text-slate-900 tracking-wider">27AABCE8842F1Z9</span>
+              <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold text-[10px]">Active & Verified</span>
+            </div>
+          </div>
+
+          <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+            <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wide">Authorized Contact Person</span>
+            <span class="font-bold text-slate-900 block mt-0.5">Aditya Patil (Managing Director)</span>
+            <div class="flex items-center gap-3 mt-1.5 text-[11px] text-slate-600">
+              <span class="flex items-center gap-1"><i class="fa-solid fa-phone text-orange-500 text-[10px]"></i> +91 98220 12345</span>
+              <span class="flex items-center gap-1"><i class="fa-solid fa-envelope text-blue-500 text-[10px]"></i> aditya.traders@esston.in</span>
+            </div>
+          </div>
+
+          <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+            <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wide">Registered Warehouse & Shop</span>
+            <p class="font-medium text-slate-700 mt-1 leading-relaxed text-[11.5px]">
+              Shop No. 14, Krishi Vyapar Bhavan, Market Yard Road, Pune, Maharashtra - 411037
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== B2B DEALER DOWNLOADS ==================== -->
+      <section class="bg-white rounded-2xl p-4 shadow-xs border border-slate-100 space-y-2.5">
+        <h3 class="text-sm font-bold text-slate-900 leading-tight">Dealership Documents</h3>
+        <p class="text-[10.5px] text-slate-500 font-medium">Download certificates and wholesale price lists</p>
+
+        <div class="space-y-2 pt-1">
+          <!-- Download 1 -->
+          <div onclick="showToast('Downloading Dealership Authorization Certificate...', '⬇️')" class="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-orange-50/50 border border-slate-200/80 transition-all cursor-pointer tap-effect">
+            <div class="flex items-center space-x-3">
+              <div class="w-9 h-9 rounded-xl bg-orange-100 text-brand-orange flex items-center justify-center text-sm shadow-xs">
+                <i class="fa-solid fa-award"></i>
+              </div>
+              <div>
+                <span class="text-xs font-bold text-slate-800 block leading-tight">Dealership Certificate 2026</span>
+                <span class="text-[10px] text-slate-400 font-medium">Official Esston Authorized Partner Certificate</span>
+              </div>
+            </div>
+            <i class="fa-solid fa-download text-slate-400 text-xs"></i>
+          </div>
+
+          <!-- Download 2 -->
+          <div onclick="showToast('Downloading Wholesale Master Price List 2026...', '⬇️')" class="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-orange-50/50 border border-slate-200/80 transition-all cursor-pointer tap-effect">
+            <div class="flex items-center space-x-3">
+              <div class="w-9 h-9 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-sm shadow-xs">
+                <i class="fa-solid fa-file-invoice-dollar"></i>
+              </div>
+              <div>
+                <span class="text-xs font-bold text-slate-800 block leading-tight">Wholesale Price List (PDF)</span>
+                <span class="text-[10px] text-slate-400 font-medium">Single/Three phase starters, solar inverters</span>
+              </div>
+            </div>
+            <i class="fa-solid fa-download text-slate-400 text-xs"></i>
+          </div>
+
+          <!-- Download 3 -->
+          <a href="dealer-enquiries.html" class="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-orange-50/50 border border-slate-200/80 transition-all cursor-pointer tap-effect block text-inherit">
+            <div class="flex items-center space-x-3">
+              <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-sm shadow-xs">
+                <i class="fa-solid fa-file-circle-check"></i>
+              </div>
+              <div>
+                <span class="text-xs font-bold text-slate-800 block leading-tight">Customer Quotation Archive</span>
+                <span class="text-[10px] text-slate-400 font-medium">View submitted dealer quotes & RFQs</span>
+              </div>
+            </div>
+            <i class="fa-solid fa-arrow-right text-slate-400 text-xs"></i>
+          </a>
+        </div>
+      </section>
+
+      <!-- ==================== SUPER ADMIN HOTLINE ==================== -->
+      <section class="bg-gradient-to-r from-orange-50 via-amber-50 to-orange-100 rounded-2xl p-4 border border-orange-200 shadow-xs space-y-2.5">
+        <div class="flex items-start gap-3">
+          <div class="w-10 h-10 rounded-xl bg-brand-orange text-white flex items-center justify-center text-base shadow-sm shrink-0">
+            <i class="fa-solid fa-headset"></i>
+          </div>
+          <div class="flex-1">
+            <span class="text-[9.5px] font-black text-orange-800 uppercase tracking-wider bg-orange-200/70 px-2 py-0.5 rounded">Super Admin Desk</span>
+            <h3 class="text-xs font-black text-slate-900 mt-1">Direct Factory Support for Dealers</h3>
+            <p class="text-[11px] text-slate-600 leading-snug mt-0.5">Need instant stock dispatch, bulk quotes or OTP renewal?</p>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-2 pt-1">
+          <a href="tel:+919822012345" class="py-2 px-3 bg-white hover:bg-slate-50 text-slate-800 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 shadow-xs border border-orange-200 tap-effect">
+            <i class="fa-solid fa-phone text-emerald-600 text-xs"></i>
+            <span>Call Admin</span>
+          </a>
+          <a href="https://wa.me/919822012345?text=Hello%20Esston%20Admin,%20Aditya%20Traders%20requesting%20assistance" target="_blank" class="py-2 px-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 shadow-xs tap-effect">
+            <i class="fa-brands fa-whatsapp text-sm"></i>
+            <span>WhatsApp</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- ==================== LOGOUT ACTION ==================== -->
+      <section class="pt-2 pb-6">
+        <button onclick="logoutDealer()" class="w-full py-3 bg-rose-50 hover:bg-rose-100 text-rose-600 font-bold rounded-2xl border border-rose-200 flex items-center justify-center gap-2 text-xs transition tap-effect cursor-pointer">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          <span>Log Out of Dealer Dashboard</span>
+        </button>
+        <p class="text-[10px] text-center text-slate-400 mt-2">
+          Esston Technology B2B Enterprise Portal • Session secured via GSTIN OTP
+        </p>
+      </section>
+
+    </main>
+
+    <!-- BEGIN: BottomNavigation (SYNCHRONIZED DEALER PORTAL TABS) -->
+    <nav class="fixed md:absolute bottom-0 left-0 right-0 max-w-[430px] mx-auto bg-white/95 backdrop-blur-md border-t border-slate-200 z-50 px-2 py-2" data-purpose="persistent-bottom-tab-bar">
+      <div class="grid grid-cols-4 items-center text-center">
+        <!-- 1: Dashboard -->
+        <a class="flex flex-col items-center justify-center text-slate-500 hover:text-slate-800 transition group py-1" href="dealer-dashboard.html">
+          <svg class="w-6 h-6 stroke-[1.8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z"></path>
+            <path d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z"></path>
+          </svg>
+          <span class="text-[10px] font-medium tracking-tight mt-0.5">Dashboard</span>
+        </a>
+
+        <!-- 2: Products -->
+        <a class="flex flex-col items-center justify-center text-slate-500 hover:text-slate-800 transition group py-1" href="dealer-catalogue.html">
+          <svg class="w-6 h-6 stroke-[1.8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+          <span class="text-[10px] font-medium tracking-tight mt-0.5">Products</span>
+        </a>
+
+        <!-- 3: Enquiries -->
+        <a class="flex flex-col items-center justify-center text-slate-500 hover:text-slate-800 transition group py-1" href="dealer-enquiries.html">
+          <svg class="w-6 h-6 stroke-[1.8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+          <span class="text-[10px] font-medium tracking-tight mt-0.5">Enquiries</span>
+        </a>
+
+        <!-- 4: More / Profile (Active) -->
+        <a class="flex flex-col items-center justify-center text-[#f9570c] group relative py-1" href="dealer-profile.html">
+          <svg class="w-6 h-6 stroke-[2]" fill="currentColor" viewBox="0 0 24 24">
+            <circle cx="5" cy="12" r="1.75"></circle>
+            <circle cx="12" cy="12" r="1.75"></circle>
+            <circle cx="19" cy="12" r="1.75"></circle>
+          </svg>
+          <span class="text-[10px] font-bold tracking-tight mt-0.5">More</span>
+          <span class="w-12 h-0.5 bg-[#f9570c] rounded-full absolute -bottom-1"></span>
+        </a>
+      </div>
+    </nav>
+    <!-- END: BottomNavigation -->
+
+  </div>
+
+  <!-- Toast Notification element -->
+  <div id="toast" class="fixed top-5 z-50 transition-all duration-300 opacity-0 -translate-y-4 pointer-events-none bg-slate-900 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-xl flex items-center space-x-2 border border-slate-700">
+    <span id="toast-icon">✓</span>
+    <span id="toast-msg">Updated</span>
+  </div>
+
+  <script>
+    function showToast(msg, icon = '✓') {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toast-msg');
+      const toastIcon = document.getElementById('toast-icon');
+      if (!toast) return;
+      toastMsg.innerText = msg;
+      toastIcon.innerText = icon;
+      toast.classList.remove('opacity-0', '-translate-y-4', 'pointer-events-none');
+      toast.classList.add('opacity-100', 'translate-y-0');
+      setTimeout(() => {
+        toast.classList.add('opacity-0', '-translate-y-4', 'pointer-events-none');
+        toast.classList.remove('opacity-100', 'translate-y-0');
+      }, 2500);
+    }
+
+    function logoutDealer() {
+      showToast('Logging out of Dealer Portal...', '🔒');
+      setTimeout(() => {
+        window.location.href = 'auth.html';
+      }, 800);
+    }
+  </script>
+
+  <script id="esston-global-navigation">
+  (function(){
+   const R={home:'customer-home.html',dashboard:'dealer-dashboard.html',products:'products.html',catalogue:'catalogue.html',dealerproducts:'dealer-catalogue.html',details:'product-details.html',starter:'my-starter.html',control:'motor-control.html',schedule:'schedule.html',faq:'help-faq.html',enquiry:'contact-enquiry.html',auth:'auth.html',splash:'splash.html',otp:'dealer-otp.html',dealerEnquiries:'dealer-enquiries.html',profile:'profile.html',dealerProfile:'dealer-profile.html'};
+   const p=(location.pathname.split('/').pop()||'index.html').toLowerCase();
+   const isDealer=/dealer-dashboard|dealer-catalogue|dealer-enquiries|dealer-profile|dealer-otp/.test(p);
+   const go=(key)=>{if(R[key]) location.href=R[key];};
+   const txt=e=>(e.innerText||e.textContent||'').replace(/\s+/g,' ').trim().toLowerCase();
+   document.addEventListener('click',function(ev){
+     const el=ev.target.closest('a,button,[role="button"]'); if(!el) return;
+     const t=txt(el); const page=p;
+     if(/^(profile|settings|more)$/.test(t) || t.includes('my profile') || t.includes('aditya traders')){ev.preventDefault();go(isDealer?'dealerProfile':'profile');return;}
+     if(/^(home|dashboard)$/.test(t) || t.startsWith('home ')){ev.preventDefault();go(isDealer?'dashboard':'home');return;}
+     if(t==='products' || t.includes('browse products') || t.includes('view products') || t==='all products' || t==='product catalogue'){ev.preventDefault();go(isDealer?'dealerproducts':'products');return;}
+     if(t==='enquiry' || t==='enquiries' || t.includes('my enquiries') || t.includes('recent enquiries') || t.includes('view all enquiries')){ev.preventDefault();go(isDealer?'dealerEnquiries':'enquiry');return;}
+   },true);
+  })();
+  </script>
+</body>
+</html>

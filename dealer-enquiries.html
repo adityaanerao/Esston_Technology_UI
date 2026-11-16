@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full w-full bg-[#0b1118]">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dealer Enquiries | Esston Technology</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              orange: '#f9570c',
+              dark: '#071322',
+              navy: '#092140',
+              accent: '#ffefe5'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .tap-effect:active {
+      transform: scale(0.97);
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="h-screen w-screen text-slate-800 antialiased font-sans flex flex-col justify-center items-center p-0 m-0 bg-[#0b1118] overflow-hidden">
+  <!-- Mobile Container Wrapper -->
+  <div class="w-full max-w-[430px] h-full h-screen bg-[#F8FAFC] shadow-2xl flex flex-col overflow-hidden relative border-x border-slate-700/50">
+
+    <!-- BEGIN: TopBrandHeader (HOME SCREEN MATCH) -->
+    <header class="sticky top-0 z-40 px-5 pt-2 pb-3.5 flex items-center justify-between bg-white border-b border-slate-100 shadow-xs" data-purpose="app-top-header">
+      <!-- Esston Technology Logo -->
+      <a aria-label="Esston Technology Home" class="flex flex-col items-start select-none group" href="dealer-dashboard.html">
+        <div class="flex items-center space-x-1">
+          <!-- Stylized ET Logo Mark -->
+          <div class="relative w-11 h-7 flex items-center justify-center">
+            <svg class="w-full h-full" fill="none" viewBox="0 0 64 36">
+              <!-- Orange 'E' & Upper Slant Arrow -->
+              <path d="M4 4H32L24 16H8L4 22H28L20 34H0L4 4Z" fill="#F9570C"></path>
+              <!-- Navy 'T' Bar & Directional Head -->
+              <path d="M22 4H56L62 4L54 16H36V34H26V4Z" fill="#092140"></path>
+              <!-- Arrow accent line -->
+              <path d="M50 0L64 0L58 10L50 0Z" fill="#F9570C"></path>
+            </svg>
+          </div>
+        </div>
+        <span class="text-[10px] font-extrabold tracking-tight text-slate-800 uppercase pl-0.5">Esston Technology®</span>
+      </a>
+
+      <!-- Right Action Items: Notifications & User Profile Capsule -->
+      <div class="flex items-center space-x-3">
+        <!-- Notification Bell Button with Red Alert Badge -->
+        <button aria-label="Notifications" class="relative w-10 h-10 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-700 shadow-sm tap-effect">
+          <svg class="w-5 h-5 text-slate-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+          <!-- Notification Active Dot Indicator -->
+          <span class="absolute top-2 right-2.5 w-2.5 h-2.5 bg-red-500 rounded-full ring-2 ring-white"></span>
+        </button>
+
+        <!-- User Profile Pill -> Links to Dealer Profile -->
+        <a href="dealer-profile.html" class="flex items-center pl-1 pr-3 py-1 bg-slate-50 hover:bg-orange-50/80 border border-slate-100 hover:border-orange-200 rounded-full shadow-sm space-x-2 tap-effect cursor-pointer block text-inherit transition-colors">
+          <!-- Profile Avatar -->
+          <div class="w-7 h-7 rounded-full bg-[#111A2E] text-white flex items-center justify-center font-bold text-xs shadow-sm border border-orange-200">A</div>
+          <!-- User Details & Role Dropdown -->
+          <div class="flex flex-col text-left">
+            <div class="flex items-center space-x-1">
+              <span class="text-xs font-bold text-slate-800 leading-tight">Aditya Traders</span>
+            </div>
+            <div class="flex items-center space-x-0.5 text-[10.5px] font-medium text-slate-500 leading-none">
+              <span class="text-brand-orange font-bold">Dealer</span>
+              <svg class="w-2.5 h-2.5 text-slate-400" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </div>
+          </div>
+        </a>
+      </div>
+    </header>
+    <!-- END: TopBrandHeader -->
+
+    <!-- Main Content Area -->
+    <main class="flex-1 overflow-y-auto no-scrollbar px-5 py-4 pb-24">
+      <!-- Title & Subtitle -->
+      <div class="mb-4">
+        <span class="text-[10px] font-bold tracking-widest text-[#f9570c] uppercase">Dealer Portal</span>
+        <h1 class="text-xl font-black text-slate-900 tracking-tight">My Enquiries</h1>
+        <p class="text-xs text-slate-500 mt-0.5">Review customer product enquiries and follow up with your Esston team.</p>
+      </div>
+
+      <!-- Search Input -->
+      <div class="relative mb-3.5">
+        <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="M21 21l-4.35-4.35"></path>
+        </svg>
+        <input id="search" type="text" placeholder="Search enquiries, products, ID..." class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#f9570c] focus:bg-white transition-all">
+      </div>
+
+      <!-- Filter Tabs -->
+      <div class="flex items-center gap-1.5 overflow-x-auto pb-2 scrollbar-none mb-3.5">
+        <button data-filter="all" class="filter-btn active px-3.5 py-1.5 rounded-full text-xs font-bold transition-all bg-slate-900 text-white shadow-xs">All</button>
+        <button data-filter="New" class="filter-btn px-3 py-1.5 rounded-full text-xs font-medium transition-all bg-slate-100 text-slate-600 hover:bg-slate-200">New</button>
+        <button data-filter="In Progress" class="filter-btn px-3 py-1.5 rounded-full text-xs font-medium transition-all bg-slate-100 text-slate-600 hover:bg-slate-200">In Progress</button>
+        <button data-filter="Quoted" class="filter-btn px-3 py-1.5 rounded-full text-xs font-medium transition-all bg-slate-100 text-slate-600 hover:bg-slate-200">Quoted</button>
+        <button data-filter="Closed" class="filter-btn px-3 py-1.5 rounded-full text-xs font-medium transition-all bg-slate-100 text-slate-600 hover:bg-slate-200">Closed</button>
+      </div>
+
+      <!-- Enquiries List -->
+      <section id="list" class="space-y-3">
+        <!-- Item 1 -->
+        <article class="item bg-white border border-slate-200/90 rounded-2xl p-4 shadow-xs hover:border-orange-300 transition-all" data-status="New">
+          <div class="flex items-start justify-between gap-3 mb-2">
+            <div>
+              <h3 class="text-sm font-bold text-slate-900 leading-snug">GSM Motor Starter (1 Phase)</h3>
+              <div class="text-[11px] font-medium text-slate-500 mt-0.5">ENQ-1024 · 18 Oct 2026</div>
+            </div>
+            <span class="text-[10px] font-bold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200/60 whitespace-nowrap">New</span>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed mb-3">Request for dealer bulk pricing and regional availability timeline.</p>
+          <div class="flex items-center justify-between pt-2 border-t border-slate-100">
+            <span class="text-[11px] font-semibold text-slate-700">Aditya Traders · Pune</span>
+            <button onclick="openEnquiryModal('ENQ-1024', 'GSM Motor Starter (1 Phase)', 'Aditya Traders · Pune', 'Request for dealer bulk pricing and regional availability timeline.', '₹3,450/u', '25 Units', 'New', '+91 98220 12345')" class="text-xs font-bold text-[#f9570c] hover:underline flex items-center space-x-1 cursor-pointer">
+              <span>View Details</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"></path></svg>
+            </button>
+          </div>
+        </article>
+
+        <!-- Item 2 -->
+        <article class="item bg-white border border-slate-200/90 rounded-2xl p-4 shadow-xs hover:border-orange-300 transition-all" data-status="In Progress">
+          <div class="flex items-start justify-between gap-3 mb-2">
+            <div>
+              <h3 class="text-sm font-bold text-slate-900 leading-snug">GSM Motor Starter (3 Phase)</h3>
+              <div class="text-[11px] font-medium text-slate-500 mt-0.5">ENQ-1021 · 17 Oct 2026</div>
+            </div>
+            <span class="text-[10px] font-bold px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200/60 whitespace-nowrap">In Progress</span>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed mb-3">Technical specifications, warranty terms, and batch delivery requested.</p>
+          <div class="flex items-center justify-between pt-2 border-t border-slate-100">
+            <span class="text-[11px] font-semibold text-slate-700">Kisan Agro Spares</span>
+            <button onclick="openEnquiryModal('ENQ-1021', 'GSM Motor Starter (3 Phase)', 'Kisan Agro Spares · Solapur', 'Technical specifications, warranty terms, and batch delivery requested.', '₹4,950/u', '15 Units', 'In Progress', '+91 98555 43210')" class="text-xs font-bold text-[#f9570c] hover:underline flex items-center space-x-1 cursor-pointer">
+              <span>View Details</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"></path></svg>
+            </button>
+          </div>
+        </article>
+
+        <!-- Item 3 -->
+        <article class="item bg-white border border-slate-200/90 rounded-2xl p-4 shadow-xs hover:border-orange-300 transition-all" data-status="Quoted">
+          <div class="flex items-start justify-between gap-3 mb-2">
+            <div>
+              <h3 class="text-sm font-bold text-slate-900 leading-snug">Solar Motor Starter 7.5 HP</h3>
+              <div class="text-[11px] font-medium text-slate-500 mt-0.5">ENQ-1018 · 16 Oct 2026</div>
+            </div>
+            <span class="text-[10px] font-bold px-2.5 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-200/60 whitespace-nowrap">Quoted</span>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed mb-3">Official quote submitted by the Esston sales desk. Pending customer approval.</p>
+          <div class="flex items-center justify-between pt-2 border-t border-slate-100">
+            <span class="text-[11px] font-semibold text-slate-700">GreenField Solar</span>
+            <button onclick="openEnquiryModal('ENQ-1018', 'Solar Motor Starter 7.5 HP', 'GreenField Solar · Nashik', 'Official quote submitted by the Esston sales desk. Pending customer approval.', '₹5,800/u', '10 Units', 'Quoted', '+91 94222 98765')" class="text-xs font-bold text-[#f9570c] hover:underline flex items-center space-x-1 cursor-pointer">
+              <span>View Details</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"></path></svg>
+            </button>
+          </div>
+        </article>
+
+        <!-- Item 4 -->
+        <article class="item bg-white border border-slate-200/90 rounded-2xl p-4 shadow-xs hover:border-orange-300 transition-all" data-status="Closed">
+          <div class="flex items-start justify-between gap-3 mb-2">
+            <div>
+              <h3 class="text-sm font-bold text-slate-900 leading-snug">Automated Control Panel Unit</h3>
+              <div class="text-[11px] font-medium text-slate-500 mt-0.5">ENQ-1009 · 14 Oct 2026</div>
+            </div>
+            <span class="text-[10px] font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 border border-slate-200 whitespace-nowrap">Closed</span>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed mb-3">Enquiry completed and dispatched to customer with confirmation invoice.</p>
+          <div class="flex items-center justify-between pt-2 border-t border-slate-100">
+            <span class="text-[11px] font-semibold text-slate-700">Swastik Electricals</span>
+            <button onclick="openEnquiryModal('ENQ-1009', 'Automated Control Panel Unit', 'Swastik Electricals · Pune', 'Enquiry completed and dispatched to customer with confirmation invoice.', '₹12,500/u', '5 Units', 'Closed', '+91 91300 45678')" class="text-xs font-bold text-[#f9570c] hover:underline flex items-center space-x-1 cursor-pointer">
+              <span>View Details</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"></path></svg>
+            </button>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <!-- BEGIN: BottomNavigation (SYNCHRONIZED DEALER PORTAL TABS) -->
+    <nav class="fixed md:absolute bottom-0 left-0 right-0 max-w-[430px] mx-auto bg-white/95 backdrop-blur-md border-t border-slate-200 z-50 px-2 py-2" data-purpose="persistent-bottom-tab-bar">
+      <div class="grid grid-cols-4 items-center text-center">
+        <!-- 1: Dashboard -->
+        <a class="flex flex-col items-center justify-center text-slate-500 hover:text-slate-800 transition group py-1" href="dealer-dashboard.html">
+          <svg class="w-6 h-6 stroke-[1.8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z"></path>
+            <path d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z"></path>
+          </svg>
+          <span class="text-[10px] font-medium tracking-tight mt-0.5">Dashboard</span>
+        </a>
+
+        <!-- 2: Products -->
+        <a class="flex flex-col items-center justify-center text-slate-500 hover:text-slate-800 transition group py-1" href="dealer-catalogue.html">
+          <svg class="w-6 h-6 stroke-[1.8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+          <span class="text-[10px] font-medium tracking-tight mt-0.5">Products</span>
+        </a>
+
+        <!-- 3: Enquiries (Active) -->
+        <a class="flex flex-col items-center justify-center text-[#f9570c] group relative py-1" href="dealer-enquiries.html">
+          <svg class="w-6 h-6 stroke-[2.2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+          <span class="text-[10px] font-bold tracking-tight mt-0.5">Enquiries</span>
+          <span class="w-12 h-0.5 bg-[#f9570c] rounded-full absolute -bottom-1"></span>
+        </a>
+
+        <!-- 4: More / Profile -->
+        <a class="flex flex-col items-center justify-center text-slate-500 hover:text-slate-800 transition group py-1" href="dealer-profile.html">
+          <svg class="w-6 h-6 stroke-[2]" fill="currentColor" viewBox="0 0 24 24">
+            <circle cx="5" cy="12" r="1.75"></circle>
+            <circle cx="12" cy="12" r="1.75"></circle>
+            <circle cx="19" cy="12" r="1.75"></circle>
+          </svg>
+          <span class="text-[10px] font-medium tracking-tight mt-0.5">More</span>
+        </a>
+      </div>
+    </nav>
+    <!-- END: BottomNavigation -->
+
+  </div>
+
+  <script>
+    let filter = 'all';
+    const cards = [...document.querySelectorAll('.item')];
+    function apply() {
+      const q = document.getElementById('search').value.toLowerCase();
+      cards.forEach(c => {
+        const matchesFilter = (filter === 'all' || c.dataset.status === filter);
+        const matchesQuery = c.innerText.toLowerCase().includes(q);
+        c.hidden = !(matchesFilter && matchesQuery);
+      });
+    }
+    document.querySelectorAll('[data-filter]').forEach(b => {
+      b.onclick = () => {
+        filter = b.dataset.filter;
+        document.querySelectorAll('[data-filter]').forEach(x => {
+          if (x === b) {
+            x.className = 'filter-btn active px-3.5 py-1.5 rounded-full text-xs font-bold transition-all bg-slate-900 text-white shadow-xs';
+          } else {
+            x.className = 'filter-btn px-3 py-1.5 rounded-full text-xs font-medium transition-all bg-slate-100 text-slate-600 hover:bg-slate-200';
+          }
+        });
+        apply();
+      };
+    });
+    document.getElementById('search').oninput = apply;
+
+    function openEnquiryModal(id, title, party, notes, price, qty, status, phone) {
+      document.getElementById('modal-enq-id').innerText = id;
+      document.getElementById('modal-enq-title').innerText = title;
+      document.getElementById('modal-enq-party').innerText = party;
+      document.getElementById('modal-enq-notes').innerText = notes;
+      document.getElementById('modal-enq-price').innerText = price;
+      document.getElementById('modal-enq-qty').innerText = qty;
+      document.getElementById('modal-enq-status').innerText = status;
+      document.getElementById('modal-enq-phone').href = 'tel:' + phone.replace(/\s+/g, '');
+      document.getElementById('modal-enq-wa').href = `https://wa.me/${phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hello from Aditya Traders (Esston Dealer) regarding ' + id + ': ' + title)}`;
+      document.getElementById('modal-enquiry-detail').classList.remove('hidden');
+    }
+
+    function closeEnquiryModal() {
+      document.getElementById('modal-enquiry-detail').classList.add('hidden');
+    }
+
+    function showToast(msg, icon = '✓') {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toast-msg');
+      const toastIcon = document.getElementById('toast-icon');
+      if (!toast) return;
+      toastMsg.innerText = msg;
+      toastIcon.innerText = icon;
+      toast.classList.remove('opacity-0', '-translate-y-4', 'pointer-events-none');
+      toast.classList.add('opacity-100', 'translate-y-0');
+      setTimeout(() => {
+        toast.classList.add('opacity-0', '-translate-y-4', 'pointer-events-none');
+        toast.classList.remove('opacity-100', 'translate-y-0');
+      }, 2500);
+    }
+  </script>
+
+  <!-- ==================== DEALER ENQUIRY DETAILS MODAL ==================== -->
+  <div id="modal-enquiry-detail" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-end justify-center hidden">
+    <div class="w-full max-w-[430px] bg-white rounded-t-3xl p-5 space-y-4 max-h-[85vh] overflow-y-auto no-scrollbar shadow-2xl animate-fade-in">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+        <div>
+          <span id="modal-enq-id" class="text-[10px] font-black uppercase tracking-wider text-brand-orange bg-orange-50 px-2 py-0.5 rounded border border-orange-200/50">ENQ-1024</span>
+          <h3 id="modal-enq-title" class="text-sm font-black text-slate-900 mt-1">GSM Motor Starter (1 Phase)</h3>
+        </div>
+        <button onclick="closeEnquiryModal()" class="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-slate-200 cursor-pointer">
+          ✕
+        </button>
+      </div>
+
+      <div class="space-y-2.5 text-xs">
+        <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100 space-y-1.5">
+          <div class="flex items-center justify-between">
+            <span class="text-slate-500 font-medium text-[11px]">Party / Customer:</span>
+            <span id="modal-enq-party" class="font-bold text-slate-900 text-[11px]">Aditya Traders · Pune</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-slate-500 font-medium text-[11px]">Wholesale Rate:</span>
+            <span id="modal-enq-price" class="font-extrabold text-emerald-600 font-mono text-[11px]">₹3,450/u</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-slate-500 font-medium text-[11px]">Batch Quantity:</span>
+            <span id="modal-enq-qty" class="font-bold text-slate-800 text-[11px]">25 Units</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-slate-500 font-medium text-[11px]">RFQ Status:</span>
+            <span id="modal-enq-status" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">New</span>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 text-[11px] mb-1">Enquiry Remarks &amp; Specs</label>
+          <p id="modal-enq-notes" class="p-3 bg-slate-50 rounded-xl text-slate-600 text-[11px] leading-relaxed border border-slate-100">
+            Request for dealer bulk pricing and regional availability timeline.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2 pt-1">
+        <a id="modal-enq-phone" href="tel:+919822012345" class="py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-1.5 tap-effect cursor-pointer">
+          <span>📞 Call Client</span>
+        </a>
+        <a id="modal-enq-wa" href="https://wa.me/919822012345" target="_blank" class="py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-1.5 tap-effect cursor-pointer">
+          <span>💬 WhatsApp</span>
+        </a>
+      </div>
+
+      <button onclick="showToast('Quotation PDF generated for dealer records', '📄'); closeEnquiryModal();" class="w-full py-2.5 bg-brand-orange hover:bg-orange-600 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 tap-effect cursor-pointer">
+        <span>Download Official B2B Quote PDF</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Toast Notification element -->
+  <div id="toast" class="fixed top-5 z-50 transition-all duration-300 opacity-0 -translate-y-4 pointer-events-none bg-slate-900 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-xl flex items-center space-x-2 border border-slate-700">
+    <span id="toast-icon">✓</span>
+    <span id="toast-msg">Updated</span>
+  </div>
+  <script id="esston-global-navigation">
+  (function(){
+   const R={
+     home:'customer-home.html',
+     dashboard:'dealer-dashboard.html',
+     products:'products.html',
+     catalogue:'catalogue.html',
+     dealerproducts:'dealer-catalogue.html',
+     details:'product-details.html',
+     starter:'my-starter.html',
+     control:'motor-control.html',
+     schedule:'schedule.html',
+     faq:'help-faq.html',
+     enquiry:'contact-enquiry.html',
+     auth:'auth.html',
+     splash:'splash.html',
+     otp:'dealer-otp.html',
+     dealerEnquiries:'dealer-enquiries.html',
+     profile:'profile.html',
+     dealerProfile:'dealer-profile.html'
+   };
+   const p=(location.pathname.split('/').pop()||'index.html').toLowerCase();
+   const isDealer=/dealer-dashboard|dealer-catalogue|dealer-enquiries|dealer-profile|dealer-otp/.test(p);
+   const go=(key)=>{if(R[key]) location.href=R[key];};
+   const txt=e=>(e.innerText||e.textContent||'').replace(/\s+/g,' ').trim().toLowerCase();
+   document.addEventListener('click',function(ev){
+     const el=ev.target.closest('a,button,[role="button"]'); if(!el) return;
+     const t=txt(el); const page=p;
+     if(/^(profile|settings|more)$/.test(t) || t.includes('my profile') || t.includes('aditya traders')){ev.preventDefault();go(isDealer?'dealerProfile':'profile');return;}
+     if(/^(home|dashboard)$/.test(t) || t.startsWith('home ')){ev.preventDefault();go(isDealer?'dashboard':'home');return;}
+     if(t==='products' || t.includes('browse products') || t.includes('view products') || t==='all products' || t==='product catalogue'){ev.preventDefault();go(isDealer?'dealerproducts':'products');return;}
+     if(t==='enquiry' || t==='enquiries' || t.includes('my enquiries') || t.includes('recent enquiries') || t.includes('view all enquiries')){ev.preventDefault();go(isDealer?'dealerEnquiries':'enquiry');return;}
+   },true);
+  })();
+  </script>
+</body>
+</html>

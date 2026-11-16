@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full w-full bg-[#0b1118]">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport">
+<title>Login - Esston Technology</title>
+<!-- Google Fonts: Plus Jakarta Sans -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<!-- FontAwesome 6.5.1 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<!-- Tailwind CSS v3 with Forms & Container Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              orange: '#F97316',
+              'orange-dark': '#EA580C',
+              'orange-light': '#FFF7ED',
+              navy: '#0B192C',
+              'navy-dark': '#071827',
+              'navy-light': '#1E3E62'
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif']
+          },
+          boxShadow: {
+            'card-soft': '0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 2px 8px -1px rgba(15, 23, 42, 0.04)',
+            'floating-sheet': '0 -10px 30px -4px rgba(15, 23, 42, 0.08)'
+          }
+        }
+      }
+    }
+</script>
+<style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      min-height: 100%;
+      background-color: #F1F5F9;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .custom-checkbox:checked {
+      background-color: #F97316;
+      border-color: #F97316;
+    }
+
+    .tap-effect {
+      transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.15s ease;
+    }
+    .tap-effect:active {
+      transform: scale(0.97);
+      opacity: 0.92;
+    }
+
+    /* Animated view transition */
+    .fade-in {
+      animation: fadeIn 0.25s ease-out forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+</head>
+<body class="bg-[#0b1118] text-slate-900 select-none antialiased min-h-screen h-screen w-screen flex flex-col justify-center items-center p-0 m-0 overflow-hidden">
+
+<!-- Single Mobile App Frame (Straight Edges, No Round Border) -->
+<div class="w-full max-w-[430px] min-h-screen h-screen bg-white shadow-2xl flex flex-col justify-between overflow-y-auto relative border-x border-slate-700/50">
+
+  <!-- Top Content Area -->
+  <div class="flex-1 flex flex-col">
+    <!-- Top Header & Brand Identity -->
+    <header class="px-6 pt-6 pb-2 flex flex-col items-center text-center">
+      <div class="flex items-center space-x-2.5 mb-2">
+        <div class="w-9 h-9 rounded-xl bg-slate-900 flex items-center justify-center shadow-md">
+          <span class="text-brand-orange font-black text-lg">ET</span>
+        </div>
+        <div class="text-left">
+          <h1 class="text-[16px] font-extrabold text-slate-900 leading-tight">Esston Technology</h1>
+          <p class="text-[10px] text-slate-400 font-bold tracking-wider uppercase">Smart Motor Control</p>
+        </div>
+      </div>
+      <h2 id="screen-heading" class="text-2xl font-black text-slate-900 tracking-tight">Select Your Role</h2>
+      <p id="screen-subheading" class="text-xs text-slate-500 mt-0.5 font-medium">Choose how you want to continue</p>
+    </header>
+
+    <!-- Hero Illustration with Live Dynamic Status Pill -->
+    <div class="px-6 pt-1 pb-3 flex justify-center">
+      <div class="w-full max-w-[380px] h-[145px] rounded-2xl overflow-hidden bg-slate-900 border border-slate-100 shadow-sm relative flex items-center justify-center group">
+        <img id="hero-image" alt="Esston smart technology hero" class="w-full h-full object-cover object-center brightness-95 transition-all duration-300" src="farmer_motor_hero.png">
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-black/20"></div>
+        <div class="absolute bottom-2.5 left-3 right-3 flex items-center justify-between text-white text-[11px]">
+          <span id="hero-status-pill" class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 font-semibold">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            <span id="hero-status-text">GSM IoT Connected</span>
+          </span>
+          <span id="hero-badge-text" class="text-[10px] font-medium text-slate-200">2.4GHz Smart Starter</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- VIEW 1: ROLE SELECTION (SHOWS ONLY THE 2 BUTTONS INITIALLY)   -->
+    <!-- ============================================================= -->
+    <div id="section-role-selection" class="px-6 pt-2 pb-6 space-y-4 fade-in">
+      <div class="text-center py-1">
+        <span class="text-[11px] font-extrabold uppercase tracking-widest text-orange-600 bg-orange-50 px-3 py-1 rounded-full border border-orange-100">
+          Sign In Options
+        </span>
+        <p class="text-xs text-slate-600 mt-2 font-medium">Please select your role to reveal your login credentials:</p>
+      </div>
+
+      <!-- BUTTON 1: CONSUMER (Reveals Consumer Login Form) -->
+      <button id="btn-select-consumer" onclick="showLoginForm('consumer')" type="button" class="w-full p-4 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white font-bold flex items-center justify-between shadow-lg shadow-emerald-700/20 active:scale-[0.98] transition-all tap-effect group text-left cursor-pointer border border-emerald-500/30">
+        <div class="flex items-center gap-3.5">
+          <div class="w-12 h-12 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center text-white text-xl shadow-inner">
+            <i class="fa-solid fa-tractor"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-base font-extrabold tracking-tight">Continue as Consumer</span>
+              <span class="text-[9px] font-black uppercase tracking-wider bg-white/25 px-2 py-0.5 rounded-md text-white">Farmer</span>
+            </div>
+            <p class="text-[11.5px] font-medium text-emerald-100 opacity-90 leading-tight mt-1">
+              Smart Motor IoT, Starters &amp; Auto Schedules
+            </p>
+          </div>
+        </div>
+        <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white text-xs group-hover:translate-x-1 transition-transform">
+          <i class="fa-solid fa-chevron-right"></i>
+        </div>
+      </button>
+
+      <!-- BUTTON 2: DEALER (Reveals Dealer Login Form) -->
+      <button id="btn-select-dealer" onclick="showLoginForm('dealer')" type="button" class="w-full p-4 rounded-2xl bg-gradient-to-r from-slate-900 via-[#10213c] to-slate-900 hover:from-slate-800 hover:to-[#162c50] text-white font-bold flex items-center justify-between shadow-lg shadow-slate-900/25 active:scale-[0.98] transition-all tap-effect group text-left cursor-pointer border border-slate-700/40">
+        <div class="flex items-center gap-3.5">
+          <div class="w-12 h-12 rounded-xl bg-orange-500/20 border border-orange-500/30 flex items-center justify-center text-orange-400 text-xl shadow-inner">
+            <i class="fa-solid fa-store"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-base font-extrabold tracking-tight">Continue as Dealer</span>
+              <span class="text-[9px] font-black uppercase tracking-wider bg-orange-500 text-white px-2 py-0.5 rounded-md">B2B Trade</span>
+            </div>
+            <p class="text-[11.5px] font-medium text-slate-300 opacity-90 leading-tight mt-1">
+              Wholesale Pricing, GSTIN &amp; Admin OTP Login
+            </p>
+          </div>
+        </div>
+        <div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-orange-400 text-xs group-hover:translate-x-1 transition-transform">
+          <i class="fa-solid fa-chevron-right"></i>
+        </div>
+      </button>
+
+      <!-- Explanatory note -->
+      <div class="text-center pt-2">
+        <p class="text-[11px] text-slate-400 font-medium">
+          Selecting a role will open your secure login screen
+        </p>
+      </div>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- VIEW 2: LOGIN FORM (CONSUMER OR DEALER WITH CUSTOM FIELDS)    -->
+    <!-- ============================================================= -->
+    <div id="section-login-form" class="hidden px-6 pt-1 pb-4 flex-1 flex flex-col justify-between fade-in">
+      
+      <!-- Top Action: Back to Role Selector & Active Role Indicator -->
+      <div class="flex items-center justify-between mb-2 pt-1">
+        <button onclick="showRoleSelection()" type="button" class="inline-flex items-center gap-1.5 text-xs font-bold text-slate-600 hover:text-slate-900 px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 transition-all cursor-pointer tap-effect">
+          <i class="fa-solid fa-arrow-left text-[10px]"></i>
+          <span>Change Role</span>
+        </button>
+
+        <span id="active-role-badge" class="text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
+          Consumer Login
+        </span>
+      </div>
+
+      <!-- Quick Role Toggle Tabs inside Form -->
+      <div class="grid grid-cols-2 p-1 bg-slate-100 rounded-xl mb-3 border border-slate-200/80">
+        <button type="button" id="tab-consumer" onclick="showLoginForm('consumer')" class="py-1.5 text-xs font-bold rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1.5 bg-white text-emerald-700 shadow-xs">
+          <i class="fa-solid fa-tractor text-[11px]"></i>
+          <span>Consumer</span>
+        </button>
+        <button type="button" id="tab-dealer" onclick="showLoginForm('dealer')" class="py-1.5 text-xs font-bold rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900">
+          <i class="fa-solid fa-store text-[11px]"></i>
+          <span>Dealer (GSTIN)</span>
+        </button>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- OPTION A: CONSUMER LOGIN FORM (MOBILE+PWD) -->
+      <!-- ========================================== -->
+      <form id="form-consumer" class="space-y-3" onsubmit="event.preventDefault(); loginConsumerSubmit();">
+        <!-- Field 1: Mobile Number -->
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1" for="userMobile">Mobile Number</label>
+          <div class="relative rounded-xl border border-slate-200 bg-white focus-within:border-brand-orange focus-within:ring-2 focus-within:ring-brand-orange/20 flex items-center transition-all px-3 py-2.5">
+            <span class="text-slate-400 mr-2.5 text-xs">
+              <i class="fa-solid fa-mobile-screen"></i>
+            </span>
+            <input class="w-full bg-transparent border-0 p-0 text-sm text-slate-800 placeholder-slate-400 focus:ring-0 outline-none font-medium" id="userMobile" placeholder="Enter your mobile number" type="tel" value="9876543210" required>
+          </div>
+        </div>
+
+        <!-- Field 2: Password -->
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1" for="userPassword">Password</label>
+          <div class="relative rounded-xl border border-slate-200 bg-white focus-within:border-brand-orange focus-within:ring-2 focus-within:ring-brand-orange/20 flex items-center justify-between transition-all px-3 py-2.5">
+            <div class="flex items-center flex-1 mr-2">
+              <span class="text-slate-400 mr-2.5 text-xs">
+                <i class="fa-solid fa-lock"></i>
+              </span>
+              <input class="w-full bg-transparent border-0 p-0 text-sm text-slate-800 placeholder-slate-400 focus:ring-0 outline-none" id="userPassword" placeholder="Enter your password" type="password" value="••••••••" required>
+            </div>
+            <button class="text-slate-400 hover:text-slate-600 focus:outline-none cursor-pointer" onclick="togglePass('userPassword', this)" type="button" aria-label="Toggle password visibility">
+              <i class="fa-regular fa-eye text-xs"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Utilities: Remember Me & Forgot Password -->
+        <div class="flex items-center justify-between text-xs pt-0.5">
+          <label class="flex items-center space-x-2 text-slate-700 font-medium cursor-pointer">
+            <input checked="" class="w-4 h-4 rounded text-brand-orange border-slate-300 focus:ring-brand-orange custom-checkbox cursor-pointer" type="checkbox">
+            <span class="text-[11px]">Remember me</span>
+          </label>
+          <a class="font-semibold text-brand-orange hover:underline cursor-pointer text-[11px]" href="#" onclick="alert('Password reset instructions will be sent to your registered mobile number.'); return false;">Forgot Password?</a>
+        </div>
+
+        <!-- Primary Form Submit Button -->
+        <button id="btn-consumer-submit" onclick="loginConsumerSubmit()" class="w-full mt-2 py-3.5 bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white font-bold rounded-xl flex items-center justify-center gap-2 shadow-md shadow-emerald-700/25 active:scale-[0.98] transition-all cursor-pointer text-xs uppercase tracking-wide tap-effect" type="button">
+          <span>Login to Consumer Dashboard</span>
+          <i class="fa-solid fa-arrow-right text-[11px]"></i>
+        </button>
+
+        <!-- Divider -->
+        <div class="relative flex items-center justify-center my-2">
+          <div class="border-t border-slate-200 w-full absolute"></div>
+          <span class="bg-white px-3 relative z-10 text-[10px] font-black tracking-widest text-slate-400 uppercase">
+            OR
+          </span>
+        </div>
+
+        <!-- Continue with Google Button -->
+        <button onclick="loginConsumerSubmit()" class="w-full py-2.5 px-4 border border-slate-200 rounded-xl flex items-center justify-center gap-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 active:scale-[0.99] transition-all cursor-pointer bg-white shadow-xs" type="button">
+          <svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24">
+            <path d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z" fill="#4285F4"></path>
+            <path d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z" fill="#34A853"></path>
+            <path d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 10.03 0 12s.45 3.82 1.25 5.42l4.03-3.15z" fill="#FBBC05"></path>
+            <path d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z" fill="#EA4335"></path>
+          </svg>
+          <span class="text-[11px]">Continue with Google</span>
+        </button>
+
+        <footer class="pt-2 text-center text-xs text-slate-500 font-medium">
+          <span class="text-[11px]">Don't have an account? </span>
+          <a class="font-bold text-brand-orange hover:underline cursor-pointer text-[11px]" href="#" onclick="loginConsumerSubmit()">Sign Up</a>
+        </footer>
+      </form>
+
+      <!-- ======================================================== -->
+      <!-- OPTION B: DEALER LOGIN FORM (GSTIN NO + ADMIN OTP FIELDS) -->
+      <!-- ======================================================== -->
+      <form id="form-dealer" class="hidden space-y-3" onsubmit="event.preventDefault(); loginDealerSubmit();">
+        
+        <!-- Field 1: GSTIN Number -->
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <label class="block text-xs font-bold text-slate-800" for="dealerGstin">
+              GSTIN Number <span class="text-red-500">*</span>
+            </label>
+            <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 flex items-center gap-1">
+              <i class="fa-solid fa-circle-check"></i>
+              <span>15-Digit Format</span>
+            </span>
+          </div>
+          <div class="relative rounded-xl border-2 border-slate-200 bg-white focus-within:border-brand-orange focus-within:ring-2 focus-within:ring-brand-orange/20 flex items-center transition-all px-3 py-2.5">
+            <span class="text-orange-600 mr-2.5 text-xs font-bold">
+              <i class="fa-solid fa-file-invoice"></i>
+            </span>
+            <input class="w-full bg-transparent border-0 p-0 text-sm font-mono font-bold tracking-wider text-slate-900 placeholder-slate-400 focus:ring-0 outline-none uppercase" 
+                   id="dealerGstin" 
+                   placeholder="Enter 15-digit GSTIN No." 
+                   type="text" 
+                   maxlength="15" 
+                   value="27AABCE8842F1Z9" 
+                   required>
+            <button type="button" onclick="document.getElementById('dealerGstin').value='27AABCE8842F1Z9'" title="Use demo GSTIN" class="text-[10px] text-slate-400 hover:text-orange-600 font-semibold ml-1 cursor-pointer">
+              Demo
+            </button>
+          </div>
+          <p class="text-[10.5px] text-slate-500 mt-1">Authorized dealer GSTIN for B2B wholesale pricing</p>
+        </div>
+
+        <!-- Compact Clean Admin OTP Info -->
+        <div class="rounded-xl bg-amber-50/80 border border-amber-200/90 p-2.5 shadow-2xs space-y-1.5">
+          <div class="flex items-center justify-between text-[11px]">
+            <span class="text-slate-700 flex items-center gap-1.5 font-medium">
+              <i class="fa-solid fa-shield-halved text-orange-600 text-xs"></i>
+              <span>OTP sent to <strong class="text-slate-900 font-bold">Super Admin</strong></span>
+            </span>
+            <a href="tel:+919822012345" class="font-mono text-[10.5px] font-bold text-slate-800 hover:text-orange-600">+91 98220 12345</a>
+          </div>
+          <div class="flex items-center gap-2 pt-0.5">
+            <a href="tel:+919822012345" class="flex-1 py-1.5 px-2 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-slate-800 text-[10.5px] font-bold flex items-center justify-center gap-1 tap-effect shadow-2xs transition-colors">
+              <i class="fa-solid fa-phone text-emerald-600 text-[9.5px]"></i>
+              <span>Call Admin</span>
+            </a>
+            <a href="https://wa.me/919822012345?text=Hello%20Esston%20Admin,%20please%20share%20Dealer%20Login%20OTP%20for%20GSTIN%2027AABCE8842F1Z9" target="_blank" class="flex-1 py-1.5 px-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-[10.5px] font-bold flex items-center justify-center gap-1 tap-effect shadow-2xs transition-colors">
+              <i class="fa-brands fa-whatsapp text-xs"></i>
+              <span>WhatsApp</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Field 2: OTP Input -->
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <label class="block text-xs font-bold text-slate-800">
+              Enter OTP (from Admin) <span class="text-red-500">*</span>
+            </label>
+            <button type="button" onclick="autofillDealerOtp('849201')" class="text-[10.5px] font-extrabold text-orange-600 hover:text-orange-700 hover:underline cursor-pointer flex items-center gap-1">
+              <i class="fa-solid fa-wand-magic-sparkles text-[10px]"></i>
+              <span>Auto-fill Demo (849201)</span>
+            </button>
+          </div>
+
+          <!-- 6 Individual Digit Inputs -->
+          <div class="flex justify-between gap-1.5 my-1" id="dealer-otp-inputs">
+            <input type="text" maxlength="1" inputmode="numeric" class="dealer-otp-digit w-11 h-12 text-center text-lg font-bold border-2 border-slate-200 rounded-xl focus:border-brand-orange focus:bg-orange-50/20 outline-none text-slate-900 transition-all" value="8">
+            <input type="text" maxlength="1" inputmode="numeric" class="dealer-otp-digit w-11 h-12 text-center text-lg font-bold border-2 border-slate-200 rounded-xl focus:border-brand-orange focus:bg-orange-50/20 outline-none text-slate-900 transition-all" value="4">
+            <input type="text" maxlength="1" inputmode="numeric" class="dealer-otp-digit w-11 h-12 text-center text-lg font-bold border-2 border-slate-200 rounded-xl focus:border-brand-orange focus:bg-orange-50/20 outline-none text-slate-900 transition-all" value="9">
+            <input type="text" maxlength="1" inputmode="numeric" class="dealer-otp-digit w-11 h-12 text-center text-lg font-bold border-2 border-slate-200 rounded-xl focus:border-brand-orange focus:bg-orange-50/20 outline-none text-slate-900 transition-all" value="2">
+            <input type="text" maxlength="1" inputmode="numeric" class="dealer-otp-digit w-11 h-12 text-center text-lg font-bold border-2 border-slate-200 rounded-xl focus:border-brand-orange focus:bg-orange-50/20 outline-none text-slate-900 transition-all" value="0">
+            <input type="text" maxlength="1" inputmode="numeric" class="dealer-otp-digit w-11 h-12 text-center text-lg font-bold border-2 border-slate-200 rounded-xl focus:border-brand-orange focus:bg-orange-50/20 outline-none text-slate-900 transition-all" value="1">
+          </div>
+          <div class="flex items-center justify-between text-[10.5px] text-slate-400 mt-1">
+            <span>Demo Super Admin OTP: <strong class="text-slate-700">849201</strong></span>
+            <span class="text-slate-400">Expires in 10 mins</span>
+          </div>
+        </div>
+
+        <!-- Primary Dealer Submit Button -->
+        <button id="btn-dealer-submit" onclick="loginDealerSubmit()" class="w-full mt-2 py-3.5 bg-gradient-to-r from-slate-900 via-[#10213c] to-slate-900 hover:from-slate-800 hover:to-[#162c50] text-white font-extrabold rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-slate-900/25 active:scale-[0.98] transition-all cursor-pointer text-xs uppercase tracking-wider tap-effect" type="button">
+          <i class="fa-solid fa-lock-open text-orange-400 text-xs"></i>
+          <span>Verify OTP &amp; Login to Dealer Dashboard</span>
+          <i class="fa-solid fa-arrow-right text-[11px] text-orange-400"></i>
+        </button>
+
+        <!-- Bottom Assistance Link -->
+        <footer class="pt-2 text-center text-xs text-slate-500 font-medium">
+          <span class="text-[11px]">Need dealer registration or support? </span>
+          <a class="font-bold text-brand-orange hover:underline cursor-pointer text-[11px]" href="tel:+919822012345">Contact Super Admin</a>
+        </footer>
+      </form>
+    </div>
+  </div>
+
+  <!-- Bottom App Brand Stamp -->
+  <div class="py-2.5 px-6 border-t border-slate-100 bg-slate-50/70 text-center text-[10px] text-slate-400 font-medium">
+    Esston Technology • Smart Motor Automation &amp; B2B Portal
+  </div>
+
+</div>
+
+<!-- Interactive Logic -->
+<script>
+  let activeRole = 'consumer';
+
+  // Function to show the login fields when Consumer or Dealer is selected
+  function showLoginForm(role) {
+    activeRole = role;
+    const sectionRole = document.getElementById('section-role-selection');
+    const sectionLogin = document.getElementById('section-login-form');
+    const heading = document.getElementById('screen-heading');
+    const subheading = document.getElementById('screen-subheading');
+    const roleBadge = document.getElementById('active-role-badge');
+    const formConsumer = document.getElementById('form-consumer');
+    const formDealer = document.getElementById('form-dealer');
+    const tabConsumer = document.getElementById('tab-consumer');
+    const tabDealer = document.getElementById('tab-dealer');
+    const heroImage = document.getElementById('hero-image');
+    const heroStatusText = document.getElementById('hero-status-text');
+    const heroBadgeText = document.getElementById('hero-badge-text');
+
+    // Switch view from role picker to login form
+    if (sectionRole) sectionRole.classList.add('hidden');
+    if (sectionLogin) sectionLogin.classList.remove('hidden');
+
+    if (role === 'consumer') {
+      if (heading) heading.innerText = "Consumer Sign In";
+      if (subheading) subheading.innerText = "Enter credentials to access Consumer Dashboard";
+      if (roleBadge) {
+        roleBadge.innerText = "Consumer Login";
+        roleBadge.className = "text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200";
+      }
+      if (formConsumer) formConsumer.classList.remove('hidden');
+      if (formDealer) formDealer.classList.add('hidden');
+
+      if (tabConsumer) {
+        tabConsumer.className = "py-1.5 text-xs font-bold rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1.5 bg-white text-emerald-700 shadow-xs";
+      }
+      if (tabDealer) {
+        tabDealer.className = "py-1.5 text-xs font-bold rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900";
+      }
+
+      if (heroImage) heroImage.src = 'farmer_motor_hero.png';
+      if (heroStatusText) heroStatusText.innerText = 'GSM IoT Connected';
+      if (heroBadgeText) heroBadgeText.innerText = '2.4GHz Smart Starter';
+    } else {
+      if (heading) heading.innerText = "Dealer Sign In";
+      if (subheading) subheading.innerText = "Enter GSTIN & Super Admin OTP to continue";
+      if (roleBadge) {
+        roleBadge.innerText = "Dealer Login (GSTIN + OTP)";
+        roleBadge.className = "text-[10px] font-bold uppercase tracking-wider text-orange-600 bg-orange-50 px-2.5 py-1 rounded-full border border-orange-200";
+      }
+      if (formConsumer) formConsumer.classList.add('hidden');
+      if (formDealer) formDealer.classList.remove('hidden');
+
+      if (tabConsumer) {
+        tabConsumer.className = "py-1.5 text-xs font-bold rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900";
+      }
+      if (tabDealer) {
+        tabDealer.className = "py-1.5 text-xs font-bold rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1.5 bg-slate-900 text-orange-400 shadow-xs";
+      }
+
+      if (heroImage) heroImage.src = 'professional_indian_dealer_in_casual_business_shirt_at_modern_office_desk/screen.png';
+      if (heroStatusText) heroStatusText.innerText = 'B2B Trade Portal';
+      if (heroBadgeText) heroBadgeText.innerText = 'Wholesale Bulk Access';
+    }
+  }
+
+  // Function to return to the 2 role buttons view
+  function showRoleSelection() {
+    const sectionRole = document.getElementById('section-role-selection');
+    const sectionLogin = document.getElementById('section-login-form');
+    const heading = document.getElementById('screen-heading');
+    const subheading = document.getElementById('screen-subheading');
+    const heroImage = document.getElementById('hero-image');
+    const heroStatusText = document.getElementById('hero-status-text');
+    const heroBadgeText = document.getElementById('hero-badge-text');
+
+    if (sectionLogin) sectionLogin.classList.add('hidden');
+    if (sectionRole) sectionRole.classList.remove('hidden');
+
+    if (heading) heading.innerText = "Select Your Role";
+    if (subheading) subheading.innerText = "Choose how you want to continue";
+    if (heroImage) heroImage.src = 'farmer_motor_hero.png';
+    if (heroStatusText) heroStatusText.innerText = 'GSM IoT Connected';
+    if (heroBadgeText) heroBadgeText.innerText = '2.4GHz Smart Starter';
+  }
+
+  // Consumer submit handler
+  function loginConsumerSubmit() {
+    const mobile = document.getElementById('userMobile') ? document.getElementById('userMobile').value.trim() : '';
+    if (!mobile) {
+      alert('Please enter your mobile number.');
+      return;
+    }
+    window.location.href = 'customer-home.html';
+  }
+
+  // Read OTP digits
+  function getDealerOtpValue() {
+    const inputs = document.querySelectorAll('.dealer-otp-digit');
+    return Array.from(inputs).map(i => i.value.trim()).join('');
+  }
+
+  // Auto-fill OTP helper
+  function autofillDealerOtp(code) {
+    const digits = String(code).split('');
+    const inputs = document.querySelectorAll('.dealer-otp-digit');
+    inputs.forEach((input, idx) => {
+      input.value = digits[idx] || '';
+    });
+  }
+
+  // Dealer submit handler: verifies GSTIN & OTP, then routes to dealer dashboard
+  function loginDealerSubmit() {
+    const gstin = document.getElementById('dealerGstin') ? document.getElementById('dealerGstin').value.trim() : '';
+    const otp = getDealerOtpValue();
+
+    if (!gstin || gstin.length < 5) {
+      alert('Please enter a valid 15-character GSTIN number.');
+      document.getElementById('dealerGstin').focus();
+      return;
+    }
+
+    if (otp.length < 6) {
+      alert('Please enter the 6-digit OTP obtained from the Esston Super Admin.');
+      return;
+    }
+
+    window.location.href = 'dealer-dashboard.html';
+  }
+
+  // Generic fallback submit
+  function loginSubmit() {
+    if (activeRole === 'dealer') {
+      loginDealerSubmit();
+    } else {
+      loginConsumerSubmit();
+    }
+  }
+
+  // Simulated OTP Request notification to Admin
+  function notifyAdminOtpRequest() {
+    const btn = document.getElementById('btn-request-otp');
+    const btnText = document.getElementById('btn-request-otp-text');
+    const alertBox = document.getElementById('otp-admin-alert');
+    
+    if (btnText) btnText.innerText = 'Dispatching OTP to Super Admin...';
+    setTimeout(() => {
+      if (alertBox) alertBox.classList.remove('hidden');
+      if (btnText) btnText.innerText = 'OTP Dispatched to Admin (+91 98220 12345)';
+    }, 400);
+  }
+
+  // Password visibility toggle
+  function togglePass(inputId, btn) {
+    const input = document.getElementById(inputId);
+    if (!input) return;
+    const icon = btn.querySelector('i');
+    if (input.type === 'password') {
+      input.type = 'text';
+      if (icon) {
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+      }
+      btn.classList.add('text-brand-orange');
+    } else {
+      input.type = 'password';
+      if (icon) {
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+      }
+      btn.classList.remove('text-brand-orange');
+    }
+  }
+
+  // Initialize interactive OTP digits auto-advancing
+  document.addEventListener('DOMContentLoaded', () => {
+    const otpInputs = document.querySelectorAll('.dealer-otp-digit');
+    otpInputs.forEach((input, idx) => {
+      input.addEventListener('input', (e) => {
+        e.target.value = e.target.value.replace(/\D/g, '').slice(-1);
+        if (e.target.value && idx < otpInputs.length - 1) {
+          otpInputs[idx + 1].focus();
+        }
+      });
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Backspace' && !e.target.value && idx > 0) {
+          otpInputs[idx - 1].focus();
+        }
+      });
+    });
+
+    // Check URL parameters or hash to directly open dealer login if requested
+    const params = new URLSearchParams(window.location.search);
+    const roleParam = params.get('role');
+    const hash = window.location.hash.toLowerCase();
+    if (roleParam === 'dealer' || hash === '#dealer' || hash === '#dealer-login') {
+      showLoginForm('dealer');
+    }
+  });
+</script>
+
+<script id="esston-global-navigation">
+(function(){
+  const R = {
+    home: 'customer-home.html',
+    dashboard: 'dealer-dashboard.html',
+    products: 'catalogue.html',
+    dealerproducts: 'dealer-catalogue.html',
+    details: 'product-details.html',
+    starter: 'my-starter.html',
+    control: 'motor-control.html',
+    schedule: 'schedule.html',
+    faq: 'help-faq.html',
+    enquiry: 'contact-enquiry.html',
+    auth: 'auth.html',
+    splash: 'splash.html',
+    otp: 'dealer-otp.html',
+    dealerEnquiries: 'dealer-enquiries.html'
+  };
+  const p = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+  const go = (key) => { if(R[key]) location.href = R[key]; };
+  const txt = e => (e.innerText || e.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
+
+  document.addEventListener('click', function(ev) {
+    const el = ev.target.closest('a,button,[role="button"]');
+    if (!el) return;
+    
+    // Ignore role selector buttons so they can trigger showLoginForm
+    if (el.id === 'btn-select-consumer' || el.id === 'btn-select-dealer' || el.closest('#section-role-selection')) {
+      return;
+    }
+
+    const t = txt(el);
+    // Inside login form, handle submission
+    if (t.includes('login to dealer') || (t.includes('dealer') && t.includes('login'))) {
+      ev.preventDefault();
+      go('dashboard');
+      return;
+    }
+    if (t.includes('login to consumer') || (t.includes('consumer') && t.includes('login'))) {
+      ev.preventDefault();
+      go('home');
+      return;
+    }
+  }, true);
+})();
+</script>
+
+</body>
+</html>

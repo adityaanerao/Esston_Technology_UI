@@ -1,0 +1,914 @@
+<!DOCTYPE html><html class="h-full w-full bg-[#0b1118]" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<title>Esston Technology - Help &amp; FAQ</title>
+<!-- Tailwind CSS CDN with forms and container queries plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Phosphor Icons for modern mobile UI iconography -->
+<script src="https://unpkg.com/@phosphor-icons/web"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/regular/style.css"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/thin/style.css"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/light/style.css"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/bold/style.css"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/fill/style.css"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/duotone/style.css">
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              orange: '#F25C05',
+              'orange-dark': '#D94E02',
+              'orange-light': '#FFF3EB',
+              green: '#059669',
+              'green-dark': '#047857',
+              'green-light': '#ECFDF5',
+              navy: '#0F172A',
+              slate: '#1E293B',
+              surface: '#F8FAFC'
+            }
+          },
+          fontFamily: {
+            sans: ['-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
+          },
+          boxShadow: {
+            'card': '0 2px 10px -2px rgba(15, 23, 42, 0.05), 0 1px 3px -1px rgba(15, 23, 42, 0.03)',
+            'elevated': '0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.03)',
+            'nav': '0 -2px 12px 0 rgba(15, 23, 42, 0.04)'
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="base-styling">
+    /* Hide scrollbars for clean mobile app feel */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    /* Touch optimization */
+    * {
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    input, textarea {
+      user-select: text;
+    }
+  </style>
+<style data-purpose="transitions">
+    .view-container {
+      transition: opacity 0.22s ease, transform 0.22s ease;
+    }
+    .faq-content {
+      transition: max-height 0.3s cubic-bezier(0, 1, 0, 1), opacity 0.25s ease;
+    }
+    .accordion-open .faq-chevron {
+      transform: rotate(180deg);
+    }
+    .accordion-open .faq-content {
+      max-height: 500px;
+      opacity: 1;
+    }
+    .accordion-closed .faq-content {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body class="h-screen w-screen text-slate-800 antialiased flex flex-col justify-center items-center p-0 m-0 bg-[#0b1118] overflow-hidden">
+<!-- BEGIN: MobileDeviceFrame -->
+<div class="w-full max-w-[430px] h-full h-screen bg-[#F8FAFC] shadow-2xl flex flex-col overflow-hidden relative border-x border-slate-700/50" data-purpose="mobile-viewport">
+<!-- Top floating quick segmented switcher for rapid review & testing -->
+<div class="bg-white border-b border-slate-100 z-50 sticky top-0 px-4 pt-3.5 pb-2.5 flex flex-col gap-2.5 shadow-xs" data-purpose="branded-app-header">
+  <div class="flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <div class="w-9 h-9 rounded-xl bg-slate-900 flex items-center justify-center p-1.5 shadow-sm border border-slate-800">
+        <svg class="w-full h-full text-brand-orange" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8 10C8 8.89543 8.89543 8 10 8H30C31.1046 8 32 8.89543 32 10V14C32 15.1046 31.1046 16 30 16H18V19H28C29.1046 19 30 19.8954 30 21V23C30 24.1046 29.1046 25 28 25H18V28H30C31.1046 28 32 28.8954 32 30V32C32 33.1046 31.1046 34 30 34H10C8.89543 34 8 33.1046 8 32V10Z" fill="#F25C05"></path>
+          <path d="M24 12L31 5M31 5H25M31 5V11" stroke="#F25C05" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </div>
+      <div class="flex flex-col">
+        <span class="text-[13px] font-extrabold text-slate-900 tracking-tight leading-tight flex items-center gap-0.5">Esston <span class="text-brand-orange">Technology</span><span class="text-[8px] text-slate-400 font-bold ml-0.5">®</span></span>
+        <span class="text-[9px] uppercase tracking-wider font-semibold text-slate-400">Smart Agri Automation</span>
+      </div>
+    </div>
+    <div class="flex items-center gap-2">
+      <button aria-label="Notifications" class="w-8 h-8 rounded-full bg-slate-50 hover:bg-slate-100 flex items-center justify-center text-slate-600 transition-colors relative border border-slate-200/80">
+        <i class="ph ph-bell text-base"></i>
+        <span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-brand-orange ring-1 ring-white"></span>
+      </button>
+      <div class="flex items-center gap-1.5 bg-slate-50 border border-slate-200/80 rounded-full pl-1 pr-2 py-0.5 hover:bg-slate-100 transition-all cursor-pointer">
+        <img src="https://lh3.googleusercontent.com/aida/AEtjO1VUIrLo1IYlxG80yveIjhvHHtmNWcEt6pLzN30SH47j-oFwqxmTfa5BewR2SwevG4YTAHIMo3ufEOMSn3qjI9412KenJIwQRE7ZV-JTezABbxRq_aDie7aJkHlqWVUOh4Ay2hIy2qtRKm-qtseSNKuMxILzThZaipl11Me2MjkXLIkSAbtbyc7ZEEntCkr3SmhFykG8wl0Ay9y9nWRRbg26U7q6bmCHQkd-muDTttkgN6CTxX-65u0m-Do" alt="Aditya" class="w-6 h-6 rounded-full object-cover border border-brand-orange/40">
+        <div class="flex flex-col text-left">
+          <span class="text-[10px] font-bold text-slate-800 leading-none">Aditya</span>
+          <span class="text-[8px] text-slate-500 font-medium leading-none mt-0.5">Customer ▾</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="flex bg-slate-100 p-0.5 rounded-xl border border-slate-200/80 text-xs" id="quick-segmented-tabs">
+    <button class="flex-1 py-1 rounded-lg text-[11px] font-bold transition-all bg-brand-orange text-white shadow-xs" id="tab-hub" onclick="switchView('hub')">Hub</button>
+    <button class="flex-1 py-1 rounded-lg text-[11px] font-semibold transition-all text-slate-600 hover:text-slate-900" id="tab-faq" onclick="switchView('faq')">FAQs</button>
+    <button class="flex-1 py-1 rounded-lg text-[11px] font-semibold transition-all text-slate-600 hover:text-slate-900" id="tab-chat" onclick="switchView('chat')">Assistant</button>
+  </div>
+</div>
+<!-- BEGIN: TopNavigationBar -->
+<header class="bg-white/95 backdrop-blur-md px-4 py-2 flex items-center justify-between border-b border-slate-100 z-40" data-purpose="top-navigation"><div class="flex items-center gap-2">
+  <button aria-label="Go back" class="w-8 h-8 rounded-full bg-slate-50 border border-slate-200/80 flex items-center justify-center text-slate-700 hover:bg-slate-100 active:scale-95 transition-all opacity-0 pointer-events-none" id="nav-back-button" onclick="handleBackNavigation()">
+    <i class="ph ph-caret-left text-lg font-bold"></i>
+  </button>
+  <div class="flex flex-col">
+    <h1 class="text-sm font-bold text-slate-900 tracking-tight flex items-center gap-1.5" id="nav-title">Help &amp; FAQ Support</h1>
+  </div>
+</div>
+<div class="flex items-center gap-1.5">
+  <button class="w-8 h-8 rounded-full flex items-center justify-center text-slate-600 hover:text-brand-orange hover:bg-orange-50 active:scale-95 transition-all" onclick="switchView('chat')" title="Help Desk">
+    <i class="ph ph-headset text-base"></i>
+  </button>
+  <button class="h-7 rounded-md px-2 flex items-center justify-center text-slate-700 bg-slate-100 hover:bg-slate-200 active:scale-95 transition-all border border-slate-200" title="Language Selector">
+    <span class="text-[10px] font-bold text-slate-800">EN</span>
+  </button>
+</div></header>
+<!-- END: TopNavigationBar -->
+<!-- BEGIN: MainContentArea -->
+<main class="flex-1 overflow-y-auto no-scrollbar relative flex flex-col bg-[#F8FAFC]" id="main-scroll-container">
+<!-- ============================================== -->
+<!-- VIEW 1: HELP & FAQ HUB (Landing Screen)        -->
+<!-- ============================================== -->
+<section class="view-container flex-col p-4 pb-6 space-y-4 transition-all hidden" id="view-hub">
+<!-- BEGIN: HeroCard -->
+<div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-orange-50 via-white to-orange-50/70 border border-orange-100 p-5 shadow-card" data-purpose="need-help-hero">
+  <div class="absolute -right-8 -top-8 w-32 h-32 bg-brand-orange/10 rounded-full blur-xl pointer-events-none"></div>
+  <div class="flex items-center justify-between relative z-10">
+    <div class="max-w-[62%]">
+      <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-orange-100 text-brand-orange text-[11px] font-bold mb-1.5 tracking-wide">
+        <span class="w-1.5 h-1.5 rounded-full bg-brand-orange animate-pulse"></span>
+        24/7 Agro Support
+      </div>
+      <h2 class="text-xl font-extrabold text-slate-900 tracking-tight leading-tight">Need Help?</h2>
+      <p class="text-xs text-slate-600 font-normal mt-1 leading-relaxed">
+        Find answers to common questions or chat with our automated smart assistant.
+      </p>
+    </div>
+    <div class="relative flex-shrink-0 flex items-center justify-center">
+      <div class="w-20 h-20 relative flex items-center justify-center">
+        <img src="https://lh3.googleusercontent.com/aida/AEtjO1WjkB275q5tRXcy8XlNwvvQF5p_Vr6c3YiRj1XZ1dLLAOpm9iGpowCzKO4fE6tMW8QBGftriuzGDf9rQCQCYyW9KwVPsBeDAyeFlBD2QzfjXbW-ek7jaLjmMGz52_DkZKkNsFVCaUwhqFL3VrLuc6tY4HgVHSq3NnBAvybQGLPKJnBuLWcVWbPxr342qtExQkA8DplsJADzxsq0zV04-RAlIUQyW_jLkJHC7ClpycEI8ZSwUNpdzG1P5w" alt="Esston Agro Assistant" class="w-18 h-18 object-contain rounded-2xl drop-shadow-md">
+        <div class="absolute -top-1 -right-1 bg-brand-orange text-white rounded-full p-1 shadow-md animate-bounce">
+          <i class="ph-fill ph-chat-circle-dots text-xs"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END: HeroCard -->
+<!-- BEGIN: PrimaryActionCards -->
+<div class="grid grid-cols-1 gap-3" data-purpose="quick-action-cards">
+<!-- Browse FAQs Card -->
+<div class="group cursor-pointer bg-white rounded-2xl p-4 border border-slate-200/80 shadow-card hover:shadow-md hover:border-brand-orange transition-all flex items-center justify-between active:scale-[0.99]" onclick="switchView('faq')">
+  <div class="flex items-center gap-3.5">
+    <div class="w-12 h-12 rounded-xl bg-slate-900 text-brand-orange flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
+      <i class="ph-fill ph-book-open-text text-2xl"></i>
+    </div>
+    <div>
+      <h3 class="text-sm font-bold text-slate-900 group-hover:text-brand-orange transition-colors">Browse FAQs</h3>
+      <p class="text-xs text-slate-500 mt-0.5">Find quick answers</p></div>
+  </div>
+  <div class="w-7 h-7 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 group-hover:text-brand-orange group-hover:translate-x-0.5 transition-all">
+    <i class="ph ph-caret-right text-base font-semibold"></i>
+  </div>
+</div>
+<!-- Chat with Assistant Card -->
+<div class="group cursor-pointer bg-white rounded-2xl p-4 border border-slate-200/80 shadow-card hover:shadow-md hover:border-brand-orange transition-all flex items-center justify-between active:scale-[0.99]" onclick="switchView('chat')">
+  <div class="flex items-center gap-3.5">
+    <div class="w-12 h-12 rounded-xl bg-brand-orange text-white flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
+      <i class="ph-fill ph-chats-circle text-2xl"></i>
+    </div>
+    <div>
+      <h3 class="text-sm font-bold text-slate-900 group-hover:text-brand-orange transition-colors">Chat with Assistant</h3>
+      <p class="text-xs text-slate-500 mt-0.5">Get instant help</p>
+    </div>
+  </div>
+  <div class="w-7 h-7 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 group-hover:text-brand-orange group-hover:translate-x-0.5 transition-all">
+    <i class="ph ph-caret-right text-base font-semibold"></i>
+  </div>
+</div>
+</div>
+<!-- END: PrimaryActionCards -->
+<!-- BEGIN: PopularTopicsList -->
+<div class="pt-1" data-purpose="popular-topics-section">
+<div class="flex items-center justify-between mb-2.5 px-0.5">
+<h3 class="text-sm font-bold text-slate-900 tracking-tight">Popular Topics</h3>
+<span class="text-[11px] font-semibold text-brand-orange hover:underline cursor-pointer" onclick="switchView('faq')">View All</span>
+</div>
+<div class="bg-white rounded-2xl border border-slate-200/80 shadow-card divide-y divide-slate-100 overflow-hidden">
+<!-- Topic Item 1 -->
+<button class="w-full text-left px-4 py-3.5 flex items-center justify-between hover:bg-slate-50/80 transition-colors" onclick="filterFaqAndOpen('Product Information')">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center">
+<i class="ph-fill ph-gear text-base"></i>
+</div>
+<span class="text-xs font-semibold text-slate-800">Product Information</span>
+</div>
+<i class="ph ph-caret-right text-sm text-slate-400"></i>
+</button>
+<!-- Topic Item 2 -->
+<button class="w-full text-left px-4 py-3.5 flex items-center justify-between hover:bg-slate-50/80 transition-colors" onclick="filterFaqAndOpen('Installation &amp; Setup')">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center">
+<i class="ph-fill ph-wrench text-base"></i>
+</div>
+<span class="text-xs font-semibold text-slate-800">Installation &amp; Setup</span>
+</div>
+<i class="ph ph-caret-right text-sm text-slate-400"></i>
+</button>
+<!-- Topic Item 3 -->
+<button class="w-full text-left px-4 py-3.5 flex items-center justify-between hover:bg-slate-50/80 transition-colors" onclick="filterFaqAndOpen('Usage &amp; Operation')">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center">
+<i class="ph-fill ph-play-circle text-base"></i>
+</div>
+<span class="text-xs font-semibold text-slate-800">Usage &amp; Operation</span>
+</div>
+<i class="ph ph-caret-right text-sm text-slate-400"></i>
+</button>
+<!-- Topic Item 4 -->
+<button class="w-full text-left px-4 py-3.5 flex items-center justify-between hover:bg-slate-50/80 transition-colors" onclick="filterFaqAndOpen('Maintenance &amp; Support')">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center">
+<i class="ph-fill ph-shield-check text-base"></i>
+</div>
+<span class="text-xs font-semibold text-slate-800">Maintenance &amp; Support</span>
+</div>
+<i class="ph ph-caret-right text-sm text-slate-400"></i>
+</button>
+<!-- Topic Item 5 -->
+<button class="w-full text-left px-4 py-3.5 flex items-center justify-between hover:bg-slate-50/80 transition-colors" onclick="filterFaqAndOpen('Orders &amp; Brochures')">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center">
+<i class="ph-fill ph-article text-base"></i>
+</div>
+<span class="text-xs font-semibold text-slate-800">Orders &amp; Brochures</span>
+</div>
+<i class="ph ph-caret-right text-sm text-slate-400"></i>
+</button>
+</div>
+</div>
+<!-- END: PopularTopicsList -->
+<!-- Esston Smart Callout Banner -->
+<div class="bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl p-4 text-white flex items-center justify-between mt-2 shadow-sm">
+<div class="space-y-0.5">
+<span class="text-[10px] uppercase font-bold text-brand-orange tracking-wider">Direct Hotline</span>
+<p class="text-xs font-semibold text-white">Call Farmer Helpdesk</p>
+<p class="text-[11px] text-slate-300">Mon - Sat (8 AM to 8 PM)</p>
+</div>
+<a class="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-medium flex items-center gap-1.5 transition-all border border-white/10 active:scale-95" href="tel:+911800123456"><i class="ph-fill ph-phone-call text-brand-orange"></i><span class="">1800-ESSTON</span></a>
+</div>
+</section>
+<!-- END VIEW 1 -->
+<!-- ============================================== -->
+<!-- VIEW 2: FREQUENTLY ASKED QUESTIONS (Center)     -->
+<!-- ============================================== -->
+<section class="view-container flex-col p-4 pb-8 space-y-3.5 transition-all hidden" id="view-faq">
+<!-- Search Input -->
+<div class="relative" data-purpose="faq-search">
+<i class="ph ph-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-base"></i>
+<input class="w-full pl-10 pr-9 py-2.5 rounded-xl bg-white border border-slate-200 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 shadow-sm" id="faq-search-input" oninput="handleFaqSearch(this.value)" placeholder="Search questions (e.g. SMS, starter, dry run)..." type="text">
+<button class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600" id="faq-clear-search" onclick="clearFaqSearch()">
+<i class="ph ph-x-circle text-base"></i>
+</button>
+</div>
+<!-- Filter Chips -->
+<div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5" data-purpose="faq-category-pills">
+<button class="faq-chip whitespace-nowrap px-3 py-1 rounded-full text-xs font-bold bg-brand-orange text-white shadow-xs" onclick="setCategoryFilter('all', this)">All</button>
+<button class="faq-chip whitespace-nowrap px-3 py-1 rounded-full text-xs font-medium bg-white text-slate-600 border border-slate-200" onclick="setCategoryFilter('general', this)">General</button>
+<button class="faq-chip whitespace-nowrap px-3 py-1 rounded-full text-xs font-medium bg-white text-slate-600 border border-slate-200" onclick="setCategoryFilter('sms', this)">SMS Commands</button>
+<button class="faq-chip whitespace-nowrap px-3 py-1 rounded-full text-xs font-medium bg-white text-slate-600 border border-slate-200" onclick="setCategoryFilter('installation', this)">Installation</button>
+<button class="faq-chip whitespace-nowrap px-3 py-1 rounded-full text-xs font-medium bg-white text-slate-600 border border-slate-200" onclick="setCategoryFilter('troubleshooting', this)">Protection</button>
+</div>
+<!-- Accordion Items Container -->
+<div class="space-y-2.5 pt-1" data-purpose="faq-accordion-group" id="faq-list-container">
+<!-- FAQ Item 1 (Expanded by default matching screenshot) -->
+<div class="faq-card accordion-open bg-white rounded-xl border border-orange-100 shadow-card overflow-hidden" data-category="general">
+  <button class="w-full text-left p-4 flex items-center justify-between gap-3 bg-orange-50/60 transition-colors" onclick="toggleFaqAccordion(this)">
+    <span class="text-xs font-bold text-slate-900 leading-snug">How does the Esston motor starter work?</span>
+    <i class="ph ph-caret-up text-sm text-brand-orange faq-chevron transition-transform duration-200 flex-shrink-0"></i>
+  </button>
+  <div class="faq-content px-4 py-3.5 text-xs text-slate-600 leading-relaxed border-t border-orange-100 bg-white">
+    The Esston motor starter allows you to start and stop your agricultural motor remotely using SMS commands or through the mobile app. It provides overload protection, dry run protection and easy installation.
+  </div>
+</div>
+<!-- FAQ Item 2 -->
+<div class="faq-card accordion-closed bg-white rounded-xl border border-slate-200/80 shadow-card overflow-hidden" data-category="general">
+<button class="w-full text-left p-4 flex items-center justify-between gap-3 transition-colors hover:bg-slate-50" onclick="toggleFaqAccordion(this)">
+<span class="text-xs font-bold text-slate-900 leading-snug">What are the different models available?</span>
+<i class="ph ph-caret-down text-sm text-slate-500 faq-chevron transition-transform duration-200 flex-shrink-0"></i>
+</button>
+<div class="faq-content px-4 pb-3.5 text-xs text-slate-600 leading-relaxed border-t border-slate-100">
+              Esston offers models tailored for diverse agricultural needs:
+              <ul class="list-disc pl-4 mt-1.5 space-y-1 text-slate-700">
+<li class=""><strong>Esston Eco 1-Phase:</strong> For 1 HP to 3 HP open-well pumps.</li>
+<li class=""><strong>Esston Pro 3-Phase:</strong> Heavy duty for 3 HP to 15 HP submersible borewells.</li>
+<li class=""><strong>Esston Solar Hybrid:</strong> Works seamlessly with solar irrigation inverters.</li>
+</ul>
+</div>
+</div>
+<!-- FAQ Item 3 -->
+<div class="faq-card accordion-closed bg-white rounded-xl border border-slate-200/80 shadow-card overflow-hidden" data-category="installation">
+<button class="w-full text-left p-4 flex items-center justify-between gap-3 transition-colors hover:bg-slate-50" onclick="toggleFaqAccordion(this)">
+<span class="text-xs font-bold text-slate-900 leading-snug">How do I install the motor starter?</span>
+<i class="ph ph-caret-down text-sm text-slate-500 faq-chevron transition-transform duration-200 flex-shrink-0"></i>
+</button>
+<div class="faq-content px-4 pb-3.5 text-xs text-slate-600 leading-relaxed border-t border-slate-100">
+              1. Mount the waterproof IP65 casing away from direct rainwater spray.<br>
+              2. Connect incoming 3-phase lines to L1-L2-L3 input terminals.<br>
+              3. Connect pump wires to motor load terminals.<br>
+              4. Mount the magnetic antenna externally facing open sky for optimal GSM reception.
+            </div>
+</div>
+<!-- FAQ Item 4 -->
+<div class="faq-card accordion-closed bg-white rounded-xl border border-slate-200/80 shadow-card overflow-hidden" data-category="sms">
+<button class="w-full text-left p-4 flex items-center justify-between gap-3 transition-colors hover:bg-slate-50" onclick="toggleFaqAccordion(this)">
+<span class="text-xs font-bold text-slate-900 leading-snug">What SMS commands can I use?</span>
+<i class="ph ph-caret-down text-sm text-slate-500 faq-chevron transition-transform duration-200 flex-shrink-0"></i>
+</button>
+<div class="faq-content px-4 pb-3.5 text-xs text-slate-600 leading-relaxed border-t border-slate-100">
+<div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200/80 space-y-1 font-mono text-[11px] text-slate-800">
+<p class=""><strong>START &lt;motor&gt;</strong> - Turn motor ON</p>
+<p class=""><strong>STOP &lt;motor&gt;</strong> - Turn motor OFF</p>
+<p class=""><strong>STATUS</strong> - Get live voltage &amp; phase health</p>
+<p class=""><strong>TIMER 60</strong> - Run pump for 60 minutes only</p>
+</div>
+</div>
+</div>
+<!-- FAQ Item 5 -->
+<div class="faq-card accordion-closed bg-white rounded-xl border border-slate-200/80 shadow-card overflow-hidden" data-category="sms">
+<button class="w-full text-left p-4 flex items-center justify-between gap-3 transition-colors hover:bg-slate-50" onclick="toggleFaqAccordion(this)">
+<span class="text-xs font-bold text-slate-900 leading-snug">How do I set a motor schedule?</span>
+<i class="ph ph-caret-down text-sm text-slate-500 faq-chevron transition-transform duration-200 flex-shrink-0"></i>
+</button>
+<div class="faq-content px-4 pb-3.5 text-xs text-slate-600 leading-relaxed border-t border-slate-100">
+              Navigate to the <em>Motor Control</em> tab in this app, choose your active starter unit, and tap <strong>"Add Schedule"</strong>. You can configure days of the week, start times, and auto-cutoff duration according to electricity tariff availability.
+            </div>
+</div>
+<!-- FAQ Item 6 -->
+<div class="faq-card accordion-closed bg-white rounded-xl border border-slate-200/80 shadow-card overflow-hidden" data-category="troubleshooting">
+<button class="w-full text-left p-4 flex items-center justify-between gap-3 transition-colors hover:bg-slate-50" onclick="toggleFaqAccordion(this)">
+<span class="text-xs font-bold text-slate-900 leading-snug">What protection features are available?</span>
+<i class="ph ph-caret-down text-sm text-slate-500 faq-chevron transition-transform duration-200 flex-shrink-0"></i>
+</button>
+<div class="faq-content px-4 pb-3.5 text-xs text-slate-600 leading-relaxed border-t border-slate-100">
+              Includes auto Dry Run cut-off, Single Phasing prevention, High/Low voltage shutdown (under 300V or over 460V), and thermal motor overload coil protection.
+            </div>
+</div>
+<!-- FAQ Item 7 -->
+<div class="faq-card accordion-closed bg-white rounded-xl border border-slate-200/80 shadow-card overflow-hidden" data-category="general">
+<button class="w-full text-left p-4 flex items-center justify-between gap-3 transition-colors hover:bg-slate-50" onclick="toggleFaqAccordion(this)">
+<span class="text-xs font-bold text-slate-900 leading-snug">Where can I download product brochures?</span>
+<i class="ph ph-caret-down text-sm text-slate-500 faq-chevron transition-transform duration-200 flex-shrink-0"></i>
+</button>
+<div class="faq-content px-4 pb-3.5 text-xs text-slate-600 leading-relaxed border-t border-slate-100">
+              You can download all PDF user manuals and technical spec sheets directly from the <em>Orders &amp; Brochures</em> section or on our official portal at <strong>esstontech.com/downloads</strong>.
+            </div>
+</div>
+</div>
+<!-- No FAQ Results placeholder -->
+<div class="hidden text-center py-8" id="no-faq-results">
+<i class="ph ph-magnifying-glass text-3xl text-slate-300 mb-2"></i>
+<p class="text-xs font-semibold text-slate-600">No matching questions found</p>
+<p class="text-[11px] text-slate-400 mt-0.5">Try searching with different terms or chat directly with our assistant.</p>
+</div>
+<!-- Action banner to switch to chat -->
+<div class="pt-2">
+<button class="w-full py-3 px-4 rounded-xl bg-slate-900 text-white text-xs font-semibold flex items-center justify-between hover:bg-slate-800 active:scale-[0.99] transition-all shadow-sm" onclick="switchView('chat')">
+<span class="">Still have questions? Chat with Assistant</span>
+<i class="ph ph-arrow-right text-base text-brand-orange"></i>
+</button>
+</div>
+</section>
+<!-- END VIEW 2 -->
+<!-- ============================================== -->
+<!-- VIEW 3: CHAT WITH ASSISTANT (Right Screen)     -->
+<!-- ============================================== -->
+<section class="view-container flex-col flex-1 h-full min-h-[580px] transition-all flex" id="view-chat">
+<!-- Assistant Top Info Banner -->
+<div class="bg-gradient-to-r from-orange-50 via-white to-orange-50 p-3.5 border-b border-orange-100 flex items-center gap-3.5" data-purpose="chat-assistant-header">
+  <div class="relative">
+    <div class="w-12 h-12 rounded-2xl bg-white border border-orange-100 shadow-sm flex items-center justify-center p-1 relative overflow-hidden">
+      <img src="https://lh3.googleusercontent.com/aida/AEtjO1WjkB275q5tRXcy8XlNwvvQF5p_Vr6c3YiRj1XZ1dLLAOpm9iGpowCzKO4fE6tMW8QBGftriuzGDf9rQCQCYyW9KwVPsBeDAyeFlBD2QzfjXbW-ek7jaLjmMGz52_DkZKkNsFVCaUwhqFL3VrLuc6tY4HgVHSq3NnBAvybQGLPKJnBuLWcVWbPxr342qtExQkA8DplsJADzxsq0zV04-RAlIUQyW_jLkJHC7ClpycEI8ZSwUNpdzG1P5w" alt="Esston Assistant" class="w-full h-full object-contain">
+    </div>
+    <span class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-emerald-500 border-2 border-white rounded-full"></span>
+  </div>
+  <div class="flex-1">
+    <div class="flex items-center gap-2">
+      <h3 class="text-sm font-extrabold text-slate-900 leading-none">Esston Assistant</h3>
+      <span class="text-[10px] text-emerald-700 bg-emerald-100 font-semibold px-1.5 py-0.5 rounded-full flex items-center gap-1">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Online
+      </span>
+    </div>
+    <p class="text-[11px] text-slate-600 font-normal mt-1 leading-snug">
+      Ask me anything about our smart starters, warranty, or installation.
+    </p>
+  </div>
+</div>
+<!-- Chat Messages Conversation Flow -->
+<div class="flex-1 overflow-y-auto p-4 space-y-3.5 bg-slate-50/70" data-purpose="chat-bubbles-area" id="chat-messages-container">
+<!-- Assistant Greeting Bubble -->
+<div class="flex items-start gap-2 max-w-[85%]">
+<div class="w-7 h-7 rounded-full bg-white border border-emerald-300 flex items-center justify-center flex-shrink-0 shadow-xs">
+<i class="ph-fill ph-robot text-emerald-600 text-sm"></i>
+</div>
+<div>
+<div class="bg-white text-slate-800 text-xs rounded-2xl rounded-tl-none p-3 shadow-card border border-slate-100 leading-relaxed">
+                Hello! I'm the Esston Assistant. How can I help you today? 🌾
+              </div>
+<span class="text-[9px] text-slate-400 font-medium pl-1 mt-1 block">9:41 AM</span>
+</div>
+</div>
+<!-- User Question Bubble (SMS Query matching screenshot) -->
+<div class="flex items-start justify-end gap-2 ml-auto max-w-[85%]">
+<div>
+<div class="bg-slate-900 text-white text-xs rounded-2xl rounded-tr-none p-3 shadow-sm leading-relaxed font-normal">
+                How do I start the motor using SMS?
+              </div>
+<span class="text-[9px] text-slate-400 font-medium pr-1 mt-1 block text-right">9:42 AM</span>
+</div>
+</div>
+<!-- Assistant Instructions Response Bubble -->
+<div class="flex items-start gap-2 max-w-[88%]">
+<div class="w-7 h-7 rounded-full bg-white border border-emerald-300 flex items-center justify-center flex-shrink-0 shadow-xs">
+<i class="ph-fill ph-robot text-emerald-600 text-sm"></i>
+</div>
+<div>
+<div class="bg-white text-slate-800 text-xs rounded-2xl rounded-tl-none p-3.5 shadow-card border border-slate-100 leading-relaxed space-y-2">
+<p class="">To start the motor, send the SMS command:</p>
+<div class="bg-slate-100 text-slate-900 font-mono font-bold text-xs px-2.5 py-1.5 rounded-lg border border-slate-200">
+                  START &lt;your motor number&gt;
+                </div>
+<p class="text-slate-600 text-[11px]">
+                  You will receive a confirmation message once the motor starts.
+                </p>
+</div>
+<span class="text-[9px] text-slate-400 font-medium pl-1 mt-1 block">9:42 AM</span>
+</div>
+</div>
+<div class="flex items-start justify-end gap-2 ml-auto max-w-[85%]">
+        <div>
+          <div class="bg-emerald-700 text-white text-xs rounded-2xl rounded-tr-none p-3 shadow-sm leading-relaxed font-normal">
+            Dry run protection guide
+          </div>
+          <span class="text-[9px] text-slate-400 font-medium pr-1 mt-1 block text-right">Just now</span>
+        </div>
+      </div><div class="flex items-start justify-end gap-2 ml-auto max-w-[85%]">
+        <div>
+          <div class="bg-emerald-700 text-white text-xs rounded-2xl rounded-tr-none p-3 shadow-sm leading-relaxed font-normal">
+            Check motor status
+          </div>
+          <span class="text-[9px] text-slate-400 font-medium pr-1 mt-1 block text-right">Just now</span>
+        </div>
+      </div><div class="flex items-start gap-2 max-w-[88%]">
+          <div class="w-7 h-7 rounded-full bg-white border border-emerald-300 flex items-center justify-center flex-shrink-0 shadow-xs">
+            <i class="ph-fill ph-robot text-emerald-600 text-sm"></i>
+          </div>
+          <div>
+            <div class="bg-white text-slate-800 text-xs rounded-2xl rounded-tl-none p-3.5 shadow-card border border-slate-100 leading-relaxed space-y-1.5">
+              
+          <p class="">The Dry Run auto-sensing algorithm trips the pump within <strong>90 seconds</strong> if water suction fails, saving your motor from overheating damage.</p>
+        
+            </div>
+            <span class="text-[9px] text-slate-400 font-medium pl-1 mt-1 block">Just now</span>
+          </div>
+        </div><div class="flex items-start gap-2 max-w-[88%]">
+          <div class="w-7 h-7 rounded-full bg-white border border-emerald-300 flex items-center justify-center flex-shrink-0 shadow-xs">
+            <i class="ph-fill ph-robot text-emerald-600 text-sm"></i>
+          </div>
+          <div>
+            <div class="bg-white text-slate-800 text-xs rounded-2xl rounded-tl-none p-3.5 shadow-card border border-slate-100 leading-relaxed space-y-1.5">
+              
+          <p class="">To check the real-time health of your Esston starter, send:</p>
+          <div class="bg-slate-100 text-slate-900 font-mono font-bold text-xs px-2 py-1 rounded">STATUS</div>
+          <p class="text-[11px] text-slate-600">You will receive live 3-phase voltages, current amps, and motor running state.</p>
+        
+            </div>
+            <span class="text-[9px] text-slate-400 font-medium pl-1 mt-1 block">Just now</span>
+          </div>
+        </div><div class="flex items-start justify-end gap-2 ml-auto max-w-[85%]">
+        <div>
+          <div class="bg-emerald-700 text-white text-xs rounded-2xl rounded-tr-none p-3 shadow-sm leading-relaxed font-normal">
+            How to set schedule?
+          </div>
+          <span class="text-[9px] text-slate-400 font-medium pr-1 mt-1 block text-right">Just now</span>
+        </div>
+      </div><div class="flex items-start gap-2 max-w-[88%]">
+          <div class="w-7 h-7 rounded-full bg-white border border-emerald-300 flex items-center justify-center flex-shrink-0 shadow-xs">
+            <i class="ph-fill ph-robot text-emerald-600 text-sm"></i>
+          </div>
+          <div>
+            <div class="bg-white text-slate-800 text-xs rounded-2xl rounded-tl-none p-3.5 shadow-card border border-slate-100 leading-relaxed space-y-1.5">
+              
+          <p class="">You can set an auto-stop timer anytime by messaging:</p>
+          <div class="bg-slate-100 text-slate-900 font-mono font-bold text-xs px-2 py-1 rounded">TIMER &lt;minutes&gt;</div>
+          <p class="text-[11px] text-slate-600">Example: <strong>TIMER 120</strong> runs the motor for 2 hours and turns off automatically.</p>
+        
+            </div>
+            <span class="text-[9px] text-slate-400 font-medium pl-1 mt-1 block">Just now</span>
+          </div>
+        </div></div>
+<!-- Quick Suggestions Chips Bar -->
+<div class="px-3 py-2 bg-white/80 border-t border-slate-100 flex items-center gap-1.5 overflow-x-auto no-scrollbar">
+<button class="text-[11px] whitespace-nowrap bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium px-2.5 py-1 rounded-full transition-colors" onclick="sendQuickMessage('Check motor status')">
+            ⚡ Check status
+          </button>
+<button class="text-[11px] whitespace-nowrap bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium px-2.5 py-1 rounded-full transition-colors" onclick="sendQuickMessage('Dry run protection guide')">
+            🛡️ Dry run protection
+          </button>
+<button class="text-[11px] whitespace-nowrap bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium px-2.5 py-1 rounded-full transition-colors" onclick="sendQuickMessage('How to set schedule?')">
+            ⏰ Motor schedule
+          </button>
+<button class="text-[11px] whitespace-nowrap bg-orange-50 hover:bg-orange-100 text-brand-orange font-medium px-2.5 py-1 rounded-full transition-colors border border-orange-100" onclick="sendQuickMessage('Talk to human dealer')">
+            📞 Call support
+          </button>
+</div>
+<!-- Interactive Chat Input Footer -->
+<div class="p-3 bg-white border-t border-slate-200 flex items-center gap-2">
+<button class="w-9 h-9 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors flex-shrink-0" title="Attach file or photo">
+<i class="ph ph-paperclip text-lg"></i>
+</button>
+<div class="flex-1 relative">
+<input class="w-full bg-slate-100/90 text-xs text-slate-900 placeholder-slate-400 rounded-full py-2.5 pl-4 pr-3 border-transparent focus:border-emerald-600 focus:bg-white focus:ring-1 focus:ring-emerald-600" id="chat-user-input" onkeydown="handleChatInputKeyDown(event)" placeholder="Type your message..." type="text">
+</div>
+<button aria-label="Send message" class="w-10 h-10 rounded-full bg-brand-orange text-white flex items-center justify-center shadow-md hover:bg-brand-orange/90 active:scale-90 transition-all flex-shrink-0" id="chat-send-btn" onclick="sendUserChatMessage()">
+<i class="ph-fill ph-paper-plane-tilt text-lg"></i>
+</button>
+</div>
+</section>
+<!-- END VIEW 3 -->
+</main>
+<!-- END: MainContentArea -->
+<!-- BEGIN: BottomNavigationBar -->
+<nav class="bg-white border-t border-slate-200/90 py-2 px-3 flex items-center justify-around z-40 shadow-nav" data-purpose="bottom-navigation-bar">
+<!-- Nav Item: Home -->
+<button class="flex flex-col items-center justify-center py-1 px-2 text-slate-400 hover:text-slate-700 transition-colors">
+<i class="ph ph-house text-xl"></i>
+<span class="text-[10px] font-medium mt-0.5">Home</span>
+</button>
+<!-- Nav Item: Motor Control -->
+<button class="flex flex-col items-center justify-center py-1 px-2 text-slate-400 hover:text-slate-700 transition-colors">
+<i class="ph ph-cpu text-xl"></i>
+<span class="text-[10px] font-medium mt-0.5">Control</span>
+</button>
+<!-- Nav Item: Products -->
+<button class="flex flex-col items-center justify-center py-1 px-2 text-slate-400 hover:text-slate-700 transition-colors">
+<i class="ph ph-package text-xl"></i>
+<span class="text-[10px] font-medium mt-0.5">Products</span>
+</button>
+<!-- Nav Item: FAQs (ACTIVE TAB) -->
+<button class="flex flex-col items-center justify-center py-1 px-2 text-brand-orange relative font-bold">
+<div class="relative">
+<i class="ph-fill ph-chat-circle-dots text-xl"></i>
+<span class="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-brand-orange ring-2 ring-white"></span>
+</div>
+<span class="text-[10px] mt-0.5">Help &amp; FAQ</span>
+</button>
+<!-- Nav Item: Enquiry -->
+<button class="flex flex-col items-center justify-center py-1 px-2 text-slate-400 hover:text-slate-700 transition-colors">
+<i class="ph ph-clipboard-text text-xl"></i>
+<span class="text-[10px] font-medium mt-0.5">Enquiry</span>
+</button>
+</nav>
+<!-- END: BottomNavigationBar -->
+</div>
+<!-- END: MobileDeviceFrame -->
+<!-- ============================================== -->
+<!-- JAVASCRIPT CONTROLLERS                         -->
+<!-- ============================================== -->
+<script data-purpose="view-router">
+    // View state tracking
+    let currentView = 'hub';
+    const viewHistory = [];
+
+    const navTitles = {
+      hub: 'Help & FAQ',
+      faq: 'Frequently Asked Questions',
+      chat: 'Chat with Assistant'
+    };
+
+    function switchView(viewName, addToHistory = true) {
+      if (currentView === viewName) return;
+
+      if (addToHistory) {
+        viewHistory.push(currentView);
+      }
+      currentView = viewName;
+
+      // Update Views
+      const views = ['hub', 'faq', 'chat'];
+      views.forEach(v => {
+        const el = document.getElementById(`view-${v}`);
+        const tabBtn = document.getElementById(`tab-${v}`);
+        
+        if (v === viewName) {
+          el.classList.remove('hidden');
+          el.classList.add('flex');
+          // Tab button active styling
+          if (tabBtn) {
+            tabBtn.className = "px-2.5 py-0.5 rounded-md text-[11px] font-semibold transition-all bg-brand-orange text-white";
+          }
+        } else {
+          el.classList.add('hidden');
+          el.classList.remove('flex');
+          // Tab button inactive styling
+          if (tabBtn) {
+            tabBtn.className = "px-2.5 py-0.5 rounded-md text-[11px] font-medium transition-all text-slate-400 hover:text-white";
+          }
+        }
+      });
+
+      // Update Navigation Header Title and Back button
+      const navTitleEl = document.getElementById('nav-title');
+      const backBtn = document.getElementById('nav-back-button');
+
+      navTitleEl.textContent = navTitles[viewName] || 'Help & FAQ';
+
+      if (viewName === 'hub') {
+        backBtn.classList.add('opacity-0', 'pointer-events-none');
+      } else {
+        backBtn.classList.remove('opacity-0', 'pointer-events-none');
+      }
+
+      // Scroll view back to top
+      document.getElementById('main-scroll-container').scrollTop = 0;
+
+      // If switching to chat, scroll messages to bottom
+      if (viewName === 'chat') {
+        scrollChatToBottom();
+      }
+    }
+
+    function handleBackNavigation() {
+      if (viewHistory.length > 0) {
+        const prev = viewHistory.pop();
+        switchView(prev, false);
+      } else {
+        switchView('hub', false);
+      }
+    }
+  </script>
+<script data-purpose="faq-accordion-logic">
+    // FAQ Accordion Toggle
+    function toggleFaqAccordion(buttonEl) {
+      const parentCard = buttonEl.closest('.faq-card');
+      const isOpen = parentCard.classList.contains('accordion-open');
+
+      // Close all other accordions for clean UX
+      document.querySelectorAll('.faq-card').forEach(card => {
+        card.classList.remove('accordion-open');
+        card.classList.add('accordion-closed');
+        const chevron = card.querySelector('.faq-chevron');
+        if (chevron) {
+          chevron.className = 'ph ph-caret-down text-sm text-slate-500 faq-chevron transition-transform duration-200 flex-shrink-0';
+        }
+      });
+
+      if (!isOpen) {
+        parentCard.classList.add('accordion-open');
+        parentCard.classList.remove('accordion-closed');
+        const chevron = parentCard.querySelector('.faq-chevron');
+        if (chevron) {
+          chevron.className = 'ph ph-caret-up text-sm text-slate-500 faq-chevron transition-transform duration-200 flex-shrink-0';
+        }
+      }
+    }
+
+    // Category Filtering
+    function setCategoryFilter(category, clickedBtn) {
+      // Update chip styling
+      document.querySelectorAll('.faq-chip').forEach(btn => {
+        btn.className = 'faq-chip whitespace-nowrap px-3 py-1 rounded-full text-xs font-medium bg-white text-slate-600 border border-slate-200 transition-colors';
+      });
+      clickedBtn.className = 'faq-chip whitespace-nowrap px-3 py-1 rounded-full text-xs font-medium bg-emerald-700 text-white shadow-xs transition-colors';
+
+      // Filter FAQ list
+      const cards = document.querySelectorAll('.faq-card');
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const cardCat = card.getAttribute('data-category');
+        if (category === 'all' || cardCat === category) {
+          card.classList.remove('hidden');
+          visibleCount++;
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+
+      const noResults = document.getElementById('no-faq-results');
+      if (visibleCount === 0) {
+        noResults.classList.remove('hidden');
+      } else {
+        noResults.classList.add('hidden');
+      }
+    }
+
+    // Real-time Text Search
+    function handleFaqSearch(query) {
+      const clearBtn = document.getElementById('faq-clear-search');
+      if (query.trim().length > 0) {
+        clearBtn.classList.remove('hidden');
+      } else {
+        clearBtn.classList.add('hidden');
+      }
+
+      const lowerQuery = query.toLowerCase().trim();
+      const cards = document.querySelectorAll('.faq-card');
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        if (text.includes(lowerQuery)) {
+          card.classList.remove('hidden');
+          visibleCount++;
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+
+      const noResults = document.getElementById('no-faq-results');
+      if (visibleCount === 0) {
+        noResults.classList.remove('hidden');
+      } else {
+        noResults.classList.add('hidden');
+      }
+    }
+
+    function clearFaqSearch() {
+      const input = document.getElementById('faq-search-input');
+      input.value = '';
+      document.getElementById('faq-clear-search').classList.add('hidden');
+      handleFaqSearch('');
+    }
+
+    function filterFaqAndOpen(topicName) {
+      switchView('faq');
+      const input = document.getElementById('faq-search-input');
+      if (topicName.includes('Product')) {
+        setCategoryFilter('general', document.querySelectorAll('.faq-chip')[1]);
+      } else if (topicName.includes('Installation')) {
+        setCategoryFilter('installation', document.querySelectorAll('.faq-chip')[3]);
+      } else if (topicName.includes('Usage')) {
+        setCategoryFilter('sms', document.querySelectorAll('.faq-chip')[2]);
+      } else {
+        setCategoryFilter('all', document.querySelectorAll('.faq-chip')[0]);
+      }
+    }
+  </script>
+<script data-purpose="chat-interactive-logic">
+    function scrollChatToBottom() {
+      const container = document.getElementById('chat-messages-container');
+      if (container) {
+        setTimeout(() => {
+          container.scrollTop = container.scrollHeight;
+        }, 50);
+      }
+    }
+
+    function handleChatInputKeyDown(event) {
+      if (event.key === 'Enter') {
+        sendUserChatMessage();
+      }
+    }
+
+    function sendQuickMessage(text) {
+      const input = document.getElementById('chat-user-input');
+      input.value = text;
+      sendUserChatMessage();
+    }
+
+    function sendUserChatMessage() {
+      const input = document.getElementById('chat-user-input');
+      const messageText = input.value.trim();
+      if (!messageText) return;
+
+      const container = document.getElementById('chat-messages-container');
+      const currentTime = 'Just now';
+
+      // Append User message
+      const userBubble = document.createElement('div');
+      userBubble.className = "flex items-start justify-end gap-2 ml-auto max-w-[85%]";
+      userBubble.innerHTML = `
+        <div>
+          <div class="bg-emerald-700 text-white text-xs rounded-2xl rounded-tr-none p-3 shadow-sm leading-relaxed font-normal">
+            ${escapeHtml(messageText)}
+          </div>
+          <span class="text-[9px] text-slate-400 font-medium pr-1 mt-1 block text-right">${currentTime}</span>
+        </div>
+      `;
+      container.appendChild(userBubble);
+      input.value = '';
+      scrollChatToBottom();
+
+      // Trigger Smart AI / Bot Response simulation
+      setTimeout(() => {
+        const botReply = generateBotResponse(messageText);
+        const botBubble = document.createElement('div');
+        botBubble.className = "flex items-start gap-2 max-w-[88%]";
+        botBubble.innerHTML = `
+          <div class="w-7 h-7 rounded-full bg-white border border-emerald-300 flex items-center justify-center flex-shrink-0 shadow-xs">
+            <i class="ph-fill ph-robot text-emerald-600 text-sm"></i>
+          </div>
+          <div>
+            <div class="bg-white text-slate-800 text-xs rounded-2xl rounded-tl-none p-3.5 shadow-card border border-slate-100 leading-relaxed space-y-1.5">
+              ${botReply}
+            </div>
+            <span class="text-[9px] text-slate-400 font-medium pl-1 mt-1 block">Just now</span>
+          </div>
+        `;
+        container.appendChild(botBubble);
+        scrollChatToBottom();
+      }, 700);
+    }
+
+    function generateBotResponse(userMsg) {
+      const lower = userMsg.toLowerCase();
+      if (lower.includes('status')) {
+        return `
+          <p>To check the real-time health of your Esston starter, send:</p>
+          <div class="bg-slate-100 text-slate-900 font-mono font-bold text-xs px-2 py-1 rounded">STATUS</div>
+          <p class="text-[11px] text-slate-600">You will receive live 3-phase voltages, current amps, and motor running state.</p>
+        `;
+      } else if (lower.includes('dry run') || lower.includes('protection')) {
+        return `
+          <p>The Dry Run auto-sensing algorithm trips the pump within <strong>90 seconds</strong> if water suction fails, saving your motor from overheating damage.</p>
+        `;
+      } else if (lower.includes('schedule') || lower.includes('timer')) {
+        return `
+          <p>You can set an auto-stop timer anytime by messaging:</p>
+          <div class="bg-slate-100 text-slate-900 font-mono font-bold text-xs px-2 py-1 rounded">TIMER &lt;minutes&gt;</div>
+          <p class="text-[11px] text-slate-600">Example: <strong>TIMER 120</strong> runs the motor for 2 hours and turns off automatically.</p>
+        `;
+      } else if (lower.includes('call') || lower.includes('human') || lower.includes('dealer')) {
+        return `
+          <p>You can connect with your regional Esston distributor or toll-free farmer support at <strong>1800-ESSTON-HELP</strong> (1800-377-866).</p>
+        `;
+      } else {
+        return `
+          <p>Thank you for reaching out! Regarding <em>"${escapeHtml(userMsg)}"</em>, our automated diagnostics suggest checking the starter wiring or texting <strong>STATUS</strong> to verify SIM network signal on the device.</p>
+        `;
+      }
+    }
+
+    function escapeHtml(string) {
+      const entityMap = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      };
+      return String(string).replace(/[&<>"']/g, function (s) {
+        return entityMap[s];
+      });
+    }
+  </script>
+
+
+<script id="esston-global-navigation">
+(function(){
+ const R={home:'customer-home.html',dashboard:'dealer-dashboard.html',products:'catalogue.html',dealerproducts:'dealer-catalogue.html',details:'product-details.html',starter:'my-starter.html',control:'motor-control.html',schedule:'schedule.html',faq:'help-faq.html',enquiry:'contact-enquiry.html',auth:'auth.html',splash:'splash.html',otp:'dealer-otp.html',dealerEnquiries:'dealer-enquiries.html'};
+ const p=(location.pathname.split('/').pop()||'index.html').toLowerCase();
+ const isDealer=/dealer-dashboard|dealer-catalogue|dealer-enquiries/.test(p);
+ const go=(key)=>{if(R[key]) location.href=R[key];};
+ const txt=e=>(e.innerText||e.textContent||'').replace(/\s+/g,' ').trim().toLowerCase();
+ // Route the existing bottom navigation and clearly named action buttons to the corresponding screens.
+ document.addEventListener('click',function(ev){
+   const el=ev.target.closest('a,button,[role="button"]'); if(!el) return;
+   const t=txt(el); const page=p;
+   // Common bottom/navigation links
+   if(/^(home|dashboard)$/.test(t) || t.startsWith('home ')){ev.preventDefault();go(isDealer?'dashboard':'home');return;}
+   if(t==='products' || t.includes('browse products') || t.includes('view products') || t==='all products' || t==='product catalogue'){ev.preventDefault();go(isDealer?'dealerproducts':'products');return;}
+   if(t==='enquiry' || t==='enquiries' || t.includes('my enquiries') || t.includes('recent enquiries') || t.includes('view all enquiries')){ev.preventDefault();go(isDealer?'dealerEnquiries':'enquiry');return;}
+   if(t==='faqs' || t==='help & faq' || t==='help & support' || t.includes('chat with faq bot') || t.includes('need help')){ev.preventDefault();go('faq');return;}
+   if(t==='motor control' || t==='control' || t.includes('check status') || t.includes('tap to start motor')){ if(!/motor_control|motor-control/.test(page)){ev.preventDefault();go('control');return;} }
+   if(t==='my starter' || t.includes('view my starter') || t.includes('starter details')){ev.preventDefault();go('starter');return;}
+   if(t.includes('motor schedule') || t.includes('set schedule') || t==='add slot' || t.includes('auto timer schedule')){ev.preventDefault();go('schedule');return;}
+   if(t==='view details' || t==='view product details' || t.includes('product details')){ev.preventDefault();go('details');return;}
+   if(t.includes('send enquiry') || t.includes('add to enquiry') || t==='submit enquiry' || t==='contact support' || t==='contact / enquiry'){ev.preventDefault();go('enquiry');return;}
+   if(t.includes('dealer b2b portal')){ev.preventDefault();go('auth');return;}
+   if(t.includes('customer iot app')){ev.preventDefault();go('auth');return;}
+   // Splash screen progresses to role selection when user taps the page.
+   if(page==='splash.html' && !el.closest('a[href^="http"]')){ev.preventDefault();go('auth');return;}
+   // Login: customer enters customer home; dealer login enters the OTP screen.
+   if(page==='auth.html' && (t.includes('login') || t.includes('continue'))){
+     const dealer=!!el.closest('section,form,div') && (el.closest('section,form,div').innerText||'').toLowerCase().includes('dealer login');
+     if(dealer || t.includes('dealer')){ev.preventDefault();go('otp');return;}
+     if(t.includes('login')){ev.preventDefault();go('home');return;}
+   }
+   if(page==='dealer-dashboard.html' && (t.includes('share quote') || t.includes('quick order'))){ev.preventDefault();go('dealerEnquiries');return;}
+ },true);
+ // Make all placeholder bottom-nav links meaningful even when their labels are nested in icon wrappers.
+ document.querySelectorAll('a[href="#"]').forEach(a=>{
+   const t=txt(a);
+   if(t==='home') a.href=R.home; else if(t==='dashboard') a.href=R.dashboard; else if(t==='products') a.href=isDealer?R.dealerproducts:R.products; else if(t==='motor control'||t==='control') a.href=R.control; else if(t==='my starter') a.href=R.starter; else if(t==='faqs'||t==='help & faq') a.href=R.faq; else if(t==='enquiry'||t==='enquiries') a.href=isDealer?R.dealerEnquiries:R.enquiry; else if(t==='more') a.href=R.faq;
+ });
+})();
+</script>
+</body></html>

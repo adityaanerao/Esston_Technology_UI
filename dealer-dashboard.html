@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full w-full bg-[#0b1118]">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<title>Esston Technology - Dealer Dashboard</title>
+<!-- Tailwind CSS v3 with Forms & Container Queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts: Plus Jakarta Sans -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<!-- FontAwesome 6.5.1 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              orange: '#FF5A00',
+              orangeHover: '#e04f00',
+              dark: '#111827',
+              navy: '#0E1E38',
+              muted: '#64748B'
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="custom-scrollbars-and-resets">
+    /* Hide scrollbars for clean horizontal card scrolling */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    body {
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    .tap-effect {
+      transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .tap-effect:active {
+      transform: scale(0.97);
+    }
+  </style>
+<style data-purpose="banner-decorations">
+    .diagonal-stripes {
+      background: repeating-linear-gradient(
+        -45deg,
+        rgba(255, 90, 0, 0.95),
+        rgba(255, 90, 0, 0.95) 20px,
+        #0E1E38 20px,
+        #0E1E38 34px
+      );
+    }
+    .hero-mask {
+      clip-path: polygon(0 0, 100% 0, 100% 88%, 94% 100%, 0 100%);
+    }
+  </style>
+</head>
+<body class="h-screen w-screen text-slate-800 antialiased font-sans flex flex-col justify-center items-center p-0 m-0 bg-[#0b1118] overflow-hidden">
+
+<!-- Main Container (Straight Edges, No Round Border) -->
+<div class="w-full max-w-[430px] h-full h-screen bg-[#F8FAFC] shadow-2xl flex flex-col overflow-hidden relative border-x border-slate-700/50">
+
+<!-- BEGIN: TopBrandHeader -->
+<header class="sticky top-0 z-40 px-5 pt-2 pb-3.5 flex items-center justify-between bg-white border-b border-slate-100 shadow-xs flex-shrink-0" data-purpose="app-top-header">
+  <!-- Esston Technology Logo -->
+  <a aria-label="Esston Technology Home" class="flex flex-col items-start select-none group" href="dealer-dashboard.html">
+    <div class="flex items-center space-x-1">
+      <!-- Stylized ET Logo Mark -->
+      <div class="relative w-11 h-7 flex items-center justify-center">
+        <svg class="w-full h-full" fill="none" viewBox="0 0 64 36">
+          <path d="M4 4H32L24 16H8L4 22H28L20 34H0L4 4Z" fill="#F9570C"></path>
+          <path d="M22 4H56L62 4L54 16H36V34H26V4Z" fill="#092140"></path>
+          <path d="M50 0L64 0L58 10L50 0Z" fill="#F9570C"></path>
+        </svg>
+      </div>
+    </div>
+    <span class="text-[10px] font-extrabold tracking-tight text-slate-800 uppercase pl-0.5">Esston Technology®</span>
+  </a>
+
+  <!-- Right Action Items: Notifications & User Profile Capsule -->
+  <div class="flex items-center space-x-3">
+    <!-- Notification Bell Button with Red Alert Badge -->
+    <button onclick="openNotificationsModal()" aria-label="Notifications" class="relative w-10 h-10 rounded-full bg-slate-50 hover:bg-slate-100 border border-slate-100 flex items-center justify-center text-slate-700 shadow-sm tap-effect cursor-pointer">
+      <svg class="w-5 h-5 text-slate-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+      <span class="absolute top-2 right-2.5 w-2.5 h-2.5 bg-red-500 rounded-full ring-2 ring-white"></span>
+    </button>
+
+    <!-- User Profile Pill -> Goes directly to Dealer Profile -->
+    <a href="dealer-profile.html" class="flex items-center pl-1 pr-3 py-1 bg-slate-50 hover:bg-orange-50/70 border border-slate-100 hover:border-orange-200 rounded-full shadow-sm space-x-2 tap-effect cursor-pointer transition-colors block text-inherit">
+      <div class="w-7 h-7 rounded-full bg-[#111A2E] text-white flex items-center justify-center font-bold text-xs shadow-sm border border-orange-200">A</div>
+      <div class="flex flex-col text-left">
+        <div class="flex items-center space-x-1">
+          <span class="text-xs font-bold text-slate-800 leading-tight">Aditya Traders</span>
+        </div>
+        <div class="flex items-center space-x-0.5 text-[10.5px] font-medium text-slate-500 leading-none">
+          <span class="text-brand-orange font-bold">Dealer</span>
+          <svg class="w-2.5 h-2.5 text-slate-400" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </div>
+      </div>
+    </a>
+  </div>
+</header>
+<!-- END: TopBrandHeader -->
+
+<!-- Main Scrollable Content Area -->
+<main class="flex-1 overflow-y-auto no-scrollbar px-4 py-3 space-y-4 pb-24">
+
+  <!-- BEGIN: HeroBanner -->
+  <section class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#EFF6FF] via-[#DBEAFE]/70 to-[#FFF7ED] p-4 shadow-sm border border-slate-100" data-purpose="hero-promotional-banner">
+    <!-- Background scenic agricultural farm backdrop -->
+    <div class="absolute inset-0 z-0 opacity-20 pointer-events-none mix-blend-multiply bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDBY_Ju3C4tKjxPZWb3A-EjhRQU6XvxiNnWYK47xp_nvamtEoyiJjdVT4BlrZxN9ygJpVTqeox7Si5pJ88oRhpT1C1EgEZRAX994T36DkrYGNLutDEHrdBMwSDr34L8PQhNCci_Xccb9AkBkjC4xiEds92HJp42XVn_8wsRlpDcuEYgsPAo6JpPchphGxTwKEPOVkm2xM5MagN2kg4g4p_Bz16tOmsAMEzjvv6UMWIbTyKAf7RyiOiG');">
+    </div>
+    <!-- Right Side Industrial diagonal shapes -->
+    <div class="absolute -right-4 -bottom-6 w-44 h-44 pointer-events-none z-0">
+      <div class="absolute right-0 top-0 w-32 h-48 bg-gradient-to-bl from-orange-500 to-[#10203a] rotate-12 transform rounded-xl opacity-90"></div>
+    </div>
+    <!-- Banner Content -->
+    <div class="relative z-10 flex justify-between items-center">
+      <div class="max-w-[58%]">
+        <span class="text-[10px] font-bold tracking-widest text-slate-500 uppercase block mb-1">
+          Dealer Dashboard
+        </span>
+        <h1 class="text-[20px] font-black text-slate-900 leading-tight mb-1.5 tracking-tight">
+          Welcome Back,<br>
+          <span class="text-brand-orange">Aditya Traders!</span>
+        </h1>
+        <p class="text-[11px] font-medium text-slate-600 leading-snug">
+          Wholesale catalogue, customer quotes &amp; dispatch status.
+        </p>
+      </div>
+      <!-- Product Starters 3D Mockup Container -->
+      <div class="relative z-10 w-[38%] flex justify-end items-end pr-1">
+        <div class="relative flex items-end">
+          <!-- Small Starter Box -->
+          <div class="w-14 h-20 bg-slate-100 rounded-md border border-slate-300 shadow-md p-1 flex flex-col justify-between -mr-3 z-10">
+            <div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
+            <div class="text-[6px] font-black text-brand-orange text-center">ET</div>
+            <div class="text-[4px] text-slate-400 font-bold uppercase text-center">Esston</div>
+          </div>
+          <!-- Large Motor Starter Panel -->
+          <div class="w-24 h-32 bg-slate-50 rounded-lg border-2 border-slate-200 shadow-xl p-2 flex flex-col justify-between z-20 relative">
+            <div class="flex justify-between items-center">
+              <div class="flex space-x-1">
+                <div class="w-1.5 h-1.5 rounded-full bg-red-500"></div>
+                <div class="w-1.5 h-1.5 rounded-full bg-yellow-400"></div>
+                <div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
+              </div>
+              <div class="w-2 h-2 rounded-full border border-slate-400"></div>
+            </div>
+            <div class="text-center my-auto">
+              <span class="text-[10px] font-black text-brand-orange block tracking-wider">ET</span>
+              <span class="text-[5px] font-bold text-slate-700 tracking-tight block">Esston Technology</span>
+            </div>
+            <div class="w-full h-1 bg-slate-300 rounded"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- END: HeroBanner -->
+
+  <!-- BEGIN: MetricStatsCards (DEALER BUSINESS METRICS) -->
+  <section class="grid grid-cols-2 gap-2.5 pt-1" data-purpose="dealer-stats-cards">
+    <!-- Stat 1: Active Enquiries -->
+    <a href="dealer-enquiries.html" class="bg-gradient-to-br from-slate-900 to-[#10203a] text-white p-3 rounded-2xl shadow-xs border border-slate-800 flex flex-col justify-between tap-effect block text-inherit">
+      <div class="flex items-center justify-between text-slate-400">
+        <span class="text-[10px] font-bold uppercase tracking-wider">Active Enquiries</span>
+        <span class="w-6 h-6 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-xs">📋</span>
+      </div>
+      <div class="mt-2">
+        <div class="text-xl font-black text-white">8 <span class="text-[10px] font-bold text-emerald-400 font-normal">+2 today</span></div>
+        <div class="text-[9.5px] text-slate-300 font-medium mt-0.5">3 pending quote approvals</div>
+      </div>
+    </a>
+
+    <!-- Stat 2: Wholesale Tier -->
+    <a href="dealer-profile.html" class="bg-white p-3 rounded-2xl shadow-xs border border-slate-100 flex flex-col justify-between tap-effect block text-inherit">
+      <div class="flex items-center justify-between text-slate-500">
+        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Wholesale Tier</span>
+        <span class="w-6 h-6 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center text-xs font-black">★</span>
+      </div>
+      <div class="mt-2">
+        <div class="text-xl font-black text-slate-900">Gold <span class="text-[11px] font-black text-orange-600">35%</span></div>
+        <div class="text-[9.5px] text-slate-500 font-medium mt-0.5">Tier 1 Direct Factory Margin</div>
+      </div>
+    </a>
+
+    <!-- Stat 3: Available Credit -->
+    <a href="dealer-profile.html" class="bg-white p-3 rounded-2xl shadow-xs border border-slate-100 flex flex-col justify-between tap-effect block text-inherit">
+      <div class="flex items-center justify-between text-slate-500">
+        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Available Credit</span>
+        <span class="w-6 h-6 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-xs font-black">₹</span>
+      </div>
+      <div class="mt-2">
+        <div class="text-xl font-black text-slate-900">₹3.40 L</div>
+        <div class="text-[9.5px] text-emerald-600 font-bold mt-0.5">Limit ₹5.00 L • Net 15 Days</div>
+      </div>
+    </a>
+
+    <!-- Stat 4: Dispatch Tracking -->
+    <div onclick="showToast('BlueDart AWB #94820148: 15 Units in transit from Pune factory', '🚚')" class="bg-white p-3 rounded-2xl shadow-xs border border-slate-100 flex flex-col justify-between tap-effect cursor-pointer">
+      <div class="flex items-center justify-between text-slate-500">
+        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Dispatch Track</span>
+        <span class="w-6 h-6 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-xs">🚚</span>
+      </div>
+      <div class="mt-2">
+        <div class="text-xl font-black text-slate-900">15 Units</div>
+        <div class="text-[9.5px] text-blue-600 font-bold mt-0.5">In Transit • BlueDart Air</div>
+      </div>
+    </div>
+  </section>
+  <!-- END: MetricStatsCards -->
+
+  <!-- BEGIN: QuickActionsSection -->
+  <section class="pt-1" data-purpose="quick-actions-panel">
+    <!-- Section Header -->
+    <div class="flex items-center justify-between mb-2.5">
+      <h2 class="text-base font-black text-slate-900 tracking-tight">Quick Actions</h2>
+      <a class="text-xs font-bold text-brand-orange flex items-center hover:underline" href="dealer-catalogue.html">
+        View All
+        <svg class="w-3.5 h-3.5 ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+        </svg>
+      </a>
+    </div>
+
+    <!-- Quick Action Cards Grid (Direct Dealer Portal Routes) -->
+    <div class="grid grid-cols-2 gap-2.5">
+      <!-- Action 1: Browse Products (DIRECT DEALER CATALOGUE) -->
+      <a href="dealer-catalogue.html" class="block relative h-32 rounded-2xl overflow-hidden shadow-md group cursor-pointer border border-slate-200/80 active:scale-95 transition text-inherit">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBQQeFfSiDxebnZFOaRHx8SPojJ357m7WFfXw_nHBFB1Z_8sS3h7zCnE4Zxu1jQ7OSVb55a6o5DyEY3omOI5AVQhbKt4Pf-jHJQOSCF0A8ReEc5eAIZVunXJ_-LEEtOikGQ7AmFhcgyd8_TJPnUvvvNt6_HI5qQurioiHzWZsucSBZcSza56NyYP-v6YgdciMaolhQSDDC-f__7N8xx6q6HWcF0syU1f05gkqtVh3lGGhhMVOAvhye" alt="Browse Products" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition transform duration-300">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#111A2E]/95 via-[#111A2E]/50 to-transparent"></div>
+        <div class="relative h-full p-3 flex flex-col justify-between z-10">
+          <div class="flex justify-end">
+            <div class="w-6 h-6 rounded-full bg-brand-orange text-white flex items-center justify-center shadow-sm group-hover:scale-105 transition">
+              <svg class="w-3.5 h-3.5 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M8.25 4.5l7.5 7.5-7.5 7.5" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </div>
+          </div>
+          <div>
+            <h3 class="text-xs font-black text-white leading-tight mb-0.5 tracking-tight">Browse Products</h3>
+            <p class="text-[10px] text-slate-300 font-medium leading-tight">Dealer product catalogue</p>
+          </div>
+        </div>
+      </a>
+
+      <!-- Action 2: My Enquiries (DEALER ENQUIRIES) -->
+      <a href="dealer-enquiries.html" class="block relative h-32 rounded-2xl overflow-hidden shadow-md group cursor-pointer border border-slate-200/80 active:scale-95 transition text-inherit">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuANPevtzaKRL3_CLO3H4rQtx7OKTI9G1aOPaSQkLQPbVzHV1oDlPzuXQfBhK_6taHxk16g_Q3oPsMq_JQf7QhPU7RUzOodzqPafnOAk9iCN10GuCypAsgOGdKOVrCETBmQrwqLgIH89vxSZJiL93B2DdRoAhP8k0L6crVAlIoQ90p2IEFFAeEjlv0WMfo-pCfhz8waveBhXqi1tHnoLBF9Ijwhg9QA1NjIn0ahVA1LvOp_bQ0lzAZFE" alt="My Enquiries" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition transform duration-300">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#111A2E]/95 via-[#111A2E]/50 to-transparent"></div>
+        <div class="relative h-full p-3 flex flex-col justify-between z-10">
+          <div class="flex justify-end">
+            <div class="w-6 h-6 rounded-full bg-brand-orange text-white flex items-center justify-center shadow-sm group-hover:scale-105 transition">
+              <svg class="w-3.5 h-3.5 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M8.25 4.5l7.5 7.5-7.5 7.5" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </div>
+          </div>
+          <div>
+            <h3 class="text-xs font-black text-white leading-tight mb-0.5 tracking-tight">My Enquiries</h3>
+            <p class="text-[10px] text-slate-300 font-medium leading-tight">Track &amp; manage RFQs</p>
+          </div>
+        </div>
+      </a>
+
+      <!-- Action 3: Brochures (INTERACTIVE DEALER BROCHURE DOWNLOADS) -->
+      <div onclick="openBrochuresModal()" class="relative h-32 rounded-2xl overflow-hidden shadow-md group cursor-pointer border border-slate-200/80 active:scale-95 transition">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCt5h-ZFBhsBCfbv1vn1UyER3AoQ5QeEuMuSAj-S6Jst7mMpzotijF-kiJ3nm8wRdaCtUDf8LwjsYSvuYMmt8MDK3L5q6S5XcLvxnVUCVLnJuQhTixmihfVzrbGsMkDhwaZGs4WrosgXVlYqNDHpTm8tR8Cr-bUTTMimcDez0JiA0IzCvVBEyBQW2DichCdw4qmNLDRBfQNEtWSoYBqxw6OaGVYZImpnqN8pCmqZycEEAzZ-60iceAi" alt="Brochures" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition transform duration-300">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#111A2E]/95 via-[#111A2E]/50 to-transparent"></div>
+        <div class="relative h-full p-3 flex flex-col justify-between z-10">
+          <div class="flex justify-end">
+            <div class="w-6 h-6 rounded-full bg-brand-orange text-white flex items-center justify-center shadow-sm group-hover:scale-105 transition">
+              <svg class="w-3.5 h-3.5 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M8.25 4.5l7.5 7.5-7.5 7.5" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </div>
+          </div>
+          <div>
+            <h3 class="text-xs font-black text-white leading-tight mb-0.5 tracking-tight">Brochures</h3>
+            <p class="text-[10px] text-slate-300 font-medium leading-tight">Download PDF brochures</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action 4: Help & Support (DEALER SUPER ADMIN DESK) -->
+      <div onclick="openDealerSupportModal()" class="relative h-32 rounded-2xl overflow-hidden shadow-md group cursor-pointer border border-slate-200/80 active:scale-95 transition">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBuhjuBhspoIgv_z6f_F5S9dWwJsRHzR9Qtdta91MzbQy6JuaGz4GAxre-bNo-YkcvqGspRzX5UMlufIIfc5Ib3EowbDzRwrSa8XyzKGkqQwJGbi-fcMNPOOXA1guv2z2JehYRB2hpiGw8d3sbb7z1_hg8x1YY9lqnumpNTckq_Hu_cBmAUO9LlH1fcxYiLV8eHweBNHc9PWRordhv4rTuXF33FLW20WoyUa-dtwuRQjAq_8VKAK_SE" alt="Help &amp; Support" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition transform duration-300">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#111A2E]/95 via-[#111A2E]/50 to-transparent"></div>
+        <div class="relative h-full p-3 flex flex-col justify-between z-10">
+          <div class="flex justify-end">
+            <div class="w-6 h-6 rounded-full bg-brand-orange text-white flex items-center justify-center shadow-sm group-hover:scale-105 transition">
+              <svg class="w-3.5 h-3.5 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M8.25 4.5l7.5 7.5-7.5 7.5" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </div>
+          </div>
+          <div>
+            <h3 class="text-xs font-black text-white leading-tight mb-0.5 tracking-tight">Help &amp; Support</h3>
+            <p class="text-[10px] text-slate-300 font-medium leading-tight">Super Admin assistance</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- END: QuickActionsSection -->
+
+  <!-- BEGIN: FeaturedProductsSection (DEALER CATALOGUE RANGE) -->
+  <section class="pt-1" data-purpose="featured-products-section">
+    <div class="flex items-center justify-between mb-2.5">
+      <div class="flex items-center space-x-2">
+        <h2 class="text-base font-black text-slate-900 tracking-tight">Featured Products</h2>
+        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-orange-50 text-brand-orange border border-orange-200/50">Dealer Wholesale</span>
+      </div>
+      <a class="text-xs font-bold text-brand-orange flex items-center hover:underline" href="dealer-catalogue.html">
+        View All
+        <svg class="w-3.5 h-3.5 ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+        </svg>
+      </a>
+    </div>
+
+    <div class="flex overflow-x-auto space-x-3.5 pb-2 -mx-4 px-4 no-scrollbar">
+      <!-- Product 1: GSM Motor Starter (1 Phase) -->
+      <div class="w-60 shrink-0 bg-white rounded-2xl p-3.5 border border-slate-100 shadow-sm flex flex-col justify-between group">
+        <a href="dealer-catalogue.html" class="block text-inherit">
+          <div class="h-28 bg-slate-50 rounded-xl overflow-hidden flex items-center justify-center p-2 mb-2.5 relative border border-slate-100">
+            <img src="single_phase_agricultural_motor_starter_panel_electrical_control_box_grey_and/screen.png" alt="GSM Motor Starter (1 Phase)" class="w-full h-full object-contain group-hover:scale-105 transition duration-300">
+            <span class="absolute top-1 left-1 px-1.5 py-0.5 rounded text-[8px] font-black bg-brand-orange text-white uppercase tracking-wider shadow-xs">Top Seller</span>
+          </div>
+          <div class="flex items-start justify-between gap-1 mb-1">
+            <h3 class="text-xs font-bold text-slate-900 leading-tight line-clamp-1">GSM Motor Starter (1 Phase)</h3>
+            <span class="text-[10px] font-bold text-brand-orange shrink-0">₹3,450/u</span>
+          </div>
+          <p class="text-[10px] text-slate-500 font-medium leading-snug line-clamp-1 mb-2">Remote mobile operation &amp; dry-run protection.</p>
+          <div class="flex flex-wrap gap-1 mb-3">
+            <span class="px-2 py-0.5 rounded-full text-[9px] font-semibold bg-slate-100 text-slate-700">Single Phase</span>
+            <span class="px-2 py-0.5 rounded-full text-[9px] font-semibold bg-slate-100 text-slate-700">1 HP - 2 HP</span>
+            <span class="px-2 py-0.5 rounded-full text-[9px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100/60">GSM Control</span>
+          </div>
+        </a>
+        <div class="pt-2 border-t border-slate-100">
+          <div class="flex items-center space-x-1 text-[10px] text-slate-500 font-medium mb-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span>
+            <span>In Stock • Direct Dispatch</span>
+          </div>
+          <button onclick="openShareQuoteModal('GSM Motor Starter (1 Phase)', '₹3,450', 'Single Phase 1-2 HP GSM Remote')" class="w-full py-2 bg-gradient-to-r from-orange-500 to-red-500 text-white text-xs font-semibold rounded-xl text-center shadow-sm active:scale-95 transition flex items-center justify-center space-x-1 cursor-pointer">
+            <span>Share Quote</span>
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M8.25 4.5l7.5 7.5-7.5 7.5" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Product 2: GSM Motor Starter (3 Phase) -->
+      <div class="w-60 shrink-0 bg-white rounded-2xl p-3.5 border border-slate-100 shadow-sm flex flex-col justify-between group">
+        <a href="dealer-catalogue.html" class="block text-inherit">
+          <div class="h-28 bg-slate-50 rounded-xl overflow-hidden flex items-center justify-center p-2 mb-2.5 relative border border-slate-100">
+            <img src="esston_agricultural_3_phase_motor_starter_panel_box_white_metal_enclosure_with/screen.png" alt="GSM Motor Starter (3 Phase)" class="w-full h-full object-contain group-hover:scale-105 transition duration-300">
+            <span class="absolute top-1 left-1 px-1.5 py-0.5 rounded text-[8px] font-black bg-blue-600 text-white uppercase tracking-wider shadow-xs">Popular</span>
+          </div>
+          <div class="flex items-start justify-between gap-1 mb-1">
+            <h3 class="text-xs font-bold text-slate-900 leading-tight line-clamp-1">GSM Motor Starter (3 Phase)</h3>
+            <span class="text-[10px] font-bold text-brand-orange shrink-0">₹4,950/u</span>
+          </div>
+          <p class="text-[10px] text-slate-500 font-medium leading-snug line-clamp-1 mb-2">Heavy-duty submersible motor protection with auto-switch.</p>
+          <div class="flex flex-wrap gap-1 mb-3">
+            <span class="px-2 py-0.5 rounded-full text-[9px] font-semibold bg-slate-100 text-slate-700">Three Phase</span>
+            <span class="px-2 py-0.5 rounded-full text-[9px] font-semibold bg-slate-100 text-slate-700">3 HP - 10 HP</span>
+            <span class="px-2 py-0.5 rounded-full text-[9px] font-semibold bg-blue-50 text-blue-700 border border-blue-100/60">Phase Trip</span>
+          </div>
+        </a>
+        <div class="pt-2 border-t border-slate-100">
+          <div class="flex items-center space-x-1 text-[10px] text-slate-500 font-medium mb-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span>
+            <span>High Demand • Ready Stock</span>
+          </div>
+          <button onclick="openShareQuoteModal('GSM Motor Starter (3 Phase)', '₹4,950', 'Three Phase 3-10 HP Auto Trip')" class="w-full py-2 bg-gradient-to-r from-orange-500 to-red-500 text-white text-xs font-semibold rounded-xl text-center shadow-sm active:scale-95 transition flex items-center justify-center space-x-1 cursor-pointer">
+            <span>Share Quote</span>
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M8.25 4.5l7.5 7.5-7.5 7.5" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Product 3: Solar Water Pump Starter -->
+      <div class="w-60 shrink-0 bg-white rounded-2xl p-3.5 border border-slate-100 shadow-sm flex flex-col justify-between group">
+        <a href="dealer-catalogue.html" class="block text-inherit">
+          <div class="h-28 bg-slate-50 rounded-xl overflow-hidden flex items-center justify-center p-2 mb-2.5 relative border border-slate-100">
+            <img src="esston_solar_water_pump_motor_starter_box_standing_next_to_a_modern_blue/screen.png" alt="Solar Water Pump Starter" class="w-full h-full object-contain group-hover:scale-105 transition duration-300">
+            <span class="absolute top-1 left-1 px-1.5 py-0.5 rounded text-[8px] font-black bg-amber-600 text-white uppercase tracking-wider shadow-xs">Solar Tech</span>
+          </div>
+          <div class="flex items-start justify-between gap-1 mb-1">
+            <h3 class="text-xs font-bold text-slate-900 leading-tight line-clamp-1">Solar Water Pump Starter</h3>
+            <span class="text-[10px] font-bold text-brand-orange shrink-0">₹5,800/u</span>
+          </div>
+          <p class="text-[10px] text-slate-500 font-medium leading-snug line-clamp-1 mb-2">Hybrid auto-switch inverter starter for high-efficiency solar pumps.</p>
+          <div class="flex flex-wrap gap-1 mb-3">
+            <span class="px-2 py-0.5 rounded-full text-[9px] font-semibold bg-amber-50 text-amber-700 border border-amber-100/60">Solar Compatible</span>
+            <span class="px-2 py-0.5 rounded-full text-[9px] font-semibold bg-slate-100 text-slate-700">Hybrid Auto</span>
+            <span class="px-2 py-0.5 rounded-full text-[9px] font-semibold bg-slate-100 text-slate-700">DC/AC Dual</span>
+          </div>
+        </a>
+        <div class="pt-2 border-t border-slate-100">
+          <div class="flex items-center space-x-1 text-[10px] text-slate-500 font-medium mb-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span>
+            <span>PM-KUSUM Approved</span>
+          </div>
+          <button onclick="openShareQuoteModal('Solar Water Pump Starter', '₹5,800', 'Hybrid Dual Inverter Controller')" class="w-full py-2 bg-gradient-to-r from-orange-500 to-red-500 text-white text-xs font-semibold rounded-xl text-center shadow-sm active:scale-95 transition flex items-center justify-center space-x-1 cursor-pointer">
+            <span>Share Quote</span>
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M8.25 4.5l7.5 7.5-7.5 7.5" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Product 4: Accessories & Control Enclosures -->
+      <div class="w-60 shrink-0 bg-white rounded-2xl p-3.5 border border-slate-100 shadow-sm flex flex-col justify-between group">
+        <a href="dealer-catalogue.html" class="block text-inherit">
+          <div class="h-28 bg-slate-50 rounded-xl overflow-hidden flex items-center justify-center p-2 mb-2.5 relative border border-slate-100">
+            <img src="agricultural_motor_starter_installation_accessories_and_kit_external_gsm_high/screen.png" alt="Accessories &amp; Control Enclosures" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            <span class="absolute top-1 left-1 px-1.5 py-0.5 rounded text-[8px] font-black bg-slate-700 text-white uppercase tracking-wider shadow-xs">Genuine Parts</span>
+          </div>
+          <div class="flex items-start justify-between gap-1 mb-1">
+            <h3 class="text-xs font-bold text-slate-900 leading-tight line-clamp-1">Accessories &amp; Control Enclosures</h3>
+            <span class="text-[10px] font-bold text-brand-orange shrink-0">Bulk Packs</span>
+          </div>
+          <p class="text-[10px] text-slate-500 font-medium leading-snug line-clamp-1 mb-2">External high-gain GSM antennas, IP65 waterproof enclosures.</p>
+          <div class="flex flex-wrap gap-1 mb-3">
+            <span class="px-2 py-0.5 rounded-full text-[9px] font-semibold bg-slate-100 text-slate-700">IP65 Waterproof</span>
+            <span class="px-2 py-0.5 rounded-full text-[9px] font-semibold bg-slate-100 text-slate-700">OEM Certified</span>
+            <span class="px-2 py-0.5 rounded-full text-[9px] font-semibold bg-purple-50 text-purple-700 border border-purple-100/60">High-Gain</span>
+          </div>
+        </a>
+        <div class="pt-2 border-t border-slate-100">
+          <div class="flex items-center space-x-1 text-[10px] text-slate-500 font-medium mb-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span>
+            <span>Bulk Packets Available</span>
+          </div>
+          <button onclick="openShareQuoteModal('Accessories & Antennas', '₹450/pack', 'IP65 Enclosure & High-Gain GSM Antennas')" class="w-full py-2 bg-gradient-to-r from-orange-500 to-red-500 text-white text-xs font-semibold rounded-xl text-center shadow-sm active:scale-95 transition flex items-center justify-center space-x-1 cursor-pointer">
+            <span>Share Quote</span>
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M8.25 4.5l7.5 7.5-7.5 7.5" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- END: FeaturedProductsSection -->
+
+  <!-- BEGIN: RecentlyViewedSection -->
+  <section class="pt-1" id="section-recently-viewed" data-purpose="recently-viewed-section">
+    <div class="flex items-center justify-between mb-2.5">
+      <div class="flex items-center space-x-2">
+        <h2 class="text-base font-black text-slate-900 tracking-tight">Recently Viewed</h2>
+        <span id="recent-count" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-600 border border-slate-200">4 items</span>
+      </div>
+      <button onclick="clearRecentlyViewed()" class="text-xs font-bold text-brand-orange flex items-center hover:underline cursor-pointer">
+        Clear
+      </button>
+    </div>
+    <div id="recent-items-container" class="flex overflow-x-auto space-x-3.5 pb-2 -mx-4 px-4 no-scrollbar">
+      <!-- Card 1 -->
+      <div class="w-48 shrink-0 bg-white rounded-2xl p-3 border border-slate-100 shadow-sm flex flex-col justify-between group">
+        <a href="dealer-catalogue.html" class="block text-inherit">
+          <div class="h-24 bg-slate-50 rounded-xl overflow-hidden flex items-center justify-center p-2 mb-2 relative border border-slate-100">
+            <img src="single_phase_agricultural_motor_starter_panel_electrical_control_box_grey_and/screen.png" alt="Esston GSM Motor Starter (1 Phase)" class="w-full h-full object-contain group-hover:scale-105 transition duration-300">
+            <span class="absolute top-1 left-1 px-1.5 py-0.5 rounded text-[8px] font-bold bg-slate-800/80 text-white tracking-wider backdrop-blur-md">2h ago</span>
+          </div>
+          <h3 class="text-xs font-bold text-slate-900 leading-tight line-clamp-1 mb-1">GSM Starter (1 Phase)</h3>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[9px] font-semibold text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded">1 HP - 2 HP</span>
+            <span class="text-[10px] font-bold text-brand-orange">₹3,450/u</span>
+          </div>
+        </a>
+        <button onclick="openQuickOrderModal('GSM Starter (1 Phase)', '₹3,450')" class="w-full py-1.5 bg-orange-50 hover:bg-orange-500 text-brand-orange hover:text-white border border-orange-200/70 text-xs font-bold rounded-xl text-center active:scale-95 transition flex items-center justify-center space-x-1 cursor-pointer">
+          <span>Quick Order</span>
+        </button>
+      </div>
+      <!-- Card 2 -->
+      <div class="w-48 shrink-0 bg-white rounded-2xl p-3 border border-slate-100 shadow-sm flex flex-col justify-between group">
+        <a href="dealer-catalogue.html" class="block text-inherit">
+          <div class="h-24 bg-slate-50 rounded-xl overflow-hidden flex items-center justify-center p-2 mb-2 relative border border-slate-100">
+            <img src="esston_agricultural_3_phase_motor_starter_panel_box_white_metal_enclosure_with/screen.png" alt="Esston GSM Motor Starter (3 Phase)" class="w-full h-full object-contain group-hover:scale-105 transition duration-300">
+            <span class="absolute top-1 left-1 px-1.5 py-0.5 rounded text-[8px] font-bold bg-slate-800/80 text-white tracking-wider backdrop-blur-md">Yesterday</span>
+          </div>
+          <h3 class="text-xs font-bold text-slate-900 leading-tight line-clamp-1 mb-1">GSM Starter (3 Phase)</h3>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[9px] font-semibold text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded">3 HP - 10 HP</span>
+            <span class="text-[10px] font-bold text-brand-orange">₹4,950/u</span>
+          </div>
+        </a>
+        <button onclick="openQuickOrderModal('GSM Starter (3 Phase)', '₹4,950')" class="w-full py-1.5 bg-orange-50 hover:bg-orange-500 text-brand-orange hover:text-white border border-orange-200/70 text-xs font-bold rounded-xl text-center active:scale-95 transition flex items-center justify-center space-x-1 cursor-pointer">
+          <span>Quick Order</span>
+        </button>
+      </div>
+      <!-- Card 3 -->
+      <div class="w-48 shrink-0 bg-white rounded-2xl p-3 border border-slate-100 shadow-sm flex flex-col justify-between group">
+        <a href="dealer-catalogue.html" class="block text-inherit">
+          <div class="h-24 bg-slate-50 rounded-xl overflow-hidden flex items-center justify-center p-2 mb-2 relative border border-slate-100">
+            <img src="esston_solar_water_pump_motor_starter_box_standing_next_to_a_modern_blue/screen.png" alt="Esston Solar Water Pump Starter" class="w-full h-full object-contain group-hover:scale-105 transition duration-300">
+            <span class="absolute top-1 left-1 px-1.5 py-0.5 rounded text-[8px] font-bold bg-slate-800/80 text-white tracking-wider backdrop-blur-md">2 days ago</span>
+          </div>
+          <h3 class="text-xs font-bold text-slate-900 leading-tight line-clamp-1 mb-1">Solar Pump Starter</h3>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[9px] font-semibold text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-100/60">Hybrid</span>
+            <span class="text-[10px] font-bold text-brand-orange">₹5,800/u</span>
+          </div>
+        </a>
+        <button onclick="openQuickOrderModal('Solar Pump Starter', '₹5,800')" class="w-full py-1.5 bg-orange-50 hover:bg-orange-500 text-brand-orange hover:text-white border border-orange-200/70 text-xs font-bold rounded-xl text-center active:scale-95 transition flex items-center justify-center space-x-1 cursor-pointer">
+          <span>Quick Order</span>
+        </button>
+      </div>
+      <!-- Card 4 -->
+      <div class="w-48 shrink-0 bg-white rounded-2xl p-3 border border-slate-100 shadow-sm flex flex-col justify-between group">
+        <a href="dealer-catalogue.html" class="block text-inherit">
+          <div class="h-24 bg-slate-50 rounded-xl overflow-hidden flex items-center justify-center p-2 mb-2 relative border border-slate-100">
+            <img src="agricultural_motor_starter_installation_accessories_and_kit_external_gsm_high/screen.png" alt="Installation Kit &amp; GSM Antenna" class="w-full h-full object-contain group-hover:scale-105 transition duration-300">
+            <span class="absolute top-1 left-1 px-1.5 py-0.5 rounded text-[8px] font-bold bg-slate-800/80 text-white tracking-wider backdrop-blur-md">3 days ago</span>
+          </div>
+          <h3 class="text-xs font-bold text-slate-900 leading-tight line-clamp-1 mb-1">GSM Antenna Kit</h3>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[9px] font-semibold text-purple-700 bg-purple-50 px-1.5 py-0.5 rounded border border-purple-100/60">High-Gain</span>
+            <span class="text-[10px] font-bold text-brand-orange">Bulk Pack</span>
+          </div>
+        </a>
+        <button onclick="openQuickOrderModal('GSM Antenna Kit', '₹450/pack')" class="w-full py-1.5 bg-orange-50 hover:bg-orange-500 text-brand-orange hover:text-white border border-orange-200/70 text-xs font-bold rounded-xl text-center active:scale-95 transition flex items-center justify-center space-x-1 cursor-pointer">
+          <span>Quick Order</span>
+        </button>
+      </div>
+    </div>
+  </section>
+  <!-- END: RecentlyViewedSection -->
+
+  <!-- BEGIN: NeedAssistanceCard (DIRECT SUPER ADMIN CONTACT) -->
+  <section class="relative overflow-hidden rounded-2xl bg-[#FFF9F3] border border-orange-200/70 p-4 shadow-xs" data-purpose="support-callout-card">
+    <div class="absolute -right-4 top-0 bottom-0 w-16 diagonal-stripes transform skew-x-12 opacity-85 pointer-events-none"></div>
+    <div class="relative z-10 flex items-center justify-between pr-2">
+      <div class="max-w-[58%]">
+        <h3 class="text-sm font-black text-slate-900 leading-snug">Need Dealer Assistance?</h3>
+        <p class="text-[10px] text-slate-600 font-medium leading-relaxed mt-0.5">
+          Connect directly with your dedicated Esston Super Admin desk for urgent dispatches &amp; RFQs.
+        </p>
+      </div>
+      <!-- Contact Support Pill Button (Opens Dealer Support Desk) -->
+      <button onclick="openDealerSupportModal()" class="bg-brand-orange hover:bg-brand-orangeHover text-white px-3.5 py-2 rounded-full font-bold text-xs flex items-center space-x-1.5 shadow-md shadow-orange-500/20 active:scale-95 transition shrink-0 z-20 cursor-pointer">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM12 18.75h7.5A2.25 2.25 0 0021.75 16.5v-9A2.25 2.25 0 0019.5 5.25H12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+          <path d="M12 12h7.5" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+        </svg>
+        <span class="tracking-tight text-[11px]">Contact Admin</span>
+      </button>
+    </div>
+  </section>
+  <!-- END: NeedAssistanceCard -->
+
+</main>
+
+<!-- BEGIN: BottomNavigation (SYNCHRONIZED DEALER PORTAL TABS) -->
+<nav class="fixed md:absolute bottom-0 left-0 right-0 max-w-[430px] mx-auto bg-white/95 backdrop-blur-md border-t border-slate-200 z-50 px-2 py-2" data-purpose="persistent-bottom-tab-bar">
+  <div class="grid grid-cols-4 items-center text-center">
+    <!-- 1: Dashboard (Active) -->
+    <a class="flex flex-col items-center justify-center text-[#f9570c] group relative py-1" href="dealer-dashboard.html">
+      <svg class="w-6 h-6 stroke-[2.2]" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z"></path>
+        <path d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z"></path>
+      </svg>
+      <span class="text-[10px] font-bold tracking-tight mt-0.5">Dashboard</span>
+      <!-- Active Tab Underline Indicator -->
+      <span class="w-12 h-0.5 bg-[#f9570c] rounded-full absolute -bottom-1"></span>
+    </a>
+
+    <!-- 2: Products (DEALER PRODUCT CATALOGUE) -->
+    <a class="flex flex-col items-center justify-center text-slate-500 hover:text-slate-800 transition group py-1" href="dealer-catalogue.html">
+      <svg class="w-6 h-6 stroke-[1.8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+      <span class="text-[10px] font-medium tracking-tight mt-0.5">Products</span>
+    </a>
+
+    <!-- 3: Enquiries (DEALER ENQUIRIES) -->
+    <a class="flex flex-col items-center justify-center text-slate-500 hover:text-slate-800 transition group py-1" href="dealer-enquiries.html">
+      <svg class="w-6 h-6 stroke-[1.8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+      <span class="text-[10px] font-medium tracking-tight mt-0.5">Enquiries</span>
+    </a>
+
+    <!-- 4: More / Profile (DEALER PROFILE) -->
+    <a class="flex flex-col items-center justify-center text-slate-500 hover:text-slate-800 transition group py-1" href="dealer-profile.html">
+      <svg class="w-6 h-6 stroke-[2]" fill="currentColor" viewBox="0 0 24 24">
+        <circle cx="5" cy="12" r="1.75"></circle>
+        <circle cx="12" cy="12" r="1.75"></circle>
+        <circle cx="19" cy="12" r="1.75"></circle>
+      </svg>
+      <span class="text-[10px] font-medium tracking-tight mt-0.5">More</span>
+    </a>
+  </div>
+</nav>
+<!-- END: BottomNavigation -->
+
+</div>
+
+<!-- ==================== MODAL 1: NOTIFICATIONS MODAL ==================== -->
+<div id="modal-notifications" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-end justify-center hidden">
+  <div class="w-full max-w-[430px] bg-white rounded-t-3xl p-5 space-y-4 max-h-[80vh] overflow-y-auto no-scrollbar shadow-2xl animate-fade-in">
+    <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+      <div class="flex items-center space-x-2">
+        <div class="w-8 h-8 rounded-xl bg-orange-100 text-brand-orange flex items-center justify-center text-sm font-bold">
+          <i class="fa-solid fa-bell"></i>
+        </div>
+        <div>
+          <h3 class="text-sm font-black text-slate-900">Dealer Notifications</h3>
+          <p class="text-[10px] text-slate-500 font-medium">B2B updates &amp; Super Admin dispatches</p>
+        </div>
+      </div>
+      <button onclick="closeModal('modal-notifications')" class="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-slate-200">
+        ✕
+      </button>
+    </div>
+
+    <div class="space-y-2.5 text-xs">
+      <div class="p-3 rounded-2xl bg-orange-50/70 border border-orange-200/80 flex items-start space-x-3">
+        <div class="w-2 h-2 rounded-full bg-orange-500 mt-1.5 shrink-0"></div>
+        <div>
+          <span class="font-bold text-slate-900 block leading-tight">Q4 Wholesale Price Revision Available</span>
+          <p class="text-[11px] text-slate-600 mt-0.5">3-Phase Submersible starter margins increased to 35% for Gold Dealers.</p>
+          <span class="text-[9.5px] text-slate-400 font-medium block mt-1">10 mins ago</span>
+        </div>
+      </div>
+
+      <div class="p-3 rounded-2xl bg-slate-50 border border-slate-100 flex items-start space-x-3">
+        <div class="w-2 h-2 rounded-full bg-blue-500 mt-1.5 shrink-0"></div>
+        <div>
+          <span class="font-bold text-slate-900 block leading-tight">BlueDart Shipment Dispatched</span>
+          <p class="text-[11px] text-slate-600 mt-0.5">15 Units of GSM Starter (1 Phase) dispatched from factory. AWB #94820148.</p>
+          <span class="text-[9.5px] text-slate-400 font-medium block mt-1">2 hours ago</span>
+        </div>
+      </div>
+
+      <div class="p-3 rounded-2xl bg-slate-50 border border-slate-100 flex items-start space-x-3">
+        <div class="w-2 h-2 rounded-full bg-emerald-500 mt-1.5 shrink-0"></div>
+        <div>
+          <span class="font-bold text-slate-900 block leading-tight">GST Input Tax Credit Statement Ready</span>
+          <p class="text-[11px] text-slate-600 mt-0.5">September B2B GSTR-1 invoices synced for GSTIN 27AABCE8842F1Z9.</p>
+          <span class="text-[9.5px] text-slate-400 font-medium block mt-1">Yesterday</span>
+        </div>
+      </div>
+    </div>
+
+    <button onclick="closeModal('modal-notifications')" class="w-full py-2.5 bg-slate-900 text-white rounded-xl font-bold text-xs">
+      Mark All as Read
+    </button>
+  </div>
+</div>
+
+<!-- ==================== MODAL 2: BROCHURES DOWNLOAD MODAL ==================== -->
+<div id="modal-brochures" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-end justify-center hidden">
+  <div class="w-full max-w-[430px] bg-white rounded-t-3xl p-5 space-y-4 max-h-[85vh] overflow-y-auto no-scrollbar shadow-2xl animate-fade-in">
+    <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+      <div class="flex items-center space-x-2">
+        <div class="w-8 h-8 rounded-xl bg-orange-100 text-brand-orange flex items-center justify-center text-sm font-bold">
+          <i class="fa-solid fa-file-pdf"></i>
+        </div>
+        <div>
+          <h3 class="text-sm font-black text-slate-900">Download Product Brochures</h3>
+          <p class="text-[10px] text-slate-500 font-medium">Dealer high-res technical datasheets</p>
+        </div>
+      </div>
+      <button onclick="closeModal('modal-brochures')" class="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-slate-200">
+        ✕
+      </button>
+    </div>
+
+    <div class="space-y-2.5">
+      <!-- Brochure Item 1 -->
+      <div onclick="downloadBrochure('Esston GSM Single Phase Starter Brochure (PDF)')" class="p-3 rounded-2xl bg-slate-50 hover:bg-orange-50/60 border border-slate-200/80 flex items-center justify-between transition cursor-pointer tap-effect">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-xl bg-red-100 text-red-600 flex items-center justify-center text-base font-black">
+            PDF
+          </div>
+          <div>
+            <h4 class="text-xs font-bold text-slate-900 leading-tight">GSM Motor Starter (1 Phase)</h4>
+            <span class="text-[10px] text-slate-500 font-medium">1 HP - 2 HP • 2.4 MB • Full Specs &amp; Wiring</span>
+          </div>
+        </div>
+        <i class="fa-solid fa-circle-down text-brand-orange text-lg"></i>
+      </div>
+
+      <!-- Brochure Item 2 -->
+      <div onclick="downloadBrochure('Esston GSM 3 Phase Controller Datasheet (PDF)')" class="p-3 rounded-2xl bg-slate-50 hover:bg-orange-50/60 border border-slate-200/80 flex items-center justify-between transition cursor-pointer tap-effect">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-base font-black">
+            PDF
+          </div>
+          <div>
+            <h4 class="text-xs font-bold text-slate-900 leading-tight">GSM Motor Starter (3 Phase)</h4>
+            <span class="text-[10px] text-slate-500 font-medium">3 HP - 10 HP • 3.1 MB • Heavy Duty Submersible</span>
+          </div>
+        </div>
+        <i class="fa-solid fa-circle-down text-brand-orange text-lg"></i>
+      </div>
+
+      <!-- Brochure Item 3 -->
+      <div onclick="downloadBrochure('Esston Solar Pump Inverter Starter Brochure (PDF)')" class="p-3 rounded-2xl bg-slate-50 hover:bg-orange-50/60 border border-slate-200/80 flex items-center justify-between transition cursor-pointer tap-effect">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-base font-black">
+            PDF
+          </div>
+          <div>
+            <h4 class="text-xs font-bold text-slate-900 leading-tight">Solar Water Pump Starter</h4>
+            <span class="text-[10px] text-slate-500 font-medium">Hybrid Auto Dual • PM-KUSUM Approved • 1.9 MB</span>
+          </div>
+        </div>
+        <i class="fa-solid fa-circle-down text-brand-orange text-lg"></i>
+      </div>
+
+      <!-- Brochure Item 4 -->
+      <div onclick="downloadBrochure('Esston Accessories & GSM Kit Catalogue (PDF)')" class="p-3 rounded-2xl bg-slate-50 hover:bg-orange-50/60 border border-slate-200/80 flex items-center justify-between transition cursor-pointer tap-effect">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center text-base font-black">
+            PDF
+          </div>
+          <div>
+            <h4 class="text-xs font-bold text-slate-900 leading-tight">Accessories &amp; High-Gain Antennas</h4>
+            <span class="text-[10px] text-slate-500 font-medium">IP65 Waterproof Enclosures • 1.2 MB</span>
+          </div>
+        </div>
+        <i class="fa-solid fa-circle-down text-brand-orange text-lg"></i>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL 3: DEALER SUPER ADMIN SUPPORT ==================== -->
+<div id="modal-support" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-end justify-center hidden">
+  <div class="w-full max-w-[430px] bg-white rounded-t-3xl p-5 space-y-4 max-h-[85vh] overflow-y-auto no-scrollbar shadow-2xl animate-fade-in">
+    <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+      <div class="flex items-center space-x-2">
+        <div class="w-8 h-8 rounded-xl bg-orange-100 text-brand-orange flex items-center justify-center text-sm font-bold">
+          <i class="fa-solid fa-headset"></i>
+        </div>
+        <div>
+          <h3 class="text-sm font-black text-slate-900">Dealer Super Admin Desk</h3>
+          <p class="text-[10px] text-slate-500 font-medium">Priority B2B hotline &amp; dispatch desk</p>
+        </div>
+      </div>
+      <button onclick="closeModal('modal-support')" class="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-slate-200">
+        ✕
+      </button>
+    </div>
+
+    <div class="p-3.5 rounded-2xl bg-gradient-to-br from-orange-50 to-amber-50 border border-orange-200 text-slate-800 space-y-1">
+      <div class="text-[10px] font-black uppercase tracking-wider text-orange-700">Dedicated Account Manager</div>
+      <div class="text-sm font-extrabold text-slate-900">Rohan Deshmukh</div>
+      <div class="text-[11px] text-slate-600 font-medium">Assigned to: Aditya Traders (Pune Division)</div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-2.5">
+      <a href="tel:+919822012345" class="py-3 px-3 bg-slate-900 hover:bg-slate-800 text-white rounded-2xl font-bold text-xs flex flex-col items-center justify-center gap-1.5 shadow-sm tap-effect">
+        <i class="fa-solid fa-phone text-emerald-400 text-sm"></i>
+        <span>Call Admin Desk</span>
+        <span class="text-[9.5px] text-slate-400 font-mono">+91 98220 12345</span>
+      </a>
+      <a href="https://wa.me/919822012345?text=Hello%20Esston%20Admin,%20Aditya%20Traders%20calling%20regarding%20wholesale%20order" target="_blank" class="py-3 px-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl font-bold text-xs flex flex-col items-center justify-center gap-1.5 shadow-sm tap-effect">
+        <i class="fa-brands fa-whatsapp text-lg"></i>
+        <span>WhatsApp Admin</span>
+        <span class="text-[9.5px] text-emerald-100 font-medium">Instant Response</span>
+      </a>
+    </div>
+
+    <a href="dealer-enquiries.html" class="block w-full py-2.5 text-center bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs rounded-xl tap-effect">
+      View &amp; Submit B2B Enquiries →
+    </a>
+  </div>
+</div>
+
+<!-- ==================== MODAL 4: SHARE QUOTE / QUICK ORDER MODAL ==================== -->
+<div id="modal-quote" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-end justify-center hidden">
+  <div class="w-full max-w-[430px] bg-white rounded-t-3xl p-5 space-y-4 max-h-[85vh] overflow-y-auto no-scrollbar shadow-2xl animate-fade-in">
+    <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+      <div>
+        <span class="text-[9.5px] font-bold text-brand-orange uppercase tracking-wider">Customer Quotation</span>
+        <h3 id="quote-product-name" class="text-sm font-black text-slate-900">GSM Motor Starter (1 Phase)</h3>
+      </div>
+      <button onclick="closeModal('modal-quote')" class="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-slate-200">
+        ✕
+      </button>
+    </div>
+
+    <div class="space-y-3 text-xs">
+      <div>
+        <label class="block font-bold text-slate-700 mb-1">Customer / Farmer Name</label>
+        <input id="quote-cust-name" type="text" placeholder="e.g. Ramesh Patil" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-medium focus:outline-none focus:border-brand-orange">
+      </div>
+      <div class="grid grid-cols-2 gap-2">
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Dealer Price</label>
+          <input id="quote-dealer-price" type="text" readonly class="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs font-bold text-slate-700">
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Quoted Price (₹)</label>
+          <input id="quote-customer-price" type="text" placeholder="e.g. 4,200" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-bold text-orange-600 focus:outline-none focus:border-brand-orange">
+        </div>
+      </div>
+      <div>
+        <label class="block font-bold text-slate-700 mb-1">Quantity (Units)</label>
+        <input id="quote-qty" type="number" value="1" min="1" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-bold focus:outline-none focus:border-brand-orange">
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-2 pt-1">
+      <button onclick="submitQuote('whatsapp')" class="py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-1.5 tap-effect cursor-pointer">
+        <i class="fa-brands fa-whatsapp text-sm"></i>
+        <span>Share WhatsApp</span>
+      </button>
+      <button onclick="submitQuote('enquiry')" class="py-2.5 bg-brand-orange hover:bg-brand-orangeHover text-white font-bold rounded-xl text-xs flex items-center justify-center gap-1.5 tap-effect cursor-pointer">
+        <i class="fa-solid fa-file-invoice text-xs"></i>
+        <span>Add to Enquiries</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Notification element -->
+<div id="toast" class="fixed top-5 z-50 transition-all duration-300 opacity-0 -translate-y-4 pointer-events-none bg-slate-900 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-xl flex items-center space-x-2 border border-slate-700">
+  <span id="toast-icon">✓</span>
+  <span id="toast-msg">Updated</span>
+</div>
+
+<script>
+  function showToast(msg, icon = '✓') {
+    const toast = document.getElementById('toast');
+    const toastMsg = document.getElementById('toast-msg');
+    const toastIcon = document.getElementById('toast-icon');
+    if (!toast) return;
+    toastMsg.innerText = msg;
+    toastIcon.innerText = icon;
+    toast.classList.remove('opacity-0', '-translate-y-4', 'pointer-events-none');
+    toast.classList.add('opacity-100', 'translate-y-0');
+    setTimeout(() => {
+      toast.classList.add('opacity-0', '-translate-y-4', 'pointer-events-none');
+      toast.classList.remove('opacity-100', 'translate-y-0');
+    }, 2500);
+  }
+
+  function openNotificationsModal() {
+    document.getElementById('modal-notifications').classList.remove('hidden');
+  }
+
+  function openBrochuresModal() {
+    document.getElementById('modal-brochures').classList.remove('hidden');
+  }
+
+  function openDealerSupportModal() {
+    document.getElementById('modal-support').classList.remove('hidden');
+  }
+
+  function closeModal(id) {
+    const el = document.getElementById(id);
+    if (el) el.classList.add('hidden');
+  }
+
+  function downloadBrochure(title) {
+    showToast(`Downloading: ${title}`, '⬇️');
+    closeModal('modal-brochures');
+  }
+
+  function openShareQuoteModal(name, price, desc) {
+    const modal = document.getElementById('modal-quote');
+    document.getElementById('quote-product-name').innerText = name;
+    document.getElementById('quote-dealer-price').value = price;
+    const num = parseInt(price.replace(/[^0-9]/g, '')) || 3500;
+    document.getElementById('quote-customer-price').value = '₹' + Math.round(num * 1.25);
+    modal.classList.remove('hidden');
+  }
+
+  function openQuickOrderModal(name, price) {
+    openShareQuoteModal(name, price, 'Direct Dealer Order');
+  }
+
+  function submitQuote(mode) {
+    const name = document.getElementById('quote-product-name').innerText;
+    const cust = document.getElementById('quote-cust-name').value || 'Customer';
+    const price = document.getElementById('quote-customer-price').value;
+    const qty = document.getElementById('quote-qty').value || '1';
+
+    closeModal('modal-quote');
+    if (mode === 'whatsapp') {
+      showToast(`Generating WhatsApp quote for ${cust}...`, '💬');
+      const text = encodeURIComponent(`Hello ${cust},\n\nEsston Technology Quotation from Aditya Traders:\nProduct: ${name}\nQuantity: ${qty} Unit(s)\nPrice: ${price} (Includes 18% GST)\n\nPlease contact Aditya Traders for order confirmation.`);
+      setTimeout(() => {
+        window.open(`https://wa.me/?text=${text}`, '_blank');
+      }, 500);
+    } else {
+      showToast(`Added quotation for ${name} to Dealer Enquiries!`, '📋');
+      setTimeout(() => {
+        window.location.href = 'dealer-enquiries.html';
+      }, 700);
+    }
+  }
+
+  function clearRecentlyViewed() {
+    const container = document.getElementById('recent-items-container');
+    const count = document.getElementById('recent-count');
+    if (container) {
+      container.innerHTML = `
+        <div class="w-full py-6 text-center text-xs text-slate-400 font-medium">
+          No recent items. Browse the <a href="dealer-catalogue.html" class="text-brand-orange font-bold underline">Dealer Catalogue</a>.
+        </div>
+      `;
+    }
+    if (count) count.innerText = '0 items';
+    showToast('Recently viewed items cleared', '✓');
+  }
+</script>
+
+<script id="esston-global-navigation">
+(function(){
+ const R={
+   home: 'customer-home.html',
+   dashboard: 'dealer-dashboard.html',
+   products: 'products.html',
+   catalogue: 'catalogue.html',
+   dealerproducts: 'dealer-catalogue.html',
+   details: 'product-details.html',
+   starter: 'my-starter.html',
+   control: 'motor-control.html',
+   schedule: 'schedule.html',
+   faq: 'help-faq.html',
+   enquiry: 'contact-enquiry.html',
+   auth: 'auth.html',
+   splash: 'splash.html',
+   otp: 'dealer-otp.html',
+   dealerEnquiries: 'dealer-enquiries.html',
+   profile: 'profile.html',
+   dealerProfile: 'dealer-profile.html'
+ };
+ const p = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+ const isDealer = /dealer-dashboard|dealer-catalogue|dealer-enquiries|dealer-profile|dealer-otp/.test(p);
+ const go = (key) => { if (R[key]) location.href = R[key]; };
+ const txt = e => (e.innerText || e.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
+
+ document.addEventListener('click', function(ev){
+   const el = ev.target.closest('a,button,[role="button"]');
+   if (!el) return;
+   if (el.hasAttribute('onclick') || el.closest('#modal-notifications, #modal-brochures, #modal-support, #modal-quote, #toast')) return;
+
+   const t = txt(el);
+   const page = p;
+
+   // Common navigation links
+   if (/^(profile|settings|more)$/.test(t) || t.includes('my profile') || t.includes('aditya traders')) {
+     ev.preventDefault();
+     go(isDealer ? 'dealerProfile' : 'profile');
+     return;
+   }
+   if (/^(home|dashboard)$/.test(t) || t.startsWith('home ')) {
+     ev.preventDefault();
+     go(isDealer ? 'dashboard' : 'home');
+     return;
+   }
+   // CRITICAL: Products in dealer context MUST navigate to dealerproducts (dealer-catalogue.html)
+   if (t === 'products' || t.includes('browse products') || t.includes('view products') || t === 'all products' || t === 'product catalogue' || t === 'featured products') {
+     ev.preventDefault();
+     go(isDealer ? 'dealerproducts' : 'products');
+     return;
+   }
+   if (t === 'enquiry' || t === 'enquiries' || t.includes('my enquiries') || t.includes('recent enquiries') || t.includes('view all enquiries')) {
+     ev.preventDefault();
+     go(isDealer ? 'dealerEnquiries' : 'enquiry');
+     return;
+   }
+   if (isDealer && (t.includes('contact support') || t.includes('contact admin') || t.includes('need assistance'))) {
+     ev.preventDefault();
+     if (window.openDealerSupportModal) { window.openDealerSupportModal(); }
+     else { go('dealerEnquiries'); }
+     return;
+   }
+   if (isDealer && t.includes('brochures')) {
+     ev.preventDefault();
+     if (window.openBrochuresModal) { window.openBrochuresModal(); }
+     return;
+   }
+   if (page === 'dealer-dashboard.html' && (t.includes('share quote') || t.includes('quick order'))) {
+     ev.preventDefault();
+     go('dealerEnquiries');
+     return;
+   }
+ }, true);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html class="h-full w-full bg-[#0b1118]" lang="en">
+<head>
+  <script>
+    // Product screen removed for consumer app; redirecting to customer home
+    window.location.replace('customer-home.html');
+  </script>
+  <meta http-equiv="refresh" content="0; url=customer-home.html">
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+  <title>Product Catalogue - Esston Technology</title>
+  <!-- Tailwind CSS CDN with forms and container queries plugins -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <!-- FontAwesome Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+  <!-- Tailwind Configuration -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#fff7ed',
+              100: '#ffedd5',
+              200: '#fed7aa',
+              500: '#f97316',
+              600: '#ea580c',
+              700: '#c2410c',
+              orange: '#FF5E14'
+            }
+          },
+          boxShadow: {
+            'soft': '0 4px 20px -2px rgba(15, 23, 42, 0.06)',
+            'card': '0 2px 14px 0 rgba(0, 0, 0, 0.05)',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .tap-effect { transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1); }
+    .tap-effect:active { transform: scale(0.97); }
+    button, a, div[role="button"] { -webkit-tap-highlight-color: transparent; user-select: none; }
+  </style>
+
+<!-- ======================================================== -->
+<!-- CURVED ANIMATED BOTTOM NAVIGATION STYLES                 -->
+<!-- ======================================================== -->
+<style id="esston-curved-nav-style">
+  .esston-curved-nav-wrapper {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 100% !important;
+    max-width: 430px !important;
+    z-index: 50 !important;
+    filter: drop-shadow(0 -8px 24px rgba(0, 0, 0, 0.10)) !important;
+    user-select: none !important;
+    pointer-events: auto !important;
+    background: transparent !important;
+    border: none !important;
+  }
+  .esston-curved-nav-body {
+    position: relative !important;
+    background: #ffffff !important;
+    border-radius: 28px 28px 0 0 !important;
+    padding-top: 10px !important;
+    padding-bottom: 6px !important;
+  }
+  .esston-nav-sliding-indicator {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 20% !important;
+    height: 100% !important;
+    pointer-events: none !important;
+    transition: transform 0.42s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    transform: translateX(calc(100% * var(--active-tab, 0))) !important;
+    z-index: 10 !important;
+  }
+  .esston-nav-dome-svg {
+    position: absolute !important;
+    top: -24px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 96px !important;
+    height: 26px !important;
+    fill: #ffffff !important;
+    pointer-events: none !important;
+  }
+  .esston-nav-floating-circle {
+    position: absolute !important;
+    top: -20px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 50px !important;
+    height: 50px !important;
+    border-radius: 50% !important;
+    background: linear-gradient(135deg, #FF7A18 0%, #F9570C 55%, #D43E00 100%) !important;
+    box-shadow: 0 10px 22px rgba(249, 87, 12, 0.42), 0 2px 6px rgba(0, 0, 0, 0.12) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #ffffff !important;
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    animation: esstonPopBubble 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+  }
+  @keyframes esstonPopBubble {
+    0% { transform: translateX(-50%) scale(0.65); }
+    60% { transform: translateX(-50%) scale(1.12); }
+    100% { transform: translateX(-50%) scale(1); }
+  }
+  .esston-nav-floating-circle svg {
+    width: 24px !important;
+    height: 24px !important;
+    fill: currentColor !important;
+    stroke: currentColor !important;
+  }
+  .esston-nav-tabs-row {
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-around !important;
+    height: 60px !important;
+    z-index: 20 !important;
+  }
+  .esston-nav-tab-item {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-decoration: none !important;
+    cursor: pointer !important;
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    padding: 2px 0 0 0 !important;
+    transition: all 0.25s ease !important;
+  }
+  .esston-nav-tab-icon-wrap {
+    height: 26px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: opacity 0.2s ease, transform 0.2s ease !important;
+  }
+  .esston-nav-tab-item .esston-nav-tab-icon-wrap svg {
+    width: 22px !important;
+    height: 22px !important;
+    color: #94a3b8 !important;
+    stroke: currentColor !important;
+    transition: color 0.25s ease, transform 0.25s ease !important;
+  }
+  .esston-nav-tab-item:hover .esston-nav-tab-icon-wrap svg {
+    color: #475569 !important;
+    transform: translateY(-1px) !important;
+  }
+  .esston-nav-tab-item.active .esston-nav-tab-icon-wrap {
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+  .esston-nav-tab-label {
+    font-size: 10.5px !important;
+    font-weight: 600 !important;
+    color: #64748b !important;
+    margin-top: 2px !important;
+    letter-spacing: -0.01em !important;
+    transition: color 0.25s ease, font-weight 0.25s ease, transform 0.25s ease !important;
+  }
+  .esston-nav-tab-item.active .esston-nav-tab-label {
+    color: #F9570C !important;
+    font-weight: 800 !important;
+    transform: translateY(-2px) !important;
+  }
+  .esston-nav-home-indicator {
+    width: 120px !important;
+    height: 4px !important;
+    background: #0f172a !important;
+    border-radius: 9999px !important;
+    opacity: 0.18 !important;
+    margin: 4px auto 4px !important;
+  }
+</style>
+
+</head>
+<body class="h-screen w-screen text-slate-800 antialiased flex flex-col justify-center items-center p-0 m-0 bg-[#0b1118] overflow-hidden">
+
+<!-- Mobile Device Frame Container (Straight Edges, Flush Height) -->
+<div class="w-full max-w-[430px] h-full h-screen bg-[#F8FAFC] shadow-2xl flex flex-col overflow-hidden relative border-x border-slate-700/50" data-purpose="mobile-viewport">
+
+  <!-- BEGIN: Top Brand Header (Consumer Home Sync) -->
+  <header class="sticky top-0 z-40 px-4 py-3 flex items-center justify-between bg-white border-b border-slate-100 shadow-xs flex-shrink-0" data-purpose="app-top-header">
+    <!-- Brand Logo -->
+    <a aria-label="Esston Technology Home" class="flex flex-col items-start select-none group" href="customer-home.html">
+      <div class="flex items-center space-x-1">
+        <div class="relative w-11 h-7 flex items-center justify-center">
+          <svg class="w-full h-full" fill="none" viewBox="0 0 64 36">
+            <path d="M4 4H32L24 16H8L4 22H28L20 34H0L4 4Z" fill="#F9570C"></path>
+            <path d="M22 4H56L62 4L54 16H36V34H26V4Z" fill="#092140"></path>
+            <path d="M50 0L64 0L58 10L50 0Z" fill="#F9570C"></path>
+          </svg>
+        </div>
+      </div>
+      <span class="text-[10px] font-extrabold tracking-tight text-slate-800 uppercase pl-0.5">Esston Technology®</span>
+    </a>
+
+    <!-- Right Header Actions: Notification & Profile -->
+    <div class="flex items-center space-x-2">
+      <!-- Notification Button -->
+      <button aria-label="Notifications" class="relative w-9 h-9 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-center text-slate-700 shadow-2xs tap-effect">
+        <i class="fa-regular fa-bell text-xs text-slate-700"></i>
+        <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full ring-2 ring-white"></span>
+      </button>
+
+      <!-- Profile Capsule -->
+      <a href="profile.html" class="flex items-center pl-1 pr-2.5 py-1 bg-slate-50 border border-slate-200/80 rounded-xl shadow-2xs space-x-1.5 tap-effect cursor-pointer">
+        <div class="w-7 h-7 rounded-lg bg-orange-100 text-brand-orange flex items-center justify-center font-black text-xs border border-orange-200/80">
+          A
+        </div>
+        <div class="flex flex-col text-left">
+          <span class="text-xs font-black text-slate-800 leading-tight">Aditya</span>
+          <span class="text-[9.5px] font-semibold text-slate-400 leading-none">Customer</span>
+        </div>
+      </a>
+    </div>
+  </header>
+  <!-- END: Top Brand Header -->
+
+  <!-- BEGIN: Scrollable Main Content (Direct Consumer Catalogue) -->
+  <main class="flex-1 w-full px-3.5 space-y-3 pt-2 pb-24 overflow-y-auto no-scrollbar" data-purpose="consumer-catalogue-viewport">
+
+    <!-- Subtle Dealer Wholesale Portal Switch Ribbon -->
+    <div class="bg-gradient-to-r from-slate-900 to-slate-800 text-white rounded-xl px-3 py-2 flex items-center justify-between text-xs shadow-xs border border-slate-700/60" data-purpose="dealer-switch-ribbon">
+      <div class="flex items-center space-x-2">
+        <i class="fa-solid fa-store text-brand-orange text-xs"></i>
+        <span class="text-[11px] text-slate-200 font-medium">Looking for Wholesale Dealer Pricing?</span>
+      </div>
+      <a href="dealer-catalogue.html" class="inline-flex items-center space-x-1 text-[10.5px] font-black text-brand-orange hover:text-orange-300 tap-effect">
+        <span>Wholesale</span>
+        <i class="fa-solid fa-chevron-right text-[9px]"></i>
+      </a>
+    </div>
+
+    <!-- BEGIN: Hero Banner -->
+    <section class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#d8f0ff] via-[#d5eefb] to-[#c6e9ff] shadow-card p-4 text-slate-900 border border-sky-100 min-h-[155px] flex flex-col justify-between" data-purpose="hero-banner">
+      <!-- Background Farm Pumping & Starter Visual -->
+      <div class="absolute inset-0 pointer-events-none overflow-hidden">
+        <img alt="Esston Motor Starter field pump" class="absolute right-0 top-0 h-full w-[60%] object-cover object-center mask-gradient opacity-90" src="farmer_motor_hero.png" style="-webkit-mask-image: linear-gradient(to right, transparent 0%, black 28%); mask-image: linear-gradient(to right, transparent 0%, black 28%);">
+      </div>
+
+      <!-- Banner Text Content -->
+      <div class="relative z-10 max-w-[215px]">
+        <span class="text-[9.5px] font-extrabold uppercase tracking-widest text-brand-orange bg-orange-100/90 px-2 py-0.5 rounded-full inline-block mb-1 border border-orange-200">Consumer Catalogue</span>
+        <h2 class="text-base font-black text-slate-900 leading-snug tracking-tight">
+          Smart Motor Starters <br><span class="text-slate-800">for Modern Farmers</span>
+        </h2>
+        <p class="text-[10px] font-semibold text-slate-600 mt-1 mb-2.5 leading-tight">
+          Reliable • Remote Controlled • Built for India
+        </p>
+
+        <a href="#product-list" class="inline-flex items-center gap-1.5 bg-gradient-to-r from-[#059669] to-[#10b981] hover:from-[#047857] hover:to-[#059669] text-white px-3 py-1.5 rounded-full text-[11px] font-extrabold shadow-sm tap-effect">
+          <span>View Starters</span>
+          <i class="fa-solid fa-arrow-down text-[9px]"></i>
+        </a>
+      </div>
+    </section>
+    <!-- END: Hero Banner -->
+
+    <!-- BEGIN: Search Bar -->
+    <div class="relative pt-0.5" data-purpose="search-input-wrapper">
+      <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+        <i class="fa-solid fa-magnifying-glass text-slate-400 text-xs"></i>
+      </div>
+      <input id="product-search-input" class="w-full bg-white border border-slate-200/90 text-slate-800 placeholder-slate-400 text-xs rounded-xl pl-9 pr-8 py-2.5 focus:ring-2 focus:ring-brand-orange/20 focus:border-brand-orange focus:outline-none transition-all shadow-xs" placeholder="Search starters, 3-Phase, Solar, models..." type="search">
+      <button id="search-clear-btn" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600 hidden">
+        <i class="fa-solid fa-circle-xmark text-xs"></i>
+      </button>
+    </div>
+    <!-- END: Search Bar -->
+
+    <!-- BEGIN: Category Tabs -->
+    <nav aria-label="Product Categories" class="overflow-x-auto no-scrollbar -mx-3.5 px-3.5 pt-0.5" data-purpose="category-tabs">
+      <div class="flex items-center space-x-1.5 w-max py-0.5" id="category-tab-container">
+        <!-- Tab 1: All Products (Active) -->
+        <button type="button" data-category="all" class="cat-pill active flex items-center gap-1 px-3 py-1.5 rounded-xl bg-brand-orange text-white text-[11.5px] font-extrabold shadow-xs shadow-orange-500/20 tap-effect transition-all">
+          <i class="fa-solid fa-layer-group text-xs"></i>
+          <span>All Products (4)</span>
+        </button>
+
+        <!-- Tab 2: Motor Starters -->
+        <button type="button" data-category="starters" class="cat-pill flex items-center gap-1 px-3 py-1.5 rounded-xl bg-white border border-slate-200/90 hover:bg-slate-50 text-slate-700 text-[11.5px] font-bold tap-effect transition-all">
+          <i class="fa-solid fa-gauge-high text-xs text-slate-400"></i>
+          <span>GSM Starters (2)</span>
+        </button>
+
+        <!-- Tab 3: Solar Pump -->
+        <button type="button" data-category="solar" class="cat-pill flex items-center gap-1 px-3 py-1.5 rounded-xl bg-white border border-slate-200/90 hover:bg-slate-50 text-slate-700 text-[11.5px] font-bold tap-effect transition-all">
+          <i class="fa-solid fa-solar-panel text-xs text-slate-400"></i>
+          <span>Solar Pumps (1)</span>
+        </button>
+
+        <!-- Tab 4: Accessories -->
+        <button type="button" data-category="accessories" class="cat-pill flex items-center gap-1 px-3 py-1.5 rounded-xl bg-white border border-slate-200/90 hover:bg-slate-50 text-slate-700 text-[11.5px] font-bold tap-effect transition-all">
+          <i class="fa-solid fa-toolbox text-xs text-slate-400"></i>
+          <span>Accessories (1)</span>
+        </button>
+      </div>
+    </nav>
+    <!-- END: Category Tabs -->
+
+    <!-- BEGIN: Product List Section -->
+    <div class="space-y-3 pt-1" id="product-list" data-purpose="product-list-container">
+
+      <!-- Product Card 1: Esston GSM Motor Starter (1 Phase) -->
+      <article class="product-item bg-white rounded-2xl p-3 border border-slate-200/90 shadow-card relative overflow-hidden transition-all hover:shadow-md" data-category="starters" data-name="esston gsm motor starter 1 phase single 1hp 2hp borewell">
+        <div class="flex gap-3">
+          <!-- Image Box with Badge -->
+          <div class="relative w-28 h-32 flex-shrink-0 rounded-xl overflow-hidden bg-slate-50 border border-slate-100 flex items-center justify-center p-1">
+            <div class="absolute top-1.5 left-1.5 z-10 flex items-center gap-1 bg-[#fff6e6] text-[#d97706] px-1.5 py-0.5 rounded-full border border-amber-200/90">
+              <span class="text-[8px] font-black uppercase">Most Popular</span>
+            </div>
+            <img alt="Esston GSM Motor Starter (1 Phase)" class="w-full h-full object-contain drop-shadow-sm" src="single_phase_agricultural_motor_starter_panel_electrical_control_box_grey_and/screen.png">
+            <div class="absolute bottom-1.5 left-1.5 bg-slate-900/90 text-white font-extrabold text-[10.5px] px-1.5 py-0.5 rounded font-mono leading-none">₹5,499</div>
+          </div>
+
+          <!-- Product Details -->
+          <div class="flex-1 flex flex-col justify-between py-0.5 min-w-0">
+            <div>
+              <div class="flex items-start justify-between gap-1">
+                <h3 class="text-xs font-black text-slate-900 leading-snug">
+                  Esston GSM Motor Starter (1 Phase)
+                </h3>
+              </div>
+              <p class="text-[10.5px] text-slate-500 mt-0.5 leading-tight line-clamp-2">
+                Control your single-phase motor remotely via SMS &amp; Mobile App
+              </p>
+            </div>
+
+            <!-- Specs Grid -->
+            <div class="grid grid-cols-3 gap-1 pt-1.5 border-t border-slate-100 mt-1">
+              <div class="text-center bg-slate-50 rounded-lg p-1">
+                <div class="text-[9.5px] font-extrabold text-slate-800 leading-none">1 HP - 2 HP</div>
+                <div class="text-[7.5px] font-semibold text-slate-400 mt-0.5">Rating</div>
+              </div>
+              <div class="text-center bg-slate-50 rounded-lg p-1">
+                <div class="text-[9.5px] font-extrabold text-slate-800 leading-none">GSM 4G</div>
+                <div class="text-[7.5px] font-semibold text-slate-400 mt-0.5">Control</div>
+              </div>
+              <div class="text-center bg-slate-50 rounded-lg p-1">
+                <div class="text-[9.5px] font-extrabold text-slate-800 leading-none">Dry-Run</div>
+                <div class="text-[7.5px] font-semibold text-slate-400 mt-0.5">Guard</div>
+              </div>
+            </div>
+
+            <!-- Price & Action Button -->
+            <div class="flex items-center justify-between pt-2 border-t border-slate-100 mt-1.5">
+              <div>
+                <div class="flex items-baseline gap-1">
+                  <span class="text-sm font-black text-slate-900 font-mono">₹5,499</span>
+                  <span class="text-[10px] text-slate-400 line-through">₹6,999</span>
+                </div>
+                <span class="text-[8.5px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.2 rounded leading-none inline-block mt-0.5">Save 21% • Free Delivery</span>
+              </div>
+              <a href="product-details.html?id=1" class="inline-flex items-center gap-1 px-2.5 py-1.5 bg-brand-orange hover:bg-[#ea580c] text-white rounded-xl text-[10.5px] font-black shadow-xs tap-effect">
+                <span>View Details</span>
+                <i class="fa-solid fa-chevron-right text-[8px]"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Product Card 2: Esston GSM Motor Starter (3 Phase) -->
+      <article class="product-item bg-white rounded-2xl p-3 border border-slate-200/90 shadow-card relative overflow-hidden transition-all hover:shadow-md" data-category="starters" data-name="esston gsm motor starter 3 phase heavy duty 3hp 5hp 7.5hp 10hp openwell borewell">
+        <div class="flex gap-3">
+          <div class="relative w-28 h-32 flex-shrink-0 rounded-xl overflow-hidden bg-slate-50 border border-slate-100 flex items-center justify-center p-1">
+            <div class="absolute top-1.5 left-1.5 z-10 flex items-center gap-1 bg-emerald-50 text-emerald-700 px-1.5 py-0.5 rounded-full border border-emerald-200/90">
+              <span class="text-[8px] font-black uppercase">Heavy Duty</span>
+            </div>
+            <img alt="Esston GSM Motor Starter (3 Phase)" class="w-full h-full object-contain drop-shadow-sm" src="esston_agricultural_3_phase_motor_starter_panel_box_white_metal_enclosure_with/screen.png">
+            <div class="absolute bottom-1.5 left-1.5 bg-slate-900/90 text-white font-extrabold text-[10.5px] px-1.5 py-0.5 rounded font-mono leading-none">₹7,800</div>
+          </div>
+
+          <div class="flex-1 flex flex-col justify-between py-0.5 min-w-0">
+            <div>
+              <div class="flex items-start justify-between gap-1">
+                <h3 class="text-xs font-black text-slate-900 leading-snug">
+                  Esston GSM Motor Starter (3 Phase)
+                </h3>
+              </div>
+              <p class="text-[10.5px] text-slate-500 mt-0.5 leading-tight line-clamp-2">
+                Heavy duty starter with phase fail &amp; voltage protection
+              </p>
+            </div>
+
+            <div class="grid grid-cols-3 gap-1 pt-1.5 border-t border-slate-100 mt-1">
+              <div class="text-center bg-slate-50 rounded-lg p-1">
+                <div class="text-[9.5px] font-extrabold text-slate-800 leading-none">3 HP - 10 HP</div>
+                <div class="text-[7.5px] font-semibold text-slate-400 mt-0.5">Rating</div>
+              </div>
+              <div class="text-center bg-slate-50 rounded-lg p-1">
+                <div class="text-[9.5px] font-extrabold text-slate-800 leading-none">GSM 4G</div>
+                <div class="text-[7.5px] font-semibold text-slate-400 mt-0.5">Control</div>
+              </div>
+              <div class="text-center bg-slate-50 rounded-lg p-1">
+                <div class="text-[9.5px] font-extrabold text-slate-800 leading-none">Phase Cut</div>
+                <div class="text-[7.5px] font-semibold text-slate-400 mt-0.5">Guard</div>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between pt-2 border-t border-slate-100 mt-1.5">
+              <div>
+                <div class="flex items-baseline gap-1">
+                  <span class="text-sm font-black text-slate-900 font-mono">₹7,800</span>
+                  <span class="text-[10px] text-slate-400 line-through">₹9,500</span>
+                </div>
+                <span class="text-[8.5px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.2 rounded leading-none inline-block mt-0.5">Save 18% • 1 Year Warranty</span>
+              </div>
+              <a href="product-details.html?id=2" class="inline-flex items-center gap-1 px-2.5 py-1.5 bg-brand-orange hover:bg-[#ea580c] text-white rounded-xl text-[10.5px] font-black shadow-xs tap-effect">
+                <span>View Details</span>
+                <i class="fa-solid fa-chevron-right text-[8px]"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Product Card 3: Esston Solar Motor Starter -->
+      <article class="product-item bg-white rounded-2xl p-3 border border-slate-200/90 shadow-card relative overflow-hidden transition-all hover:shadow-md" data-category="solar" data-name="esston solar pump motor starter agricultural solar pv controller">
+        <div class="flex gap-3">
+          <div class="relative w-28 h-32 flex-shrink-0 rounded-xl overflow-hidden bg-slate-50 border border-slate-100 flex items-center justify-center p-1">
+            <div class="absolute top-1.5 left-1.5 z-10 flex items-center gap-1 bg-amber-50 text-amber-700 px-1.5 py-0.5 rounded-full border border-amber-200/90">
+              <span class="text-[8px] font-black uppercase">Solar VFD</span>
+            </div>
+            <img alt="Esston Solar Motor Starter" class="w-full h-full object-contain drop-shadow-sm" src="esston_solar_water_pump_motor_starter_box_standing_next_to_a_modern_blue/screen.png">
+            <div class="absolute bottom-1.5 left-1.5 bg-slate-900/90 text-white font-extrabold text-[10.5px] px-1.5 py-0.5 rounded font-mono leading-none">₹8,900</div>
+          </div>
+
+          <div class="flex-1 flex flex-col justify-between py-0.5 min-w-0">
+            <div>
+              <div class="flex items-start justify-between gap-1">
+                <h3 class="text-xs font-black text-slate-900 leading-snug">
+                  Esston Solar Pump Starter Controller
+                </h3>
+              </div>
+              <p class="text-[10.5px] text-slate-500 mt-0.5 leading-tight line-clamp-2">
+                Smart MPPT controller for agricultural solar water pumps
+              </p>
+            </div>
+
+            <div class="grid grid-cols-3 gap-1 pt-1.5 border-t border-slate-100 mt-1">
+              <div class="text-center bg-slate-50 rounded-lg p-1">
+                <div class="text-[9.5px] font-extrabold text-slate-800 leading-none">Solar PV</div>
+                <div class="text-[7.5px] font-semibold text-slate-400 mt-0.5">Compatible</div>
+              </div>
+              <div class="text-center bg-slate-50 rounded-lg p-1">
+                <div class="text-[9.5px] font-extrabold text-slate-800 leading-none">MPPT 98%</div>
+                <div class="text-[7.5px] font-semibold text-slate-400 mt-0.5">Efficiency</div>
+              </div>
+              <div class="text-center bg-slate-50 rounded-lg p-1">
+                <div class="text-[9.5px] font-extrabold text-slate-800 leading-none">Auto On</div>
+                <div class="text-[7.5px] font-semibold text-slate-400 mt-0.5">Sun Track</div>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between pt-2 border-t border-slate-100 mt-1.5">
+              <div>
+                <div class="flex items-baseline gap-1">
+                  <span class="text-sm font-black text-slate-900 font-mono">₹8,900</span>
+                  <span class="text-[10px] text-slate-400 line-through">₹11,200</span>
+                </div>
+                <span class="text-[8.5px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.2 rounded leading-none inline-block mt-0.5">Save 20% • Subsidy Eligible</span>
+              </div>
+              <a href="product-details.html?id=3" class="inline-flex items-center gap-1 px-2.5 py-1.5 bg-brand-orange hover:bg-[#ea580c] text-white rounded-xl text-[10.5px] font-black shadow-xs tap-effect">
+                <span>View Details</span>
+                <i class="fa-solid fa-chevron-right text-[8px]"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Product Card 4: Accessories & Spares -->
+      <article class="product-item bg-white rounded-2xl p-3 border border-slate-200/90 shadow-card relative overflow-hidden transition-all hover:shadow-md" data-category="accessories" data-name="esston gsm starter accessories booster antenna weatherproof enclosure cable spares kit">
+        <div class="flex gap-3">
+          <div class="relative w-28 h-32 flex-shrink-0 rounded-xl overflow-hidden bg-slate-50 border border-slate-100 flex items-center justify-center p-1">
+            <div class="absolute top-1.5 left-1.5 z-10 flex items-center gap-1 bg-blue-50 text-blue-700 px-1.5 py-0.5 rounded-full border border-blue-200/90">
+              <span class="text-[8px] font-black uppercase">Full Kit</span>
+            </div>
+            <img alt="Starter Accessories Kit" class="w-full h-full object-contain drop-shadow-sm" src="agricultural_motor_starter_installation_accessories_and_kit_external_gsm_high/screen.png">
+            <div class="absolute bottom-1.5 left-1.5 bg-slate-900/90 text-white font-extrabold text-[10.5px] px-1.5 py-0.5 rounded font-mono leading-none">₹850</div>
+          </div>
+
+          <div class="flex-1 flex flex-col justify-between py-0.5 min-w-0">
+            <div>
+              <div class="flex items-start justify-between gap-1">
+                <h3 class="text-xs font-black text-slate-900 leading-snug">
+                  High-Gain Antenna &amp; Spare Kit
+                </h3>
+              </div>
+              <p class="text-[10.5px] text-slate-500 mt-0.5 leading-tight line-clamp-2">
+                External booster antenna, sensor cable &amp; enclosure seals
+              </p>
+            </div>
+
+            <div class="grid grid-cols-3 gap-1 pt-1.5 border-t border-slate-100 mt-1">
+              <div class="text-center bg-slate-50 rounded-lg p-1">
+                <div class="text-[9.5px] font-extrabold text-slate-800 leading-none">5 dBi High</div>
+                <div class="text-[7.5px] font-semibold text-slate-400 mt-0.5">Antenna</div>
+              </div>
+              <div class="text-center bg-slate-50 rounded-lg p-1">
+                <div class="text-[9.5px] font-extrabold text-slate-800 leading-none">IP65 Seal</div>
+                <div class="text-[7.5px] font-semibold text-slate-400 mt-0.5">Weather</div>
+              </div>
+              <div class="text-center bg-slate-50 rounded-lg p-1">
+                <div class="text-[9.5px] font-extrabold text-slate-800 leading-none">100% Fit</div>
+                <div class="text-[7.5px] font-semibold text-slate-400 mt-0.5">Original</div>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between pt-2 border-t border-slate-100 mt-1.5">
+              <div>
+                <div class="flex items-baseline gap-1">
+                  <span class="text-sm font-black text-slate-900 font-mono">₹850</span>
+                  <span class="text-[10px] text-slate-400 line-through">₹1,200</span>
+                </div>
+                <span class="text-[8.5px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.2 rounded leading-none inline-block mt-0.5">Save 29% • Ready Stock</span>
+              </div>
+              <a href="product-details.html?id=4" class="inline-flex items-center gap-1 px-2.5 py-1.5 bg-brand-orange hover:bg-[#ea580c] text-white rounded-xl text-[10.5px] font-black shadow-xs tap-effect">
+                <span>View Details</span>
+                <i class="fa-solid fa-chevron-right text-[8px]"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Empty State (When no search matches) -->
+      <div id="no-products-empty" class="hidden text-center py-10 px-4 bg-white rounded-2xl border border-slate-200/80">
+        <div class="w-12 h-12 rounded-full bg-orange-50 text-brand-orange mx-auto flex items-center justify-center text-lg mb-2">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+        <h4 class="text-sm font-black text-slate-800">No Starters Found</h4>
+        <p class="text-xs text-slate-500 mt-0.5">Try searching for "3 Phase", "GSM", or "Solar"</p>
+        <button id="reset-search-btn" class="mt-3 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl tap-effect">
+          Reset Filter
+        </button>
+      </div>
+
+    </div>
+    <!-- END: Product List Section -->
+
+  </main>
+  <!-- END: Scrollable Main Content -->
+
+  <!-- BEGIN: Bottom Navigation Bar (Products Active) -->
+  
+<!-- BEGIN: BottomNavigationBar (Curved Animated) -->
+<nav class="esston-curved-nav-wrapper" data-purpose="mobile-bottom-navigation" style="--active-tab: 2;">
+  <div class="esston-curved-nav-body">
+    <!-- Sliding Dome & Elevated Circle -->
+    <div class="esston-nav-sliding-indicator">
+      <svg class="esston-nav-dome-svg" viewBox="0 0 100 26" preserveAspectRatio="none">
+        <path d="M 0,26 C 14,26 22,20 28,12 C 36,1 42,0 50,0 C 58,0 64,1 72,12 C 78,20 86,26 100,26 L 100,28 L 0,28 Z"></path>
+      </svg>
+      <div class="esston-nav-floating-circle">
+        <span class="esston-floating-icon">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </span>
+      </div>
+    </div>
+
+    <!-- 5 Customer Navigation Tabs -->
+    <div class="esston-nav-tabs-row">
+      <!-- 0: Home -->
+      <a class="esston-nav-tab-item " data-index="0" href="customer-home.html">
+        <div class="esston-nav-tab-icon-wrap">
+          <svg fill="currentColor" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg>
+        </div>
+        <span class="esston-nav-tab-label">Home</span>
+      </a>
+
+      <!-- 1: Motor Control -->
+      <a class="esston-nav-tab-item " data-index="1" href="motor-control.html">
+        <div class="esston-nav-tab-icon-wrap">
+          <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <rect height="16" rx="2" stroke="currentColor" width="18" x="3" y="4"></rect>
+            <path d="M7 4V2m10 2V2M7 20v2m10-2v2" stroke-linecap="round"></path>
+            <circle cx="12" cy="12" r="3.5"></circle>
+          </svg>
+        </div>
+        <span class="esston-nav-tab-label">Motor Control</span>
+      </a>
+
+      <!-- 2: Products -->
+      <a class="esston-nav-tab-item active" data-index="2" href="products.html">
+        <div class="esston-nav-tab-icon-wrap">
+          <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </div>
+        <span class="esston-nav-tab-label">Products</span>
+      </a>
+
+      <!-- 3: FAQs -->
+      <a class="esston-nav-tab-item " data-index="3" href="help-faq.html">
+        <div class="esston-nav-tab-icon-wrap">
+          <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </div>
+        <span class="esston-nav-tab-label">FAQs</span>
+      </a>
+
+      <!-- 4: Profile -->
+      <a class="esston-nav-tab-item " data-index="4" href="profile.html">
+        <div class="esston-nav-tab-icon-wrap">
+          <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </div>
+        <span class="esston-nav-tab-label">Profile</span>
+      </a>
+    </div>
+
+    <!-- Home Indicator -->
+    <div class="esston-nav-home-indicator"></div>
+  </div>
+</nav>
+<!-- END: BottomNavigationBar -->
+
+  <!-- END: Bottom Navigation Bar -->
+
+</div>
+
+<!-- Interactive Filtering and Search Logic -->
+<script data-purpose="catalogue-interactivity">
+  document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('product-search-input');
+    const clearBtn = document.getElementById('search-clear-btn');
+    const categoryTabs = document.querySelectorAll('.cat-pill');
+    const productItems = document.querySelectorAll('.product-item');
+    const emptyState = document.getElementById('no-products-empty');
+    const resetSearchBtn = document.getElementById('reset-search-btn');
+
+    let currentCategory = 'all';
+    let searchQuery = '';
+
+    function filterProducts() {
+      let visibleCount = 0;
+
+      productItems.forEach(item => {
+        const itemCategory = item.getAttribute('data-category');
+        const itemName = item.getAttribute('data-name') || '';
+
+        const matchesCategory = (currentCategory === 'all' || itemCategory === currentCategory);
+        const matchesSearch = (!searchQuery || itemName.toLowerCase().includes(searchQuery.toLowerCase()));
+
+        if (matchesCategory && matchesSearch) {
+          item.style.display = 'block';
+          visibleCount++;
+        } else {
+          item.style.display = 'none';
+        }
+      });
+
+      if (visibleCount === 0) {
+        emptyState.classList.remove('hidden');
+      } else {
+        emptyState.classList.add('hidden');
+      }
+    }
+
+    // Category Tabs Click
+    categoryTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        categoryTabs.forEach(t => {
+          t.className = "cat-pill flex items-center gap-1 px-3 py-1.5 rounded-xl bg-white border border-slate-200/90 hover:bg-slate-50 text-slate-700 text-[11.5px] font-bold tap-effect transition-all";
+          const icon = t.querySelector('i');
+          if (icon) icon.className = icon.className.replace('text-white', 'text-slate-400');
+        });
+
+        tab.className = "cat-pill active flex items-center gap-1 px-3 py-1.5 rounded-xl bg-brand-orange text-white text-[11.5px] font-extrabold shadow-xs shadow-orange-500/20 tap-effect transition-all";
+        const activeIcon = tab.querySelector('i');
+        if (activeIcon) activeIcon.className = activeIcon.className.replace('text-slate-400', 'text-white');
+
+        currentCategory = tab.getAttribute('data-category');
+        filterProducts();
+      });
+    });
+
+    // Search Input
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        searchQuery = e.target.value.trim();
+        if (searchQuery.length > 0) {
+          clearBtn.classList.remove('hidden');
+        } else {
+          clearBtn.classList.add('hidden');
+        }
+        filterProducts();
+      });
+
+      clearBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        searchQuery = '';
+        clearBtn.classList.add('hidden');
+        filterProducts();
+      });
+    }
+
+    if (resetSearchBtn) {
+      resetSearchBtn.addEventListener('click', () => {
+        if (searchInput) searchInput.value = '';
+        searchQuery = '';
+        currentCategory = 'all';
+        categoryTabs[0].click();
+      });
+    }
+  });
+</script>
+
+<script id="esston-global-navigation">
+(function(){
+ const R={home:'customer-home.html',dashboard:'dealer-dashboard.html',products:'products.html',catalogue:'products.html',dealerproducts:'dealer-catalogue.html',details:'product-details.html',starter:'my-starter.html',control:'motor-control.html',motorsettings:'motor-settings.html',schedule:'schedule.html',faq:'help-faq.html',enquiry:'contact-enquiry.html',auth:'auth.html',splash:'splash.html',otp:'dealer-otp.html',dealerEnquiries:'dealer-enquiries.html',profile:'profile.html',dealerProfile:'dealer-profile.html'};
+ const p=(location.pathname.split('/').pop()||'index.html').toLowerCase();
+ const isDealer=/dealer-dashboard|dealer-catalogue|dealer-enquiries|dealer-profile|dealer-otp/.test(p);
+ const go=(key)=>{if(R[key]) location.href=R[key];};
+ const txt=e=>(e.innerText||e.textContent||'').replace(/\s+/g,' ').trim().toLowerCase();
+ document.addEventListener('click',function(ev){
+   const el=ev.target.closest('a,button,[role="button"]'); if(!el) return;
+   const t=txt(el); const page=p;
+   if(t.includes('motor setting') || t.includes('motor settings')){ev.preventDefault();go('motorsettings');return;}
+   if(/^(profile|settings)$/.test(t) || t.includes('my profile') || t.includes('hello, aditya') || t.includes('aditya traders')){ev.preventDefault();go(isDealer?'dealerProfile':'profile');return;}
+   if(/^(home|dashboard)$/.test(t) || t.startsWith('home ')){ev.preventDefault();go(isDealer?'dashboard':'home');return;}
+   if(t==='products' || t.includes('browse products') || t.includes('view products') || t==='all products' || t==='product catalogue'){ev.preventDefault();go(isDealer?'dealerproducts':'products');return;}
+   if(t==='enquiry' || t==='enquiries' || t.includes('my enquiries') || t.includes('recent enquiries') || t.includes('view all enquiries')){ev.preventDefault();go(isDealer?'dealerEnquiries':'enquiry');return;}
+   if(t==='faqs' || t==='help & faq' || t==='help & support' || t.includes('chat with faq bot') || t.includes('need help')){ev.preventDefault();go('faq');return;}
+   if(t==='motor control' || t==='control'){ if(!/motor_control|motor-control/.test(page)){ev.preventDefault();go('control');return;} }
+   if(t==='my starter' || t.includes('view my starter') || t.includes('starter details')){ev.preventDefault();go('starter');return;}
+   if(t.includes('motor schedule') || t.includes('set schedule') || t==='add slot' || t.includes('auto timer schedule')){ev.preventDefault();go('schedule');return;}
+   if(t==='view details' || t==='view product details' || t.includes('product details')){ev.preventDefault();go('details');return;}
+   if(t.includes('send enquiry') || t.includes('add to enquiry') || t==='submit enquiry' || t==='contact support' || t==='contact / enquiry'){ev.preventDefault();go('enquiry');return;}
+ },true);
+ document.querySelectorAll('a[href="#"]').forEach(a=>{
+   const t=txt(a);
+   if(t==='home') a.href=R.home; else if(t==='dashboard') a.href=R.dashboard; else if(t==='products') a.href=isDealer?R.dealerproducts:R.products; else if(t==='motor control'||t==='control') a.href=R.control; else if(t==='my starter') a.href=R.starter; else if(t==='faqs'||t==='help & faq') a.href=R.faq; else if(t==='profile'||t==='settings') a.href=R.profile; else if(t==='enquiry'||t==='enquiries') a.href=isDealer?R.dealerEnquiries:R.enquiry; else if(t==='more') a.href=R.faq;
+ });
+})();
+</script>
+
+</body>
+</html>

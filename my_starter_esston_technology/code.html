@@ -1,0 +1,394 @@
+<!DOCTYPE html><html lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<title>My Starter - Esston Technology</title>
+<!-- Google Fonts: Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              orange: '#F97316',
+              'orange-dark': '#EA580C',
+              'orange-light': '#FFF7ED',
+              navy: '#0F172A',
+              slate: '#1E293B',
+              muted: '#64748B',
+            }
+          },
+          boxShadow: {
+            'soft': '0 8px 30px rgba(0, 0, 0, 0.04)',
+            'card': '0 4px 20px -2px rgba(15, 23, 42, 0.05)',
+            'nav': '0 -4px 20px rgba(0, 0, 0, 0.03)',
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="custom-layout">
+    body {
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    /* Hide scrollbars for clean app viewport */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="bg-[#F8FAFC] text-slate-800 font-sans antialiased min-h-screen flex justify-center">
+<!-- Mobile Viewport Container -->
+<div class="w-full max-w-md bg-[#F8FAFC] min-h-screen flex flex-col relative pb-24 shadow-2xl">
+<!-- BEGIN: TopHeader -->
+<header class="sticky top-0 z-30 px-5 pt-3.5 pb-3.5 flex items-center justify-between bg-white border-b border-slate-100 shadow-sm" data-purpose="top-navigation-bar">
+<!-- Esston Technology Logo -->
+<a aria-label="Esston Technology Home" class="flex flex-col items-start select-none group" href="#home">
+<div class="flex items-center space-x-1">
+<!-- Stylized ET Logo Mark -->
+<div class="relative w-11 h-7 flex items-center justify-center">
+<svg class="w-full h-full" fill="none" viewBox="0 0 64 36">
+<!-- Orange 'E' & Upper Slant Arrow -->
+<path d="M4 4H32L24 16H8L4 22H28L20 34H0L4 4Z" fill="#F9570C"></path>
+<!-- Navy 'T' Bar & Directional Head -->
+<path d="M22 4H56L62 4L54 16H36V34H26V4Z" fill="#092140"></path>
+<!-- Arrow accent line -->
+<path d="M50 0L64 0L58 10L50 0Z" fill="#F9570C"></path>
+</svg>
+</div>
+</div>
+<span class="text-[10px] font-extrabold tracking-tight text-slate-800 uppercase pl-0.5">Esston Technology®</span>
+</a>
+<!-- Right Action Items: Notifications & User Profile Capsule -->
+<div class="flex items-center space-x-3">
+<!-- Notification Bell Button with Red Alert Badge -->
+<button aria-label="Notifications" class="relative w-10 h-10 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-700 shadow-sm active:scale-95 transition-transform">
+<svg class="w-5 h-5 text-slate-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<!-- Notification Active Dot Indicator -->
+<span class="absolute top-2 right-2.5 w-2.5 h-2.5 bg-red-500 rounded-full ring-2 ring-white"></span>
+</button>
+<!-- User Profile Pill -->
+<div class="flex items-center pl-1 pr-3 py-1 bg-slate-50 border border-slate-100 rounded-full shadow-sm space-x-2 active:scale-95 transition-transform cursor-pointer">
+<!-- Profile Avatar -->
+<div class="w-7 h-7 rounded-full bg-slate-200 overflow-hidden flex items-center justify-center border border-orange-200">
+<img src="https://lh3.googleusercontent.com/aida/AEtjO1UOJP1AyQbgQedtc1mse-zJ6FsNoxAR847vfAqQtg16H6uCvdZwU03yb2tn4LzmlQ8ttxOsS_tYDdaCUwHzKk8wMYxCKAP-UYE6yFaT6yu0fQjOQdWXzgs0ccglWFesChn_8iqMx0NkH8fLEdCOU0aDye7fNGVPOaNDmT6S8jMqgo1yZyh3oG8KxMh5N_HYa0Z-hVk6iQ2BB4aku6RVmVt9sRbz8RPW_fxDyOn6q1lWWrI0FsEXSyPUfew" alt="Aditya profile" class="w-full h-full object-cover object-center">
+</div>
+<!-- User Details & Role Dropdown -->
+<div class="flex flex-col text-left">
+<div class="flex items-center space-x-1">
+<span class="text-xs font-bold text-slate-800 leading-tight">Hello, Aditya</span>
+</div>
+<div class="flex items-center space-x-0.5 text-[10.5px] font-medium text-slate-500 leading-none">
+<span class="">Customer</span>
+<svg class="w-2.5 h-2.5 text-slate-400" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+<path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- END: TopHeader -->
+<!-- Scrollable Main Body Content -->
+<main class="flex-1 px-4 pt-3 space-y-4 overflow-y-auto no-scrollbar" data-purpose="main-content-area">
+<!-- BEGIN: HeroMotorCardWithSpecs -->
+<section class="bg-white rounded-3xl overflow-hidden shadow-card border border-slate-100/80" data-purpose="hero-and-specs-container">
+<!-- Hero Image Banner -->
+<div class="relative h-48 w-full bg-slate-900 overflow-hidden" data-purpose="hero-banner">
+<!-- Background Agricultural Landscape -->
+<img alt="Irrigation pump in farm" class="w-full h-full object-cover object-center" src="https://lh3.googleusercontent.com/aida/AEtjO1V9GkbIOrF8GecfeKPDZg5yJ6kmyzYgHGt0rXgJAnZPOOORBp7x94e1x69YFz8XublEceStdkousOYM5CxL1hNbxPCu2AXrhBg8quMK7mk6GsLsgeJhfej_7a8n3k39q2XFN-5nBkK6R8u1pvVCKqvPfwdCgubbsJ5cFB_CH5axp2X0fvURzqZaKStbn8kVz682zpT3IBMyz3otf2C6Bnn0sYq04-44NV4mKGOt_cRsyUT30ikiKnoV92I">
+<!-- Gradient overlay for text contrast -->
+<div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-900/30 to-transparent"></div>
+<!-- Hero Content Overlay -->
+<div class="absolute top-4 left-4 right-4 flex flex-col justify-between h-[calc(100%-2rem)]">
+<div>
+<h2 class="text-2xl font-extrabold text-white tracking-tight drop-shadow-sm">Farm Motor</h2>
+<!-- Location subtitle with pin -->
+<div class="flex items-center space-x-1.5 text-white/90 text-xs mt-1 drop-shadow-sm font-medium">
+<svg class="w-3.5 h-3.5 text-white/90 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+<path clip-rule="evenodd" d="M9.69 18.933l.003.001C9.89 19.02 10 19 10 19s.11.02.308-.066l.002-.001.006-.003.018-.008a5.741 5.741 0 00.281-.14c.186-.096.446-.24.757-.433.62-.384 1.445-.966 2.274-1.765C15.302 14.988 17 12.493 17 9A7 7 0 103 9c0 3.492 1.698 5.988 3.355 7.588a13.75 13.75 0 003.05 2.203l.02.009.006.003.002.001.002.001zM10 12a3 3 0 100-6 3 3 0 000 6z" fill-rule="evenodd"></path>
+</svg>
+<span class="">Wagholi, Pune</span>
+</div>
+</div>
+<!-- Status Badge: Online -->
+<div>
+<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-white/95 text-emerald-700 shadow-md backdrop-blur-sm space-x-1.5">
+<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+<span class="">Online</span>
+</span>
+</div>
+</div>
+</div>
+<!-- Starter Specs 2x2 Grid -->
+<div class="p-4 grid grid-cols-2 divide-x divide-y divide-slate-100" data-purpose="starter-specs-grid">
+<!-- Item 1: Starter Mobile Number -->
+<div class="pr-2 pb-3 flex items-center space-x-3">
+<div class="w-10 h-10 rounded-full bg-amber-50 flex items-center justify-center shrink-0 text-amber-600">
+<svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+<path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"></path>
+</svg>
+</div>
+<div class="min-w-0 flex-1">
+<p class="text-[11px] font-medium text-slate-400 truncate">Starter Mobile Number</p>
+<p class="text-[13px] font-bold text-slate-800 tracking-tight truncate">+91 98765 43210</p>
+</div>
+</div>
+<!-- Item 2: Motor Rating -->
+<div class="pl-4 pb-3 flex items-center space-x-3">
+<div class="w-10 h-10 rounded-full bg-sky-50 flex items-center justify-center shrink-0 text-sky-600">
+<!-- Motor Icon -->
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<div class="min-w-0 flex-1">
+<p class="text-[11px] font-medium text-slate-400 truncate">Motor Rating</p>
+<p class="text-[14px] font-bold text-slate-800 truncate">5 HP</p>
+</div>
+</div>
+<!-- Item 3: Usage -->
+<div class="pr-2 pt-3 flex items-center space-x-3">
+<div class="w-10 h-10 rounded-full bg-emerald-50 flex items-center justify-center shrink-0 text-emerald-600">
+<svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+<path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+</svg>
+</div>
+<div class="min-w-0 flex-1">
+<p class="text-[11px] font-medium text-slate-400 truncate">Usage</p>
+<p class="text-[14px] font-bold text-slate-800 truncate">Irrigation</p>
+</div>
+</div>
+<!-- Item 4: Location -->
+<div class="pl-4 pt-3 flex items-center space-x-3">
+<div class="w-10 h-10 rounded-full bg-purple-50 flex items-center justify-center shrink-0 text-purple-600">
+<svg class="w-5 h-5 fill-current" viewBox="0 0 20 20">
+<path clip-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" fill-rule="evenodd"></path>
+</svg>
+</div>
+<div class="min-w-0 flex-1">
+<p class="text-[11px] font-medium text-slate-400 truncate">Location</p>
+<p class="text-[13px] font-bold text-slate-800 truncate">Wagholi, Pune</p>
+</div>
+</div>
+</div>
+</section>
+<!-- END: HeroMotorCardWithSpecs -->
+<!-- BEGIN: ActionNavigationTiles -->
+<section class="space-y-3" data-purpose="action-navigation-section">
+<!-- Tile 1: Motor Control -->
+<a class="block bg-gradient-to-r from-white via-white to-amber-50/40 rounded-2xl p-4 border border-slate-100 shadow-[0_2px_12px_rgba(0,0,0,0.03)] hover:shadow-md transition-all active:scale-[0.99] relative overflow-hidden group" href="#motor-control">
+<div class="flex items-center justify-between relative z-10">
+<div class="flex items-center space-x-3.5 min-w-0">
+<!-- Play / Power Round Icon -->
+<div class="w-12 h-12 rounded-full bg-gradient-to-tr from-brand-orange to-amber-500 text-white flex items-center justify-center shadow-md shadow-orange-500/20 shrink-0">
+<svg class="w-6 h-6 fill-current translate-x-0.5" viewBox="0 0 24 24">
+<path d="M8 5v14l11-7z"></path>
+</svg>
+</div>
+<div class="truncate">
+<h3 class="text-base font-bold text-slate-900 group-hover:text-brand-orange transition-colors">Motor Control</h3>
+<p class="text-xs text-slate-400 font-normal mt-0.5">Start, stop and check status of your motor</p>
+</div>
+</div>
+<!-- Chevron -->
+<div class="pl-2 text-brand-orange shrink-0">
+<svg class="w-5 h-5 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M8.25 4.5l7.5 7.5-7.5 7.5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+</div>
+<!-- Subtle background wave / decoration -->
+<div class="absolute -right-6 -bottom-6 w-28 h-28 bg-amber-100/30 rounded-full blur-xl pointer-events-none"></div>
+</a>
+<!-- Tile 2: Command Guide -->
+<a class="block bg-gradient-to-r from-white via-white to-indigo-50/40 rounded-2xl p-4 border border-slate-100 shadow-[0_2px_12px_rgba(0,0,0,0.03)] hover:shadow-md transition-all active:scale-[0.99] relative overflow-hidden group" href="#command-guide">
+<div class="flex items-center justify-between relative z-10">
+<div class="flex items-center space-x-3.5 min-w-0">
+<!-- Document Icon -->
+<div class="w-12 h-12 rounded-full bg-gradient-to-tr from-purple-600 to-indigo-500 text-white flex items-center justify-center shadow-md shadow-purple-500/20 shrink-0">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<div class="truncate">
+<h3 class="text-base font-bold text-slate-900 group-hover:text-purple-600 transition-colors">Command Guide</h3>
+<p class="text-xs text-slate-400 font-normal mt-0.5">View supported SMS commands with examples</p>
+</div>
+</div>
+<!-- Chevron -->
+<div class="pl-2 text-purple-600 shrink-0">
+<svg class="w-5 h-5 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M8.25 4.5l7.5 7.5-7.5 7.5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+</div>
+<!-- Subtle background wave / decoration -->
+<div class="absolute -right-6 -bottom-6 w-28 h-28 bg-indigo-100/30 rounded-full blur-xl pointer-events-none"></div>
+</a>
+<!-- Tile 3: Operation History -->
+<a class="block bg-gradient-to-r from-white via-white to-emerald-50/40 rounded-2xl p-4 border border-slate-100 shadow-[0_2px_12px_rgba(0,0,0,0.03)] hover:shadow-md transition-all active:scale-[0.99] relative overflow-hidden group" href="#operation-history">
+<div class="flex items-center justify-between relative z-10">
+<div class="flex items-center space-x-3.5 min-w-0">
+<!-- Bar Chart Icon -->
+<div class="w-12 h-12 rounded-full bg-gradient-to-tr from-emerald-600 to-teal-500 text-white flex items-center justify-center shadow-md shadow-emerald-500/20 shrink-0">
+<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+<path d="M5 9.2h3V19H5zM10.6 5h2.8v14h-2.8zM16.2 13h2.8v6h-2.8z"></path>
+</svg>
+</div>
+<div class="truncate">
+<h3 class="text-base font-bold text-slate-900 group-hover:text-emerald-600 transition-colors">Operation History</h3>
+<p class="text-xs text-slate-400 font-normal mt-0.5">View recent commands and motor status logs</p>
+</div>
+</div>
+<!-- Chevron -->
+<div class="pl-2 text-emerald-600 shrink-0">
+<svg class="w-5 h-5 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M8.25 4.5l7.5 7.5-7.5 7.5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+</div>
+<!-- Subtle background wave / decoration -->
+<div class="absolute -right-6 -bottom-6 w-28 h-28 bg-emerald-100/30 rounded-full blur-xl pointer-events-none"></div>
+</a>
+<a class="block bg-gradient-to-r from-white via-white to-sky-50 rounded-2xl p-4 border border-slate-100 shadow-[0_2px_12px_rgba(0,0,0,0.03)] hover:shadow-md transition-all active:scale-[0.99] relative overflow-hidden group" href="#motor-schedule"><div class="flex items-center justify-between relative z-10"><div class="flex items-center space-x-3.5 min-w-0"><div class="w-12 h-12 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-500 text-white flex items-center justify-center shadow-md shadow-purple-500/20 shrink-0"><svg class="w-6 h-6 stroke-[2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 3" stroke-linecap="round" stroke-linejoin="round"></path></svg></div><div class="truncate"><h3 class="text-base font-bold text-slate-900 group-hover:text-blue-600 transition-colors">Motor Schedule</h3><p class="text-xs text-slate-400 font-normal mt-0.5">Set auto start &amp; stop timers or irrigation schedules</p></div></div><div class="pl-2 text-sky-600 shrink-0"><svg class="w-5 h-5 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8.25 4.5l7.5 7.5-7.5 7.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></div></div><div class="absolute -right-6 -bottom-6 w-28 h-28 bg-indigo-100/30 rounded-full blur-xl pointer-events-none"></div></a></section>
+<!-- END: ActionNavigationTiles -->
+<!-- BEGIN: ImportantNoticeBox -->
+<section class="bg-[#EFF6FF] rounded-2xl p-4 border border-blue-100/80 shadow-sm" data-purpose="important-notice">
+<div class="flex items-start space-x-3">
+<!-- Info Icon -->
+<div class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center shrink-0 mt-0.5 shadow-sm">
+<span class="text-xs font-serif font-black italic">i</span>
+</div>
+<div class="flex-1">
+<h4 class="text-sm font-bold text-slate-900 tracking-tight mb-2">Important</h4>
+<ul class="space-y-1.5 text-xs text-slate-600 font-normal">
+<li class="flex items-start space-x-1.5">
+<span class="text-slate-400 leading-tight text-sm font-bold">•</span>
+<span class="leading-relaxed">Command is sent via SMS directly to your starter.</span>
+</li>
+<li class="flex items-start space-x-1.5">
+<span class="text-slate-400 leading-tight text-sm font-bold">•</span>
+<span class="leading-relaxed">A sent SMS does not guarantee motor state.</span>
+</li>
+<li class="flex items-start space-x-1.5">
+<span class="text-slate-400 leading-tight text-sm font-bold">•</span>
+<span class="leading-relaxed">Please wait for the reply from your starter.</span>
+</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- END: ImportantNoticeBox -->
+</main>
+<!-- BEGIN: BottomNavigation -->
+<nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white/95 backdrop-blur-md border-t border-slate-200/80 px-2 pt-2 z-40 shadow-nav pb-2" data-purpose="bottom-navigation-bar">
+<div class="grid grid-cols-5 items-center text-center">
+<!-- Nav Item 1: Home -->
+<a class="flex flex-col items-center justify-center space-y-1 text-slate-500 hover:text-slate-800 transition-colors tap-effect" href="#home">
+<svg class="w-6 h-6 stroke-[1.8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="text-[10.5px] font-medium leading-none">Home</span>
+<span class="w-5 h-0.5 bg-transparent rounded-full mt-0.5"></span>
+</a>
+<!-- Nav Item 2: Motor Control (Active) -->
+<a class="flex flex-col items-center justify-center space-y-1 text-brand-orange group tap-effect" href="#starter">
+<div class="relative">
+<svg class="w-6 h-6 stroke-[1.8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<rect height="16" rx="2" stroke="currentColor" width="18" x="3" y="4"></rect>
+<path d="M7 4V2m10 2V2M7 20v2m10-2v2" stroke-linecap="round"></path>
+<circle cx="12" cy="12" r="3.5"></circle>
+</svg>
+</div>
+<span class="text-[10.5px] font-bold leading-none">Motor Control</span>
+<!-- Active Indicator Bar -->
+<span class="w-5 h-0.5 bg-brand-orange rounded-full mt-0.5"></span>
+</a>
+<!-- Nav Item 3: Products -->
+<a class="flex flex-col items-center justify-center space-y-1 text-slate-500 hover:text-slate-800 transition-colors tap-effect" href="#products">
+<svg class="w-6 h-6 stroke-[1.8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="text-[10.5px] font-medium leading-none">Products</span>
+<span class="w-5 h-0.5 bg-transparent rounded-full mt-0.5"></span>
+</a>
+<!-- Nav Item 4: FAQs -->
+<a class="flex flex-col items-center justify-center space-y-1 text-slate-500 hover:text-slate-800 transition-colors tap-effect" href="#faqs">
+<svg class="w-6 h-6 stroke-[1.8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="text-[10.5px] font-medium leading-none">FAQs</span>
+<span class="w-5 h-0.5 bg-transparent rounded-full mt-0.5"></span>
+</a>
+<!-- Nav Item 5: Enquiry -->
+<a class="flex flex-col items-center justify-center space-y-1 text-slate-500 hover:text-slate-800 transition-colors tap-effect" href="#enquiry">
+<svg class="w-6 h-6 stroke-[1.8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="text-[10.5px] font-medium leading-none">Enquiry</span>
+<span class="w-5 h-0.5 bg-transparent rounded-full mt-0.5"></span>
+</a>
+</div>
+</nav>
+<!-- END: BottomNavigation -->
+</div>
+
+
+
+
+<script id="esston-global-navigation">
+(function(){
+ const R={home:'customer-home.html',dashboard:'dealer-dashboard.html',products:'catalogue.html',dealerproducts:'dealer-catalogue.html',details:'product-details.html',starter:'my-starter.html',control:'motor-control.html',schedule:'schedule.html',faq:'help-faq.html',enquiry:'contact-enquiry.html',auth:'auth.html',splash:'splash.html',otp:'dealer-otp.html',dealerEnquiries:'dealer-enquiries.html'};
+ const p=(location.pathname.split('/').pop()||'index.html').toLowerCase();
+ const isDealer=/dealer-dashboard|dealer-catalogue|dealer-enquiries/.test(p);
+ const go=(key)=>{if(R[key]) location.href=R[key];};
+ const txt=e=>(e.innerText||e.textContent||'').replace(/\s+/g,' ').trim().toLowerCase();
+ // Route the existing bottom navigation and clearly named action buttons to the corresponding screens.
+ document.addEventListener('click',function(ev){
+   const el=ev.target.closest('a,button,[role="button"]'); if(!el) return;
+   const t=txt(el); const page=p;
+   // Common bottom/navigation links
+   if(/^(home|dashboard)$/.test(t) || t.startsWith('home ')){ev.preventDefault();go(isDealer?'dashboard':'home');return;}
+   if(t==='products' || t.includes('browse products') || t.includes('view products') || t==='all products' || t==='product catalogue'){ev.preventDefault();go(isDealer?'dealerproducts':'products');return;}
+   if(t==='enquiry' || t==='enquiries' || t.includes('my enquiries') || t.includes('recent enquiries') || t.includes('view all enquiries')){ev.preventDefault();go(isDealer?'dealerEnquiries':'enquiry');return;}
+   if(t==='faqs' || t==='help & faq' || t==='help & support' || t.includes('chat with faq bot') || t.includes('need help')){ev.preventDefault();go('faq');return;}
+   if(t==='motor control' || t==='control' || t.includes('check status') || t.includes('tap to start motor')){ if(!/motor_control|motor-control/.test(page)){ev.preventDefault();go('control');return;} }
+   if(t==='my starter' || t.includes('view my starter') || t.includes('starter details')){ev.preventDefault();go('starter');return;}
+   if(t.includes('motor schedule') || t.includes('set schedule') || t==='add slot' || t.includes('auto timer schedule')){ev.preventDefault();go('schedule');return;}
+   if(t==='view details' || t==='view product details' || t.includes('product details')){ev.preventDefault();go('details');return;}
+   if(t.includes('send enquiry') || t.includes('add to enquiry') || t==='submit enquiry' || t==='contact support' || t==='contact / enquiry'){ev.preventDefault();go('enquiry');return;}
+   if(t.includes('dealer b2b portal')){ev.preventDefault();go('auth');return;}
+   if(t.includes('customer iot app')){ev.preventDefault();go('auth');return;}
+   // Splash screen progresses to role selection when user taps the page.
+   if(page==='splash.html' && !el.closest('a[href^="http"]')){ev.preventDefault();go('auth');return;}
+   // Login: customer enters customer home; dealer login enters the OTP screen.
+   if(page==='auth.html' && (t.includes('login') || t.includes('continue'))){
+     const dealer=!!el.closest('section,form,div') && (el.closest('section,form,div').innerText||'').toLowerCase().includes('dealer login');
+     if(dealer || t.includes('dealer')){ev.preventDefault();go('otp');return;}
+     if(t.includes('login')){ev.preventDefault();go('home');return;}
+   }
+   if(page==='dealer-dashboard.html' && (t.includes('share quote') || t.includes('quick order'))){ev.preventDefault();go('dealerEnquiries');return;}
+ },true);
+ // Make all placeholder bottom-nav links meaningful even when their labels are nested in icon wrappers.
+ document.querySelectorAll('a[href="#"]').forEach(a=>{
+   const t=txt(a);
+   if(t==='home') a.href=R.home; else if(t==='dashboard') a.href=R.dashboard; else if(t==='products') a.href=isDealer?R.dealerproducts:R.products; else if(t==='motor control'||t==='control') a.href=R.control; else if(t==='my starter') a.href=R.starter; else if(t==='faqs'||t==='help & faq') a.href=R.faq; else if(t==='enquiry'||t==='enquiries') a.href=isDealer?R.dealerEnquiries:R.enquiry; else if(t==='more') a.href=R.faq;
+ });
+})();
+</script>
+</body></html>

@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Set Motor Schedule - Esston Technology</title>
+<!-- Google Fonts: Plus Jakarta Sans -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN with plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              orange: '#FF6417',
+              orangeDark: '#EA580C',
+              navy: '#0B1528',
+              slate: '#64748B',
+              surface: '#F8FAFC'
+            }
+          },
+          boxShadow: {
+            card: '0 8px 24px -4px rgba(15, 23, 42, 0.06), 0 2px 6px -2px rgba(15, 23, 42, 0.04)',
+            knob: '0 4px 12px rgba(0, 0, 0, 0.15)',
+            cta: '0 10px 25px -4px rgba(255, 100, 23, 0.42)',
+          }
+        }
+      }
+    }
+  </script>
+<!-- BEGIN: Style - Custom Utility and Dial Physics -->
+<style data-purpose="clock-dial-layout">
+    /* Remove user selection for responsive touch dragging */
+    .touch-none {
+      touch-action: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    
+    /* Smooth transition for non-dragging visual updates */
+    .smooth-arc {
+      transition: stroke-dasharray 0.15s ease-out, stroke-dashoffset 0.15s ease-out;
+    }
+
+    /* Modal bottom sheet transitions */
+    .modal-sheet {
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease-out;
+    }
+    .modal-sheet.closed {
+      transform: translateY(100%);
+      pointer-events: none;
+      opacity: 0;
+    }
+    .modal-backdrop.closed {
+      opacity: 0;
+      pointer-events: none;
+    }
+    
+    /* Toast slide transition */
+    #toast-notification {
+      transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+    }
+    #toast-notification.hidden-toast {
+      transform: translate(-50%, -120%);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Range slider custom styling for time selector */
+    input[type=range]::-webkit-slider-thumb {
+      appearance: none;
+      height: 22px;
+      width: 22px;
+      border-radius: 50%;
+      background: #FF6417;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    }
+  </style>
+<!-- END: Style - Custom Utility and Dial Physics -->
+</head>
+<body class="bg-[#F4F6F9] text-slate-800 font-sans antialiased min-h-screen flex justify-center selection:bg-orange-500 selection:text-white">
+<!-- Main Mobile Container (Centered for clean app view) -->
+<main class="w-full max-w-md bg-[#F8FAFC] min-h-screen flex flex-col relative pb-8 shadow-2xl overflow-x-hidden">
+<!-- Toast Notification Banner -->
+<div class="hidden-toast fixed top-5 left-1/2 -translate-x-1/2 z-50 w-11/12 max-w-sm bg-brand-navy text-white px-4 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 border border-slate-700/60" id="toast-notification">
+<div class="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path></svg>
+</div>
+<div class="flex-1 text-xs">
+<p class="font-bold text-white text-sm" id="toast-title">Schedule Synced</p>
+<p class="text-slate-300 mt-0.5 font-normal" id="toast-message">Motor schedule set successfully</p>
+</div>
+</div>
+<!-- BEGIN: Header Navigation -->
+<header class="sticky top-0 z-30 bg-[#F8FAFC]/90 backdrop-blur-md px-5 pt-4 pb-3 border-b border-slate-200/60" data-purpose="mobile-header">
+<div class="flex items-center justify-between relative">
+<!-- Back Button -->
+<button aria-label="Go Back" class="w-10 h-10 rounded-full bg-white border border-slate-200/80 shadow-sm flex items-center justify-center text-slate-700 hover:bg-slate-50 active:scale-95 transition-all" id="btn-back" type="button">
+<svg class="w-5 h-5 -ml-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+</button>
+<!-- Screen Title -->
+<div class="text-center flex-1 mx-3">
+<h1 class="text-lg font-bold text-brand-navy tracking-tight">Set Motor Schedule</h1>
+<p class="text-[11px] font-medium text-slate-500 mt-0.5 line-clamp-1">Choose time range to run your motor automatically</p>
+</div>
+<!-- Information / Help Icon Button -->
+<button aria-label="Schedule Information" class="w-10 h-10 rounded-full bg-white border border-slate-200/80 shadow-sm flex items-center justify-center text-slate-600 hover:bg-slate-50 active:scale-95 transition-all" id="btn-info" type="button">
+<svg class="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+</header>
+<!-- END: Header Navigation -->
+<!-- Scrollable Content Section -->
+<div class="flex-1 px-4 pt-3 pb-24 space-y-4 overflow-y-auto">
+<!-- BEGIN: Motor Hero Card -->
+<section class="relative rounded-3xl overflow-hidden shadow-lg border border-slate-200/60 h-44 bg-slate-900 group" data-purpose="motor-hero-card">
+<!-- Agricultural Field Pump Background -->
+<img alt="Farm Motor in Field" class="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 brightness-[0.88]" src="https://lh3.googleusercontent.com/aida/AEtjO1V9GkbIOrF8GecfeKPDZg5yJ6kmyzYgHGt0rXgJAnZPOOORBp7x94e1x69YFz8XublEceStdkousOYM5CxL1hNbxPCu2AXrhBg8quMK7mk6GsLsgeJhfej_7a8n3k39q2XFN-5nBkK6R8u1pvVCKqvPfwdCgubbsJ5cFB_CH5axp2X0fvURzqZaKStbn8kVz682zpT3IBMyz3otf2C6Bnn0sYq04-44NV4mKGOt_cRsyUT30ikiKnoV92I"/>
+<!-- Subtle Cinematic Gradient Overlays -->
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent"></div>
+<div class="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-transparent"></div>
+<!-- Content Info Floating Over Banner -->
+<div class="relative h-full p-4 flex flex-col justify-between z-10">
+<div>
+<!-- Status Badge -->
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/95 backdrop-blur-md shadow-sm mb-2 border border-emerald-100">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+</span>
+<span class="text-[11px] font-bold tracking-wide text-emerald-800 uppercase">Online</span>
+</div>
+<!-- Pump Title -->
+<h2 class="text-xl font-extrabold text-white tracking-tight drop-shadow-md">Farm Motor</h2>
+<div class="flex items-center gap-1 text-emerald-200/90 text-xs font-medium mt-0.5 drop-shadow">
+<svg class="w-3.5 h-3.5 text-orange-400 shrink-0" fill="currentColor" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" fill-rule="evenodd"></path>
+</svg>
+<span>Wagholi, Pune • 7.5 HP Submersible</span>
+</div>
+</div>
+<!-- Live Power & Health indicators inside hero -->
+<div class="flex items-center gap-3 pt-2 text-white/90 text-[11px] border-t border-white/15">
+<span class="flex items-center gap-1">
+<svg class="w-3.5 h-3.5 text-amber-300" fill="currentColor" viewbox="0 0 20 20"><path d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z"></path></svg>
+              415V 3-Phase
+            </span>
+<span class="text-white/40">•</span>
+<span class="text-emerald-300 font-medium">Flow: Normal</span>
+</div>
+</div>
+</section>
+<!-- END: Motor Hero Card -->
+<!-- BEGIN: Time Slot Selector Row -->
+<div class="bg-white rounded-2xl p-2.5 shadow-card border border-slate-100 flex items-center justify-between gap-1.5" data-purpose="time-slot-selector">
+<button class="slot-tab flex-1 py-2 px-2 rounded-xl text-center transition-all bg-brand-orange text-white shadow-sm shadow-orange-500/25" data-slot="1" type="button">
+<div class="text-[10px] uppercase font-bold tracking-wider opacity-90">Slot 1</div>
+<div class="text-xs font-extrabold mt-0.5 truncate" id="slot-1-time">06:00A - 08:00P</div>
+</button>
+<button class="slot-tab flex-1 py-2 px-2 rounded-xl text-center transition-all bg-slate-50 text-slate-600 border border-slate-200/80 hover:bg-slate-100" data-slot="2" type="button">
+<div class="text-[10px] uppercase font-bold tracking-wider opacity-70">Slot 2</div>
+<div class="text-xs font-semibold mt-0.5 truncate" id="slot-2-time">10:00P - 04:00A</div>
+</button>
+<button class="slot-tab flex-1 py-2 px-2 rounded-xl text-center transition-all bg-slate-50 text-slate-600 border border-slate-200/80 hover:bg-slate-100" data-slot="3" type="button">
+<div class="text-[10px] uppercase font-bold tracking-wider opacity-70">Slot 3</div>
+<div class="text-xs font-semibold mt-0.5 truncate" id="slot-3-time">Off (Empty)</div>
+</button>
+</div>
+<!-- END: Time Slot Selector Row -->
+<!-- BEGIN: Time Range Selector Dial Section -->
+<section class="bg-white rounded-3xl p-4 shadow-card border border-slate-100 relative" data-purpose="interactive-dial-panel">
+<!-- Section Header & Currently Setting Indicator Banner -->
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-2.5">
+<div class="w-9 h-9 rounded-2xl bg-orange-50 border border-orange-100 text-brand-orange flex items-center justify-center shrink-0 shadow-sm">
+<svg class="w-4 h-4 text-brand-orange" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<div>
+<h3 class="text-sm font-bold text-brand-navy">Select Time Range</h3>
+<p class="text-[11px] text-slate-500 leading-tight">Tap dial or drag knobs to adjust</p>
+</div>
+</div>
+<!-- Active Setting Mode Badge & Quick Switcher -->
+<div class="inline-flex items-center p-0.5 bg-slate-100 rounded-xl border border-slate-200/80 text-[11px] font-semibold" id="active-field-toggle-pill">
+<button class="px-2.5 py-1 rounded-lg bg-emerald-500 text-white shadow-xs transition-all flex items-center gap-1 font-bold" id="btn-select-start-mode" type="button">
+<span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+<span>Start</span>
+</button>
+<button class="px-2.5 py-1 rounded-lg text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1 font-semibold" id="btn-select-end-mode" type="button">
+<span class="w-1.5 h-1.5 rounded-full bg-brand-orange"></span>
+<span>End</span>
+</button>
+</div>
+</div>
+<!-- Currently Editing Context Hint Bar -->
+<div class="mb-2 py-1.5 px-3 rounded-xl bg-emerald-50/80 border border-emerald-200/70 flex items-center justify-between text-xs transition-colors" id="context-indicator-bar">
+<div class="flex items-center gap-1.5 text-emerald-800 font-semibold" id="context-indicator-text">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+</span>
+<span>Setting <strong>Start Time</strong> (Green Knob)</span>
+</div>
+<span class="text-[10px] text-slate-500 font-medium">Click dial or numbers</span>
+</div>
+<!-- Interactive Clock Dial Area -->
+<div class="flex flex-col items-center justify-center py-1 relative">
+<!-- Clock Widget Container -->
+<div class="relative w-64 h-64 select-none touch-none cursor-pointer flex items-center justify-center" id="dial-container">
+<!-- Dial SVG Background & Dynamic Schedule Arc -->
+<svg class="w-full h-full transform -rotate-90" id="clock-svg" viewbox="0 0 260 260">
+<defs>
+<!-- Arc Gradient for the Scheduled Interval -->
+<lineargradient id="scheduleGradient" x1="0%" x2="100%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#10B981"></stop>
+<stop offset="50%" stop-color="#F59E0B"></stop>
+<stop offset="100%" stop-color="#FF6417"></stop>
+</lineargradient>
+<filter height="140%" id="glow" width="140%" x="-20%" y="-20%">
+<fedropshadow dx="0" dy="2" flood-color="#FF6417" flood-opacity="0.35" stddeviation="3"></fedropshadow>
+</filter>
+</defs>
+<!-- Clock Base Track -->
+<circle cx="130" cy="130" fill="#F8FAFC" r="102" stroke="#E2E8F0" stroke-linecap="round" stroke-width="14"></circle>
+<!-- Active Interval Arc Highlight -->
+<path d="" fill="none" filter="url(#glow)" id="schedule-arc" stroke="url(#scheduleGradient)" stroke-linecap="round" stroke-width="16"></path>
+<!-- Internal Tick Marks (60 ticks for hours and minutes) -->
+<g class="text-slate-300" id="tick-marks"></g>
+</svg>
+<!-- Numbers (1 - 12) positioned circular (Clickable) -->
+<div class="absolute inset-0 text-slate-700 text-xs font-semibold" id="clock-numbers">
+<!-- Rendered via JS -->
+</div>
+<!-- Central Hub Badge -->
+<div class="absolute w-28 h-28 rounded-full bg-gradient-to-b from-[#FFF5EE] to-[#FFF0E6] border border-orange-200/80 shadow-inner flex flex-col items-center justify-center text-center p-2 pointer-events-none z-10">
+<span class="text-[10px] uppercase font-bold tracking-wider text-brand-orange leading-tight">Schedule</span>
+<span class="text-sm font-extrabold text-brand-navy my-0.5" id="center-duration-badge">14h 00m</span>
+<span class="text-[9px] text-slate-500 font-medium">Auto-Run Duration</span>
+</div>
+<!-- Interactive Start Knob (Green: 06:00 AM) -->
+<div class="absolute w-7 h-7 rounded-full bg-white border-[3px] border-emerald-500 shadow-knob cursor-grab active:cursor-grabbing flex items-center justify-center z-20 hover:scale-110 active:scale-95 transition-transform" id="start-knob" title="Start Time Knob">
+<div class="w-2 h-2 rounded-full bg-emerald-500"></div>
+</div>
+<!-- Interactive End Knob (Orange: 08:00 PM) -->
+<div class="absolute w-7 h-7 rounded-full bg-white border-[3px] border-brand-orange shadow-knob cursor-grab active:cursor-grabbing flex items-center justify-center z-20 hover:scale-110 active:scale-95 transition-transform" id="end-knob" title="End Time Knob">
+<div class="w-2 h-2 rounded-full bg-brand-orange"></div>
+</div>
+</div>
+<!-- Dial Interaction Guidance Hint -->
+<div class="flex items-center gap-4 mt-2 text-[11px] text-slate-500 font-medium">
+<button class="flex items-center gap-1.5 hover:text-emerald-700 transition-colors" id="hint-start-btn" type="button">
+<span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block ring-2 ring-emerald-100"></span> Start Knob
+</button>
+<button class="flex items-center gap-1.5 hover:text-orange-700 transition-colors" id="hint-end-btn" type="button">
+<span class="w-2.5 h-2.5 rounded-full bg-brand-orange inline-block ring-2 ring-orange-100"></span> End Knob
+</button>
+<span class="text-slate-400 text-[10px]">Drag knob or tap dial</span>
+</div>
+</div>
+<!-- BEGIN: Prominent Interactive Time Cards (Start & End Time Bars) -->
+<div class="grid grid-cols-2 gap-3 mt-3 pt-3 border-t border-slate-100" data-purpose="time-cards">
+<!-- Start Time Card / Tab -->
+<div class="p-3 rounded-2xl bg-emerald-50/50 border-2 border-emerald-500 shadow-sm transition-all cursor-pointer flex flex-col justify-between group relative ring-2 ring-emerald-400/20" id="card-start-time">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-full bg-emerald-500 text-white flex items-center justify-center shrink-0 shadow-xs">
+<svg class="w-3.5 h-3.5 ml-0.5" fill="currentColor" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" fill-rule="evenodd"></path>
+</svg>
+</div>
+<div>
+<p class="text-[10px] font-bold text-emerald-700 uppercase tracking-wider">Start Time</p>
+<p class="text-sm font-extrabold text-brand-navy leading-none mt-0.5" id="display-start-time">06:00 AM</p>
+</div>
+</div>
+<!-- Active Selection Radio Dot -->
+<div class="w-4 h-4 rounded-full border-2 border-emerald-500 flex items-center justify-center bg-white" id="radio-start">
+<div class="w-2 h-2 rounded-full bg-emerald-500"></div>
+</div>
+</div>
+<!-- Quick Controls: AM/PM Pills & Steppers -->
+<div class="flex items-center justify-between gap-1 mt-2.5 pt-2 border-t border-emerald-200/50">
+<!-- AM/PM Toggle Pill -->
+<div class="inline-flex rounded-lg bg-white p-0.5 border border-slate-200 text-[10px] font-bold" onclick="event.stopPropagation()">
+<button class="px-1.5 py-0.5 rounded bg-emerald-500 text-white" id="pill-start-am" type="button">AM</button>
+<button class="px-1.5 py-0.5 rounded text-slate-500 hover:text-slate-800" id="pill-start-pm" type="button">PM</button>
+</div>
+<!-- Step Buttons (-/+ 15m) -->
+<div class="flex items-center gap-1" onclick="event.stopPropagation()">
+<button aria-label="Subtract 15 minutes" class="w-6 h-6 rounded-lg bg-white border border-slate-200 text-slate-700 flex items-center justify-center hover:bg-slate-100 active:scale-95 text-xs font-bold shadow-xs" id="step-start-minus" type="button">-15</button>
+<button aria-label="Add 15 minutes" class="w-6 h-6 rounded-lg bg-white border border-slate-200 text-slate-700 flex items-center justify-center hover:bg-slate-100 active:scale-95 text-xs font-bold shadow-xs" id="step-start-plus" type="button">+15</button>
+</div>
+</div>
+</div>
+<!-- End Time Card / Tab -->
+<div class="p-3 rounded-2xl bg-slate-50 border-2 border-slate-200 hover:border-orange-300 transition-all cursor-pointer flex flex-col justify-between group relative" id="card-end-time">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-full bg-orange-100 text-brand-orange flex items-center justify-center shrink-0 shadow-xs">
+<svg class="w-3.5 h-3.5" fill="currentColor" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1V8a1 1 0 00-1-1H8z" fill-rule="evenodd"></path>
+</svg>
+</div>
+<div>
+<p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">End Time</p>
+<p class="text-sm font-extrabold text-brand-navy leading-none mt-0.5" id="display-end-time">08:00 PM</p>
+</div>
+</div>
+<!-- Active Selection Radio Dot -->
+<div class="w-4 h-4 rounded-full border-2 border-slate-300 flex items-center justify-center bg-white" id="radio-end">
+<div class="w-2 h-2 rounded-full bg-brand-orange hidden"></div>
+</div>
+</div>
+<!-- Quick Controls: AM/PM Pills & Steppers -->
+<div class="flex items-center justify-between gap-1 mt-2.5 pt-2 border-t border-slate-200/80">
+<!-- AM/PM Toggle Pill -->
+<div class="inline-flex rounded-lg bg-white p-0.5 border border-slate-200 text-[10px] font-bold" onclick="event.stopPropagation()">
+<button class="px-1.5 py-0.5 rounded text-slate-500 hover:text-slate-800" id="pill-end-am" type="button">AM</button>
+<button class="px-1.5 py-0.5 rounded bg-brand-orange text-white" id="pill-end-pm" type="button">PM</button>
+</div>
+<!-- Step Buttons (-/+ 15m) -->
+<div class="flex items-center gap-1" onclick="event.stopPropagation()">
+<button aria-label="Subtract 15 minutes" class="w-6 h-6 rounded-lg bg-white border border-slate-200 text-slate-700 flex items-center justify-center hover:bg-slate-100 active:scale-95 text-xs font-bold shadow-xs" id="step-end-minus" type="button">-15</button>
+<button aria-label="Add 15 minutes" class="w-6 h-6 rounded-lg bg-white border border-slate-200 text-slate-700 flex items-center justify-center hover:bg-slate-100 active:scale-95 text-xs font-bold shadow-xs" id="step-end-plus" type="button">+15</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Fine-Tune modal launch link -->
+<div class="mt-2.5 text-center">
+<button class="text-xs font-semibold text-brand-orange hover:text-orange-700 inline-flex items-center gap-1 py-1 px-3 rounded-full hover:bg-orange-50 transition-colors" id="btn-open-fine-tuning" type="button">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Custom Precise Time Picker &amp; Sliders</span>
+</button>
+</div>
+<!-- END: Prominent Interactive Time Cards -->
+</section>
+<!-- END: Time Range Selector Dial Section -->
+<!-- BEGIN: Repeat Schedule Days Section -->
+<section class="bg-white rounded-3xl p-4 shadow-card border border-slate-100" data-purpose="repeat-schedule-panel">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-2.5">
+<div class="w-9 h-9 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 border border-blue-100">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"></path>
+</svg>
+</div>
+<div>
+<h3 class="text-sm font-bold text-brand-navy">Repeat</h3>
+<p class="text-[11px] text-slate-500 leading-tight">Select days to apply this schedule</p>
+</div>
+</div>
+<!-- Quick Preset Dropdown/Button -->
+<button class="text-xs font-semibold text-brand-orange hover:text-orange-700 bg-orange-50 px-2.5 py-1 rounded-full border border-orange-200/60 transition-colors" id="preset-toggle-btn">
+            Presets ▾
+          </button>
+</div>
+<!-- Quick Preset Filter Buttons (Toggleable Drawer) -->
+<div class="grid grid-cols-3 gap-2 mb-3 bg-slate-50 p-2 rounded-2xl border border-slate-200/60 text-center" id="presets-container">
+<button class="preset-btn text-[11px] py-1 px-2 rounded-xl bg-white text-slate-700 font-semibold shadow-xs hover:border-orange-300 border border-slate-200" data-preset="daily" type="button">Daily</button>
+<button class="preset-btn text-[11px] py-1 px-2 rounded-xl bg-brand-orange text-white font-semibold shadow-xs border border-transparent" data-preset="weekdays" type="button">Weekdays</button>
+<button class="preset-btn text-[11px] py-1 px-2 rounded-xl bg-white text-slate-700 font-semibold shadow-xs hover:border-orange-300 border border-slate-200" data-preset="weekends" type="button">Weekends</button>
+</div>
+<!-- 7-Day Selector Pills -->
+<div class="grid grid-cols-7 gap-1.5" id="day-selector-group">
+<!-- Mon -->
+<button class="day-btn py-2.5 rounded-2xl text-xs font-bold transition-all shadow-sm flex flex-col items-center justify-center bg-brand-orange text-white shadow-orange-500/25" data-day="Mon" type="button">
+<span>Mon</span>
+</button>
+<!-- Tue -->
+<button class="day-btn py-2.5 rounded-2xl text-xs font-bold transition-all shadow-sm flex flex-col items-center justify-center bg-brand-orange text-white shadow-orange-500/25" data-day="Tue" type="button">
+<span>Tue</span>
+</button>
+<!-- Wed -->
+<button class="day-btn py-2.5 rounded-2xl text-xs font-bold transition-all shadow-sm flex flex-col items-center justify-center bg-brand-orange text-white shadow-orange-500/25" data-day="Wed" type="button">
+<span>Wed</span>
+</button>
+<!-- Thu -->
+<button class="day-btn py-2.5 rounded-2xl text-xs font-bold transition-all shadow-sm flex flex-col items-center justify-center bg-brand-orange text-white shadow-orange-500/25" data-day="Thu" type="button">
+<span>Thu</span>
+</button>
+<!-- Fri -->
+<button class="day-btn py-2.5 rounded-2xl text-xs font-bold transition-all shadow-sm flex flex-col items-center justify-center bg-brand-orange text-white shadow-orange-500/25" data-day="Fri" type="button">
+<span>Fri</span>
+</button>
+<!-- Sat (Inactive) -->
+<button class="day-btn py-2.5 rounded-2xl text-xs font-bold transition-all shadow-sm flex flex-col items-center justify-center bg-white text-slate-600 border border-slate-200 hover:border-slate-300" data-day="Sat" type="button">
+<span>Sat</span>
+</button>
+<!-- Sun (Inactive) -->
+<button class="day-btn py-2.5 rounded-2xl text-xs font-bold transition-all shadow-sm flex flex-col items-center justify-center bg-white text-slate-600 border border-slate-200 hover:border-slate-300" data-day="Sun" type="button">
+<span>Sun</span>
+</button>
+</div>
+<p class="text-[11px] text-slate-500 text-center mt-3 font-medium" id="repeat-summary">Runs every Monday through Friday</p>
+</section>
+<!-- END: Repeat Schedule Days Section -->
+<!-- BEGIN: Safety & Notification Toggle Notice -->
+<section class="bg-amber-50/80 border border-amber-200/80 rounded-2xl p-3 flex items-start gap-2.5">
+<svg class="w-5 h-5 text-amber-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<div class="text-xs text-amber-900 leading-snug">
+<span class="font-bold">Dry Run Protection Active:</span> If groundwater pressure drops, the starter will auto-trip and alert your smartphone.
+</div>
+</section>
+<!-- END: Safety & Notification Toggle Notice -->
+</div>
+<!-- End Scrollable Content -->
+<!-- BEGIN: Sticky Bottom Bar & Save CTA -->
+<div class="fixed bottom-0 max-w-md w-full bg-white/95 backdrop-blur-md border-t border-slate-200/80 p-4 z-40">
+<button class="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-[#FF7A1A] via-brand-orange to-[#EA580C] text-white font-bold text-base shadow-cta hover:brightness-105 active:scale-[0.98] transition-all flex items-center justify-center gap-2.5 tracking-wide" id="btn-save-schedule" type="button">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span id="save-button-label">Save Schedule</span>
+</button>
+</div>
+<!-- END: Sticky Bottom Bar & Save CTA -->
+<!-- BEGIN: Time Picker Bottom Sheet Modal -->
+<div class="modal-backdrop closed fixed inset-0 bg-black/50 z-50 transition-opacity" id="modal-backdrop"></div>
+<div class="modal-sheet closed fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white rounded-t-3xl z-50 p-6 shadow-2xl border-t border-slate-200" id="time-sheet">
+<div class="w-12 h-1.5 bg-slate-300 rounded-full mx-auto mb-4"></div>
+<div class="flex items-center justify-between mb-4">
+<h4 class="text-base font-bold text-brand-navy" id="sheet-title">Set Start Time</h4>
+<button class="p-1 rounded-full text-slate-400 hover:text-slate-700" id="close-sheet-btn">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+<!-- Time Picker Controls -->
+<div class="space-y-4">
+<!-- Hour Slider -->
+<div>
+<div class="flex justify-between text-xs font-semibold text-slate-600 mb-1">
+<span>Hour</span>
+<span class="text-brand-orange font-bold text-sm" id="slider-hour-val">6</span>
+</div>
+<input class="w-full accent-orange-500 bg-slate-100 h-2 rounded-lg cursor-pointer" id="slider-hour" max="12" min="1" type="range" value="6"/>
+</div>
+<!-- Minute Slider -->
+<div>
+<div class="flex justify-between text-xs font-semibold text-slate-600 mb-1">
+<span>Minute</span>
+<span class="text-brand-orange font-bold text-sm" id="slider-minute-val">00</span>
+</div>
+<input class="w-full accent-orange-500 bg-slate-100 h-2 rounded-lg cursor-pointer" id="slider-minute" max="55" min="0" step="5" type="range" value="0"/>
+</div>
+<!-- AM/PM Toggle Buttons -->
+<div class="flex rounded-xl bg-slate-100 p-1">
+<button class="flex-1 py-2 text-xs font-bold rounded-lg bg-white shadow-xs text-brand-orange" id="ampm-am">AM</button>
+<button class="flex-1 py-2 text-xs font-bold rounded-lg text-slate-600" id="ampm-pm">PM</button>
+</div>
+<button class="w-full py-3 bg-brand-orange hover:bg-orange-600 text-white font-bold rounded-xl text-sm transition-all shadow-md" id="btn-apply-modal-time">
+          Apply Time
+        </button>
+</div>
+</div>
+<!-- END: Time Picker Bottom Sheet Modal -->
+</main>
+<!-- BEGIN: Interactive Clock Logic and Schedule Synchronization -->
+<script data-purpose="clock-scheduler-script">
+    (function() {
+      // Multi-slot management state
+      const slots = {
+        1: { start: 6 * 60, end: 20 * 60, active: true },      // 06:00 AM - 08:00 PM
+        2: { start: 22 * 60, end: 4 * 60, active: true },      // 10:00 PM - 04:00 AM
+        3: { start: 12 * 60, end: 15 * 60, active: false }     // 12:00 PM - 03:00 PM
+      };
+
+      const state = {
+        activeSlot: 1,
+        selectedField: 'start', // 'start' | 'end' is currently active for dial manipulation
+        isDragging: false,
+        selectedDays: new Set(['Mon', 'Tue', 'Wed', 'Thu', 'Fri'])
+      };
+
+      // Geometry Constants for 260x260 Dial
+      const CENTER_X = 130;
+      const CENTER_Y = 130;
+      const RADIUS = 102;
+
+      // DOM Elements
+      const dialContainer = document.getElementById('dial-container');
+      const startKnob = document.getElementById('start-knob');
+      const endKnob = document.getElementById('end-knob');
+      const scheduleArc = document.getElementById('schedule-arc');
+      const tickMarksGroup = document.getElementById('tick-marks');
+      const clockNumbers = document.getElementById('clock-numbers');
+      const displayStartTime = document.getElementById('display-start-time');
+      const displayEndTime = document.getElementById('display-end-time');
+      const centerDurationBadge = document.getElementById('center-duration-badge');
+      const saveScheduleBtn = document.getElementById('btn-save-schedule');
+      const toastNotification = document.getElementById('toast-notification');
+      const toastTitle = document.getElementById('toast-title');
+      const toastMessage = document.getElementById('toast-message');
+
+      // Cards & Context Elements
+      const cardStartTime = document.getElementById('card-start-time');
+      const cardEndTime = document.getElementById('card-end-time');
+      const radioStart = document.getElementById('radio-start');
+      const radioEnd = document.getElementById('radio-end');
+      const btnSelectStartMode = document.getElementById('btn-select-start-mode');
+      const btnSelectEndMode = document.getElementById('btn-select-end-mode');
+      const contextIndicatorBar = document.getElementById('context-indicator-bar');
+      const contextIndicatorText = document.getElementById('context-indicator-text');
+
+      // AM/PM Pills on cards
+      const pillStartAm = document.getElementById('pill-start-am');
+      const pillStartPm = document.getElementById('pill-start-pm');
+      const pillEndAm = document.getElementById('pill-end-am');
+      const pillEndPm = document.getElementById('pill-end-pm');
+
+      // Slot tabs
+      const slotTabs = document.querySelectorAll('.slot-tab');
+      const slot1Time = document.getElementById('slot-1-time');
+      const slot2Time = document.getElementById('slot-2-time');
+      const slot3Time = document.getElementById('slot-3-time');
+
+      // Modal elements
+      const modalBackdrop = document.getElementById('modal-backdrop');
+      const timeSheet = document.getElementById('time-sheet');
+      const sheetTitle = document.getElementById('sheet-title');
+      const closeSheetBtn = document.getElementById('close-sheet-btn');
+      const sliderHour = document.getElementById('slider-hour');
+      const sliderMinute = document.getElementById('slider-minute');
+      const sliderHourVal = document.getElementById('slider-hour-val');
+      const sliderMinuteVal = document.getElementById('slider-minute-val');
+      const ampmAm = document.getElementById('ampm-am');
+      const ampmPm = document.getElementById('ampm-pm');
+      const btnApplyModalTime = document.getElementById('btn-apply-modal-time');
+
+      function minutesToTimeString(totalMinutes) {
+        let mins = Math.round(totalMinutes) % 1440;
+        if (mins < 0) mins += 1440;
+        let hours = Math.floor(mins / 60);
+        const minutes = mins % 60;
+        const period = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        if (hours === 0) hours = 12;
+        const hh = hours.toString().padStart(2, '0');
+        const mm = minutes.toString().padStart(2, '0');
+        return `${hh}:${mm} ${period}`;
+      }
+
+      function minutesToCompactString(totalMinutes) {
+        let mins = Math.round(totalMinutes) % 1440;
+        if (mins < 0) mins += 1440;
+        let hours = Math.floor(mins / 60);
+        const period = hours >= 12 ? 'P' : 'A';
+        hours = hours % 12 || 12;
+        const hh = hours.toString().padStart(2, '0');
+        return `${hh}:00${period}`;
+      }
+
+      function minutesToAngle(minutes) {
+        const min12 = minutes % 720;
+        return (min12 / 720) * 360;
+      }
+
+      function polarToCartesian(cx, cy, r, angleDegrees) {
+        const rad = (angleDegrees - 90) * Math.PI / 180.0;
+        return {
+          x: cx + (r * Math.cos(rad)),
+          y: cy + (r * Math.sin(rad))
+        };
+      }
+
+      function describeArc(cx, cy, r, startAngle, endAngle) {
+        let sweep = endAngle - startAngle;
+        if (sweep < 0) sweep += 360;
+
+        const start = polarToCartesian(cx, cy, r, endAngle);
+        const end = polarToCartesian(cx, cy, r, startAngle);
+        const largeArcFlag = sweep <= 180 ? "0" : "1";
+
+        return [
+          "M", start.x, start.y,
+          "A", r, r, 0, largeArcFlag, 0, end.x, end.y
+        ].join(" ");
+      }
+
+      // Initialize Face with Clickable numbers
+      function initClockFace() {
+        let ticksHtml = '';
+        for (let i = 0; i < 60; i++) {
+          const angle = (i * 6) * Math.PI / 180;
+          const isHour = i % 5 === 0;
+          const length = isHour ? 8 : 4;
+          const r1 = RADIUS + 10;
+          const r2 = r1 - length;
+
+          const x1 = CENTER_X + r1 * Math.cos(angle);
+          const y1 = CENTER_Y + r1 * Math.sin(angle);
+          const x2 = CENTER_X + r2 * Math.cos(angle);
+          const y2 = CENTER_Y + r2 * Math.sin(angle);
+
+          ticksHtml += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${isHour ? '#94A3B8' : '#CBD5E1'}" stroke-width="${isHour ? '1.8' : '1'}" stroke-linecap="round" />`;
+        }
+        tickMarksGroup.innerHTML = ticksHtml;
+
+        clockNumbers.innerHTML = '';
+        const numRadius = 78;
+        for (let num = 1; num <= 12; num++) {
+          const angleDeg = (num * 30);
+          const rad = (angleDeg - 90) * Math.PI / 180;
+          const x = CENTER_X + numRadius * Math.cos(rad);
+          const y = CENTER_Y + numRadius * Math.sin(rad);
+
+          const span = document.createElement('button');
+          span.type = 'button';
+          span.textContent = num;
+          span.className = 'absolute font-bold text-xs text-slate-700 -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full flex items-center justify-center hover:bg-orange-100 hover:text-brand-orange transition-colors pointer-events-auto cursor-pointer';
+          span.style.left = `${(x / 260) * 100}%`;
+          span.style.top = `${(y / 260) * 100}%`;
+
+          // Clicking a number directly sets the exact hour
+          span.addEventListener('click', (e) => {
+            e.stopPropagation();
+            setExactHour(num);
+          });
+
+          clockNumbers.appendChild(span);
+        }
+      }
+
+      function setExactHour(hour12) {
+        const cur = slots[state.activeSlot];
+        const isPM = (state.selectedField === 'start' ? cur.start : cur.end) >= 720;
+        let finalHour = hour12 % 12;
+        if (isPM) finalHour += 12;
+
+        const newMinutes = finalHour * 60;
+        if (state.selectedField === 'start') {
+          cur.start = newMinutes;
+        } else {
+          cur.end = newMinutes;
+        }
+        renderDial();
+        updateSlotSummaries();
+      }
+
+      // Update active selection state visually (Card borders & Header toggle pill)
+      function setActiveField(field) {
+        state.selectedField = field;
+
+        if (field === 'start') {
+          // Card Start highlight
+          cardStartTime.className = 'p-3 rounded-2xl bg-emerald-50/50 border-2 border-emerald-500 shadow-sm transition-all cursor-pointer flex flex-col justify-between group relative ring-2 ring-emerald-400/20';
+          cardEndTime.className = 'p-3 rounded-2xl bg-slate-50 border-2 border-slate-200 hover:border-orange-300 transition-all cursor-pointer flex flex-col justify-between group relative';
+          
+          radioStart.innerHTML = '<div class="w-2 h-2 rounded-full bg-emerald-500"></div>';
+          radioStart.className = 'w-4 h-4 rounded-full border-2 border-emerald-500 flex items-center justify-center bg-white';
+          radioEnd.innerHTML = '';
+          radioEnd.className = 'w-4 h-4 rounded-full border-2 border-slate-300 flex items-center justify-center bg-white';
+
+          // Toggle pill buttons
+          btnSelectStartMode.className = 'px-2.5 py-1 rounded-lg bg-emerald-500 text-white shadow-xs transition-all flex items-center gap-1 font-bold';
+          btnSelectEndMode.className = 'px-2.5 py-1 rounded-lg text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1 font-semibold';
+
+          // Context notification bar
+          contextIndicatorBar.className = 'mb-2 py-1.5 px-3 rounded-xl bg-emerald-50/80 border border-emerald-200/70 flex items-center justify-between text-xs transition-colors';
+          contextIndicatorText.className = 'flex items-center gap-1.5 text-emerald-800 font-semibold';
+          contextIndicatorText.innerHTML = `
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+            <span>Setting <strong>Start Time</strong> (Green Knob)</span>`;
+        } else {
+          // Card End highlight
+          cardStartTime.className = 'p-3 rounded-2xl bg-slate-50 border-2 border-slate-200 hover:border-emerald-300 transition-all cursor-pointer flex flex-col justify-between group relative';
+          cardEndTime.className = 'p-3 rounded-2xl bg-orange-50/50 border-2 border-brand-orange shadow-sm transition-all cursor-pointer flex flex-col justify-between group relative ring-2 ring-orange-400/20';
+
+          radioStart.innerHTML = '';
+          radioStart.className = 'w-4 h-4 rounded-full border-2 border-slate-300 flex items-center justify-center bg-white';
+          radioEnd.innerHTML = '<div class="w-2 h-2 rounded-full bg-brand-orange"></div>';
+          radioEnd.className = 'w-4 h-4 rounded-full border-2 border-brand-orange flex items-center justify-center bg-white';
+
+          // Toggle pill buttons
+          btnSelectStartMode.className = 'px-2.5 py-1 rounded-lg text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1 font-semibold';
+          btnSelectEndMode.className = 'px-2.5 py-1 rounded-lg bg-brand-orange text-white shadow-xs transition-all flex items-center gap-1 font-bold';
+
+          // Context notification bar
+          contextIndicatorBar.className = 'mb-2 py-1.5 px-3 rounded-xl bg-orange-50/80 border border-orange-200/70 flex items-center justify-between text-xs transition-colors';
+          contextIndicatorText.className = 'flex items-center gap-1.5 text-orange-900 font-semibold';
+          contextIndicatorText.innerHTML = `
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-orange"></span>
+            </span>
+            <span>Setting <strong>End Time</strong> (Orange Knob)</span>`;
+        }
+      }
+
+      function updateSlotSummaries() {
+        slot1Time.textContent = `${minutesToCompactString(slots[1].start)} - ${minutesToCompactString(slots[1].end)}`;
+        slot2Time.textContent = `${minutesToCompactString(slots[2].start)} - ${minutesToCompactString(slots[2].end)}`;
+        slot3Time.textContent = slots[3].active ? `${minutesToCompactString(slots[3].start)} - ${minutesToCompactString(slots[3].end)}` : 'Off (Empty)';
+      }
+
+      function renderDial() {
+        const currentSlot = slots[state.activeSlot];
+        const startDeg = minutesToAngle(currentSlot.start);
+        const endDeg = minutesToAngle(currentSlot.end);
+
+        // Update Arc Path
+        scheduleArc.setAttribute('d', describeArc(CENTER_X, CENTER_Y, RADIUS, startDeg, endDeg));
+
+        // Position start knob
+        const startPos = polarToCartesian(CENTER_X, CENTER_Y, RADIUS, startDeg);
+        startKnob.style.left = `${(startPos.x / 260) * 100}%`;
+        startKnob.style.top = `${(startPos.y / 260) * 100}%`;
+        startKnob.style.transform = 'translate(-50%, -50%)';
+
+        // Position end knob
+        const endPos = polarToCartesian(CENTER_X, CENTER_Y, RADIUS, endDeg);
+        endKnob.style.left = `${(endPos.x / 260) * 100}%`;
+        endKnob.style.top = `${(endPos.y / 260) * 100}%`;
+        endKnob.style.transform = 'translate(-50%, -50%)';
+
+        // Update Text Labels
+        displayStartTime.textContent = minutesToTimeString(currentSlot.start);
+        displayEndTime.textContent = minutesToTimeString(currentSlot.end);
+
+        // Update AM/PM pills
+        const isStartPM = currentSlot.start >= 720;
+        pillStartAm.className = !isStartPM ? 'px-1.5 py-0.5 rounded bg-emerald-500 text-white' : 'px-1.5 py-0.5 rounded text-slate-500 hover:text-slate-800';
+        pillStartPm.className = isStartPM ? 'px-1.5 py-0.5 rounded bg-emerald-500 text-white' : 'px-1.5 py-0.5 rounded text-slate-500 hover:text-slate-800';
+
+        const isEndPM = currentSlot.end >= 720;
+        pillEndAm.className = !isEndPM ? 'px-1.5 py-0.5 rounded bg-brand-orange text-white' : 'px-1.5 py-0.5 rounded text-slate-500 hover:text-slate-800';
+        pillEndPm.className = isEndPM ? 'px-1.5 py-0.5 rounded bg-brand-orange text-white' : 'px-1.5 py-0.5 rounded text-slate-500 hover:text-slate-800';
+
+        // Calculate and render Duration
+        let diff = currentSlot.end - currentSlot.start;
+        if (diff < 0) diff += 1440; // over midnight
+        const durHours = Math.floor(diff / 60);
+        const durMins = diff % 60;
+        centerDurationBadge.textContent = `${durHours}h ${durMins > 0 ? durMins + 'm' : '00m'}`;
+      }
+
+      function getMinutesFromPointer(e) {
+        const rect = dialContainer.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+        const dx = clientX - (rect.left + rect.width / 2);
+        const dy = clientY - (rect.top + rect.height / 2);
+
+        let theta = Math.atan2(dy, dx) * (180 / Math.PI) + 90;
+        if (theta < 0) theta += 360;
+
+        // Snap to nearest 5 minutes: 360 deg = 720 minutes => 1 deg = 2 mins
+        let minutes = Math.round((theta / 360) * 720 / 5) * 5;
+        return minutes % 720;
+      }
+
+      // Pointer Event Handlers for Dragging Knobs & Clicking Dial
+      function onDialPointerDown(e) {
+        state.isDragging = true;
+        const rect = dialContainer.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+        const startRect = startKnob.getBoundingClientRect();
+        const endRect = endKnob.getBoundingClientRect();
+
+        const distStart = Math.hypot(clientX - (startRect.left + startRect.width / 2), clientY - (startRect.top + startRect.height / 2));
+        const distEnd = Math.hypot(clientX - (endRect.left + endRect.width / 2), clientY - (endRect.top + endRect.height / 2));
+
+        // If user tapped directly near start knob, switch activeField to start; if near end knob, switch to end
+        if (distStart < 28) {
+          setActiveField('start');
+        } else if (distEnd < 28) {
+          setActiveField('end');
+        }
+
+        updateFieldFromEvent(e);
+
+        window.addEventListener('pointermove', onDialPointerMove);
+        window.addEventListener('pointerup', onDialPointerUp);
+        window.addEventListener('touchmove', onDialPointerMove, { passive: false });
+        window.addEventListener('touchend', onDialPointerUp);
+      }
+
+      function updateFieldFromEvent(e) {
+        const clockMins = getMinutesFromPointer(e);
+        const cur = slots[state.activeSlot];
+
+        if (state.selectedField === 'start') {
+          const isPM = cur.start >= 720;
+          cur.start = clockMins + (isPM ? 720 : 0);
+        } else {
+          const isPM = cur.end >= 720;
+          cur.end = clockMins + (isPM ? 720 : 0);
+        }
+        renderDial();
+        updateSlotSummaries();
+      }
+
+      function onDialPointerMove(e) {
+        if (!state.isDragging) return;
+        if (e.cancelable) e.preventDefault();
+        updateFieldFromEvent(e);
+      }
+
+      function onDialPointerUp() {
+        state.isDragging = false;
+        window.removeEventListener('pointermove', onDialPointerMove);
+        window.removeEventListener('pointerup', onDialPointerUp);
+        window.removeEventListener('touchmove', onDialPointerMove);
+        window.removeEventListener('touchend', onDialPointerUp);
+      }
+
+      // Slot Switching Handler
+      slotTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          const slotNum = parseInt(tab.getAttribute('data-slot'), 10);
+          state.activeSlot = slotNum;
+
+          slotTabs.forEach(t => {
+            t.className = 'slot-tab flex-1 py-2 px-2 rounded-xl text-center transition-all bg-slate-50 text-slate-600 border border-slate-200/80 hover:bg-slate-100';
+          });
+          tab.className = 'slot-tab flex-1 py-2 px-2 rounded-xl text-center transition-all bg-brand-orange text-white shadow-sm shadow-orange-500/25';
+
+          renderDial();
+        });
+      });
+
+      // Quick Field Selection Event Listeners
+      cardStartTime.addEventListener('click', () => setActiveField('start'));
+      cardEndTime.addEventListener('click', () => setActiveField('end'));
+      btnSelectStartMode.addEventListener('click', () => setActiveField('start'));
+      btnSelectEndMode.addEventListener('click', () => setActiveField('end'));
+      document.getElementById('hint-start-btn').addEventListener('click', () => setActiveField('start'));
+      document.getElementById('hint-end-btn').addEventListener('click', () => setActiveField('end'));
+
+      // AM/PM Pills on Cards
+      pillStartAm.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const cur = slots[state.activeSlot];
+        if (cur.start >= 720) cur.start -= 720;
+        setActiveField('start');
+        renderDial();
+        updateSlotSummaries();
+      });
+      pillStartPm.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const cur = slots[state.activeSlot];
+        if (cur.start < 720) cur.start += 720;
+        setActiveField('start');
+        renderDial();
+        updateSlotSummaries();
+      });
+
+      pillEndAm.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const cur = slots[state.activeSlot];
+        if (cur.end >= 720) cur.end -= 720;
+        setActiveField('end');
+        renderDial();
+        updateSlotSummaries();
+      });
+      pillEndPm.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const cur = slots[state.activeSlot];
+        if (cur.end < 720) cur.end += 720;
+        setActiveField('end');
+        renderDial();
+        updateSlotSummaries();
+      });
+
+      // Steppers (+/- 15 mins)
+      function adjustMinutes(field, delta) {
+        const cur = slots[state.activeSlot];
+        if (field === 'start') {
+          cur.start = (cur.start + delta + 1440) % 1440;
+          setActiveField('start');
+        } else {
+          cur.end = (cur.end + delta + 1440) % 1440;
+          setActiveField('end');
+        }
+        renderDial();
+        updateSlotSummaries();
+      }
+
+      document.getElementById('step-start-minus').addEventListener('click', (e) => {
+        e.stopPropagation();
+        adjustMinutes('start', -15);
+      });
+      document.getElementById('step-start-plus').addEventListener('click', (e) => {
+        e.stopPropagation();
+        adjustMinutes('start', 15);
+      });
+      document.getElementById('step-end-minus').addEventListener('click', (e) => {
+        e.stopPropagation();
+        adjustMinutes('end', -15);
+      });
+      document.getElementById('step-end-plus').addEventListener('click', (e) => {
+        e.stopPropagation();
+        adjustMinutes('end', 15);
+      });
+
+      // Day Repeat Selector Interaction
+      const dayButtons = document.querySelectorAll('.day-btn');
+      const repeatSummary = document.getElementById('repeat-summary');
+
+      function updateDayButtonStyles() {
+        dayButtons.forEach(btn => {
+          const day = btn.getAttribute('data-day');
+          if (state.selectedDays.has(day)) {
+            btn.className = 'day-btn py-2.5 rounded-2xl text-xs font-bold transition-all shadow-sm flex flex-col items-center justify-center bg-brand-orange text-white shadow-orange-500/25';
+          } else {
+            btn.className = 'day-btn py-2.5 rounded-2xl text-xs font-bold transition-all shadow-sm flex flex-col items-center justify-center bg-white text-slate-600 border border-slate-200 hover:border-slate-300';
+          }
+        });
+
+        if (state.selectedDays.size === 7) {
+          repeatSummary.textContent = 'Runs every day (Mon - Sun)';
+        } else if (state.selectedDays.size === 5 && ['Mon','Tue','Wed','Thu','Fri'].every(d => state.selectedDays.has(d))) {
+          repeatSummary.textContent = 'Runs every Monday through Friday';
+        } else if (state.selectedDays.size === 2 && state.selectedDays.has('Sat') && state.selectedDays.has('Sun')) {
+          repeatSummary.textContent = 'Runs on Weekends only (Sat, Sun)';
+        } else if (state.selectedDays.size === 0) {
+          repeatSummary.textContent = 'One-time manual schedule (No repeat)';
+        } else {
+          repeatSummary.textContent = 'Runs on ' + Array.from(state.selectedDays).join(', ');
+        }
+      }
+
+      dayButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const day = btn.getAttribute('data-day');
+          if (state.selectedDays.has(day)) {
+            state.selectedDays.delete(day);
+          } else {
+            state.selectedDays.add(day);
+          }
+          updateDayButtonStyles();
+        });
+      });
+
+      // Repeat Presets
+      document.querySelectorAll('.preset-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const preset = btn.getAttribute('data-preset');
+          document.querySelectorAll('.preset-btn').forEach(b => {
+            b.className = 'preset-btn text-[11px] py-1 px-2 rounded-xl bg-white text-slate-700 font-semibold shadow-xs hover:border-orange-300 border border-slate-200';
+          });
+          btn.className = 'preset-btn text-[11px] py-1 px-2 rounded-xl bg-brand-orange text-white font-semibold shadow-xs border border-transparent';
+
+          if (preset === 'daily') {
+            state.selectedDays = new Set(['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']);
+          } else if (preset === 'weekdays') {
+            state.selectedDays = new Set(['Mon', 'Tue', 'Wed', 'Thu', 'Fri']);
+          } else if (preset === 'weekends') {
+            state.selectedDays = new Set(['Sat', 'Sun']);
+          }
+          updateDayButtonStyles();
+        });
+      });
+
+      // Modal Bottom Sheet fine-tuning
+      let activeEditingField = 'start';
+      let selectedModalPeriod = 'AM';
+
+      function openSheet(type) {
+        activeEditingField = type || state.selectedField;
+        const cur = slots[state.activeSlot];
+        const currentMins = activeEditingField === 'start' ? cur.start : cur.end;
+        sheetTitle.textContent = activeEditingField === 'start' ? `Adjust Start Time (Slot ${state.activeSlot})` : `Adjust End Time (Slot ${state.activeSlot})`;
+
+        let hours = Math.floor(currentMins / 60);
+        const mins = currentMins % 60;
+        const isPM = hours >= 12;
+        hours = hours % 12 || 12;
+
+        sliderHour.value = hours;
+        sliderHourVal.textContent = hours;
+        sliderMinute.value = mins;
+        sliderMinuteVal.textContent = mins < 10 ? '0' + mins : mins;
+
+        setAmPmUI(isPM ? 'PM' : 'AM');
+
+        modalBackdrop.classList.remove('closed');
+        timeSheet.classList.remove('closed');
+      }
+
+      function closeSheet() {
+        modalBackdrop.classList.add('closed');
+        timeSheet.classList.add('closed');
+      }
+
+      function setAmPmUI(period) {
+        selectedModalPeriod = period;
+        if (period === 'AM') {
+          ampmAm.className = 'flex-1 py-2 text-xs font-bold rounded-lg bg-white shadow-xs text-brand-orange';
+          ampmPm.className = 'flex-1 py-2 text-xs font-bold rounded-lg text-slate-600';
+        } else {
+          ampmPm.className = 'flex-1 py-2 text-xs font-bold rounded-lg bg-white shadow-xs text-brand-orange';
+          ampmAm.className = 'flex-1 py-2 text-xs font-bold rounded-lg text-slate-600';
+        }
+      }
+
+      ampmAm.addEventListener('click', () => setAmPmUI('AM'));
+      ampmPm.addEventListener('click', () => setAmPmUI('PM'));
+
+      sliderHour.addEventListener('input', (e) => {
+        sliderHourVal.textContent = e.target.value;
+      });
+      sliderMinute.addEventListener('input', (e) => {
+        const val = parseInt(e.target.value, 10);
+        sliderMinuteVal.textContent = val < 10 ? '0' + val : val;
+      });
+
+      btnApplyModalTime.addEventListener('click', () => {
+        let h = parseInt(sliderHour.value, 10);
+        const m = parseInt(sliderMinute.value, 10);
+        if (selectedModalPeriod === 'PM' && h !== 12) h += 12;
+        if (selectedModalPeriod === 'AM' && h === 12) h = 0;
+
+        const calculated = h * 60 + m;
+        const cur = slots[state.activeSlot];
+        if (activeEditingField === 'start') {
+          cur.start = calculated;
+        } else {
+          cur.end = calculated;
+        }
+        renderDial();
+        updateSlotSummaries();
+        closeSheet();
+      });
+
+      document.getElementById('btn-open-fine-tuning').addEventListener('click', () => openSheet(state.selectedField));
+      closeSheetBtn.addEventListener('click', closeSheet);
+      modalBackdrop.addEventListener('click', closeSheet);
+
+      // Save Schedule CTA & Feedback Toast
+      saveScheduleBtn.addEventListener('click', () => {
+        const cur = slots[state.activeSlot];
+        const startStr = minutesToTimeString(cur.start);
+        const endStr = minutesToTimeString(cur.end);
+        const dayCount = state.selectedDays.size;
+
+        toastTitle.textContent = `Slot ${state.activeSlot} Saved & Synced!`;
+        toastMessage.textContent = `Motor runs ${startStr} - ${endStr} (${dayCount} day${dayCount === 1 ? '' : 's'}/wk)`;
+        toastNotification.classList.remove('hidden-toast');
+
+        if (navigator.vibrate) {
+          navigator.vibrate([40, 60, 40]);
+        }
+
+        setTimeout(() => {
+          toastNotification.classList.add('hidden-toast');
+        }, 3600);
+      });
+
+      // Quick info button alert
+      document.getElementById('btn-info').addEventListener('click', () => {
+        alert("Automated Irrigation Schedule:\n• Rotates pump relays smoothly.\n• Dry run cut-off within 45 seconds.\n• Synchronized with cloud controller.");
+      });
+
+      // Back button interaction
+      document.getElementById('btn-back').addEventListener('click', () => {
+        if (confirm("Exit schedule editor? Any unsaved changes will remain cached locally.")) {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      });
+
+      // Attach pointer listener to dial
+      dialContainer.addEventListener('pointerdown', onDialPointerDown);
+
+      // Initialize Face & Render Initial Schedule
+      initClockFace();
+      setActiveField('start');
+      renderDial();
+      updateSlotSummaries();
+      updateDayButtonStyles();
+    })();
+  </script>
+<!-- END: Interactive Clock Logic and Schedule Synchronization -->
+<script id="esston-global-navigation">
+(function(){
+ const R={home:'customer-home.html',dashboard:'dealer-dashboard.html',products:'catalogue.html',dealerproducts:'dealer-catalogue.html',details:'product-details.html',starter:'my-starter.html',control:'motor-control.html',schedule:'schedule.html',faq:'help-faq.html',enquiry:'contact-enquiry.html',auth:'auth.html',splash:'splash.html',otp:'dealer-otp.html',dealerEnquiries:'dealer-enquiries.html'};
+ const p=(location.pathname.split('/').pop()||'index.html').toLowerCase();
+ const isDealer=/dealer-dashboard|dealer-catalogue|dealer-enquiries/.test(p);
+ const go=(key)=>{if(R[key]) location.href=R[key];};
+ const txt=e=>(e.innerText||e.textContent||'').replace(/\s+/g,' ').trim().toLowerCase();
+ // Route the existing bottom navigation and clearly named action buttons to the corresponding screens.
+ document.addEventListener('click',function(ev){
+   const el=ev.target.closest('a,button,[role="button"]'); if(!el) return;
+   const t=txt(el); const page=p;
+   // Common bottom/navigation links
+   if(/^(home|dashboard)$/.test(t) || t.startsWith('home ')){ev.preventDefault();go(isDealer?'dashboard':'home');return;}
+   if(t==='products' || t.includes('browse products') || t.includes('view products') || t==='all products' || t==='product catalogue'){ev.preventDefault();go(isDealer?'dealerproducts':'products');return;}
+   if(t==='enquiry' || t==='enquiries' || t.includes('my enquiries') || t.includes('recent enquiries') || t.includes('view all enquiries')){ev.preventDefault();go(isDealer?'dealerEnquiries':'enquiry');return;}
+   if(t==='faqs' || t==='help & faq' || t==='help & support' || t.includes('chat with faq bot') || t.includes('need help')){ev.preventDefault();go('faq');return;}
+   if(t==='motor control' || t==='control' || t.includes('check status') || t.includes('tap to start motor')){ if(!/motor_control|motor-control/.test(page)){ev.preventDefault();go('control');return;} }
+   if(t==='my starter' || t.includes('view my starter') || t.includes('starter details')){ev.preventDefault();go('starter');return;}
+   if(t.includes('motor schedule') || t.includes('set schedule') || t==='add slot' || t.includes('auto timer schedule')){ev.preventDefault();go('schedule');return;}
+   if(t==='view details' || t==='view product details' || t.includes('product details')){ev.preventDefault();go('details');return;}
+   if(t.includes('send enquiry') || t.includes('add to enquiry') || t==='submit enquiry' || t==='contact support' || t==='contact / enquiry'){ev.preventDefault();go('enquiry');return;}
+   if(t.includes('dealer b2b portal')){ev.preventDefault();go('auth');return;}
+   if(t.includes('customer iot app')){ev.preventDefault();go('auth');return;}
+   // Splash screen progresses to role selection when user taps the page.
+   if(page==='splash.html' && !el.closest('a[href^="http"]')){ev.preventDefault();go('auth');return;}
+   // Login: customer enters customer home; dealer login enters the OTP screen.
+   if(page==='auth.html' && (t.includes('login') || t.includes('continue'))){
+     const dealer=!!el.closest('section,form,div') && (el.closest('section,form,div').innerText||'').toLowerCase().includes('dealer login');
+     if(dealer || t.includes('dealer')){ev.preventDefault();go('otp');return;}
+     if(t.includes('login')){ev.preventDefault();go('home');return;}
+   }
+   if(page==='dealer-dashboard.html' && (t.includes('share quote') || t.includes('quick order'))){ev.preventDefault();go('dealerEnquiries');return;}
+ },true);
+ // Make all placeholder bottom-nav links meaningful even when their labels are nested in icon wrappers.
+ document.querySelectorAll('a[href="#"]').forEach(a=>{
+   const t=txt(a);
+   if(t==='home') a.href=R.home; else if(t==='dashboard') a.href=R.dashboard; else if(t==='products') a.href=isDealer?R.dealerproducts:R.products; else if(t==='motor control'||t==='control') a.href=R.control; else if(t==='my starter') a.href=R.starter; else if(t==='faqs'||t==='help & faq') a.href=R.faq; else if(t==='enquiry'||t==='enquiries') a.href=isDealer?R.dealerEnquiries:R.enquiry; else if(t==='more') a.href=R.faq;
+ });
+})();
+</script>
+</body></html>

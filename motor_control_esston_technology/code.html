@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html class="h-full w-full bg-[#0b1118]" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+  <title>Motor Control - Esston Technology</title>
+  <!-- Tailwind CSS CDN v3 -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <!-- FontAwesome Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+  <!-- Tailwind Configuration -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#fff7ed',
+              100: '#ffedd5',
+              200: '#fed7aa',
+              500: '#f97316',
+              600: '#ea580c',
+              700: '#c2410c',
+              orange: '#FF5E14'
+            },
+            status: {
+              green: '#10B981',
+              darkGreen: '#059669',
+              lightGreen: '#ECFDF5',
+              stopRed: '#EF4444',
+              amber: '#F59E0B'
+            }
+          },
+          boxShadow: {
+            'soft': '0 4px 20px -2px rgba(15, 23, 42, 0.06)',
+            'card': '0 2px 14px 0 rgba(0, 0, 0, 0.05)',
+            'button-glow': '0 8px 25px -4px rgba(16, 185, 129, 0.45)',
+            'button-glow-red': '0 8px 25px -4px rgba(239, 68, 68, 0.45)',
+            'glow-orange': '0 8px 24px -4px rgba(255, 94, 20, 0.35)',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @keyframes pulse-subtle {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.15); }
+    }
+    .animate-live-dot {
+      animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    @keyframes spin-slow {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .animate-spin-slow {
+      animation: spin-slow 8s linear infinite;
+    }
+    @keyframes ripple {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      100% { transform: scale(1.35); opacity: 0; }
+    }
+    .animate-ripple {
+      animation: ripple 2s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+    }
+    button, a, div[role="button"] {
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    .tap-effect {
+      transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .tap-effect:active {
+      transform: scale(0.97);
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="h-screen w-screen text-slate-800 antialiased flex flex-col justify-center items-center p-0 m-0 bg-[#0b1118] overflow-hidden">
+
+<!-- Mobile Device Frame Container (Straight Edges, Flush Height) -->
+<div class="w-full max-w-[430px] h-full h-screen bg-[#F8FAFC] shadow-2xl flex flex-col overflow-hidden relative border-x border-slate-700/50" data-purpose="mobile-viewport">
+
+  <!-- BEGIN: Unified Top Header -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-100 px-4 py-3 flex items-center justify-between flex-shrink-0 shadow-xs" data-purpose="app-top-header">
+    <div class="flex items-center space-x-2.5">
+      <!-- Back to Customer Home Button -->
+      <a href="../customer-home.html" aria-label="Go Back" class="w-9 h-9 rounded-xl bg-slate-50 border border-slate-200/80 hover:bg-slate-100 flex items-center justify-center text-slate-700 tap-effect transition-all">
+        <i class="fa-solid fa-chevron-left text-sm"></i>
+      </a>
+      <div>
+        <div class="flex items-center space-x-1.5">
+          <h1 class="text-base font-extrabold text-slate-900 tracking-tight leading-tight">Motor Control</h1>
+          <span class="inline-flex items-center px-1.5 py-0.5 rounded-full text-[9px] font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200/80">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1 animate-ping"></span>
+            LIVE
+          </span>
+        </div>
+        <p class="text-[10.5px] font-medium text-slate-400" id="header-starter-name">Esston Smart Starter IoT</p>
+      </div>
+    </div>
+
+    <!-- Right Header Actions: Call Starter & Motor Settings Gear -->
+    <div class="flex items-center space-x-2">
+      <!-- Quick Call Starter via IVR -->
+      <a href="tel:+919876543210" aria-label="Call Starter" class="w-9 h-9 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-600 hover:bg-emerald-100 flex items-center justify-center tap-effect transition-all" title="Call Starter SIM">
+        <i class="fa-solid fa-phone text-xs"></i>
+      </a>
+      <!-- Refresh Telemetry Button -->
+      <button id="btn-refresh" aria-label="Refresh telemetry" class="w-9 h-9 rounded-xl bg-slate-50 border border-slate-200/80 text-slate-600 hover:text-brand-orange hover:bg-orange-50 flex items-center justify-center tap-effect transition-all" title="Refresh">
+        <i class="fa-solid fa-arrows-rotate text-xs"></i>
+      </button>
+      <!-- Settings Link -->
+      <a href="../motor-settings.html" aria-label="Motor Settings" class="w-9 h-9 rounded-xl bg-slate-50 border border-slate-200/80 text-slate-700 hover:text-slate-900 hover:bg-slate-100 flex items-center justify-center tap-effect transition-all" title="Motor Settings">
+        <i class="fa-solid fa-sliders text-sm"></i>
+      </a>
+    </div>
+  </header>
+  <!-- END: Unified Top Header -->
+
+  <!-- BEGIN: 4-Motor Quick Switcher Tabs (Home Multi-Motor Sync) -->
+  <section class="bg-white border-b border-slate-100 px-3 py-2 flex-shrink-0" data-purpose="motor-tabs-selector">
+    <div class="grid grid-cols-4 gap-1.5" id="motor-tab-container">
+      <!-- Motor 1 Tab -->
+      <button type="button" data-motor="1" class="motor-tab-btn active border-2 border-brand-orange bg-orange-50/80 text-brand-orange rounded-xl py-1.5 px-1 text-center tap-effect transition-all flex flex-col items-center">
+        <div class="flex items-center space-x-1">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span class="text-[11px] font-extrabold tracking-tight">Motor 1</span>
+        </div>
+        <span class="text-[9px] font-semibold text-slate-500 truncate max-w-full">Borewell</span>
+      </button>
+
+      <!-- Motor 2 Tab -->
+      <button type="button" data-motor="2" class="motor-tab-btn border border-slate-200/90 bg-white text-slate-700 hover:bg-slate-50 rounded-xl py-1.5 px-1 text-center tap-effect transition-all flex flex-col items-center">
+        <div class="flex items-center space-x-1">
+          <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+          <span class="text-[11px] font-bold tracking-tight">Motor 2</span>
+        </div>
+        <span class="text-[9px] font-semibold text-slate-400 truncate max-w-full">Openwell</span>
+      </button>
+
+      <!-- Motor 3 Tab -->
+      <button type="button" data-motor="3" class="motor-tab-btn border border-slate-200/90 bg-white text-slate-700 hover:bg-slate-50 rounded-xl py-1.5 px-1 text-center tap-effect transition-all flex flex-col items-center">
+        <div class="flex items-center space-x-1">
+          <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+          <span class="text-[11px] font-bold tracking-tight">Motor 3</span>
+        </div>
+        <span class="text-[9px] font-semibold text-slate-400 truncate max-w-full">Drip Line</span>
+      </button>
+
+      <!-- Motor 4 Tab -->
+      <button type="button" data-motor="4" class="motor-tab-btn border border-slate-200/90 bg-white text-slate-700 hover:bg-slate-50 rounded-xl py-1.5 px-1 text-center tap-effect transition-all flex flex-col items-center">
+        <div class="flex items-center space-x-1">
+          <span class="w-2 h-2 rounded-full bg-slate-300"></span>
+          <span class="text-[11px] font-bold tracking-tight">Motor 4</span>
+        </div>
+        <span class="text-[9px] font-semibold text-slate-400 truncate max-w-full">Feeder</span>
+      </button>
+    </div>
+  </section>
+  <!-- END: 4-Motor Quick Switcher Tabs -->
+
+  <!-- BEGIN: Scrollable Main Content -->
+  <main class="flex-1 overflow-y-auto no-scrollbar px-3.5 pt-3 pb-24 space-y-3.5" data-purpose="motor-dashboard-content">
+
+    <!-- BEGIN: Primary Hero Power Hub Card -->
+    <section class="bg-white rounded-2xl p-4 shadow-card border border-slate-200/80 relative overflow-hidden" data-purpose="hero-power-hub" id="hero-power-card">
+      <div class="absolute -right-12 -top-12 w-48 h-48 bg-gradient-to-br from-emerald-100/40 via-teal-50/20 to-transparent rounded-full blur-2xl pointer-events-none" id="ambient-glow"></div>
+
+      <!-- Top Row: Motor Identity & GSM Signal -->
+      <div class="flex items-start justify-between relative z-10">
+        <div>
+          <div class="flex items-center space-x-1.5">
+            <span class="text-[10px] font-extrabold uppercase tracking-wider text-brand-orange bg-orange-100/80 px-2 py-0.5 rounded-full border border-orange-200/60" id="badge-motor-type">3-Phase 5 HP Borewell</span>
+            <span class="text-[10px] font-bold text-slate-500 flex items-center gap-1">
+              <i class="fa-solid fa-location-dot text-slate-400 text-[9px]"></i>
+              <span id="label-motor-location">Wagholi, Pune</span>
+            </span>
+          </div>
+          <h2 class="text-xl font-black text-slate-900 tracking-tight mt-1" id="label-motor-title">Motor 1 - Farm Borewell</h2>
+          <p class="text-[11px] text-slate-400 font-medium mt-0.5 flex items-center gap-1">
+            <span>SIM:</span>
+            <span class="font-bold text-slate-600" id="label-motor-sim">+91 98765 43210</span>
+          </p>
+        </div>
+
+        <!-- GSM Signal Pill -->
+        <div class="flex flex-col items-end">
+          <div class="flex items-center space-x-1 bg-slate-50 border border-slate-200/80 px-2 py-1 rounded-full shadow-2xs">
+            <div class="flex items-end space-x-0.5 h-3">
+              <div class="w-1 h-1.5 bg-emerald-500 rounded-2xs"></div>
+              <div class="w-1 h-2 bg-emerald-500 rounded-2xs"></div>
+              <div class="w-1 h-2.5 bg-emerald-500 rounded-2xs"></div>
+              <div class="w-1 h-3 bg-emerald-500 rounded-2xs"></div>
+            </div>
+            <span class="text-[9.5px] font-extrabold text-slate-700 ml-0.5">4G LTE</span>
+          </div>
+          <span class="text-[9px] font-bold text-emerald-600 mt-1" id="label-network-status">Connected (100%)</span>
+        </div>
+      </div>
+
+      <!-- Centerpiece: Circular Interactive Motor Turbine Hub -->
+      <div class="py-4 flex flex-col items-center justify-center relative z-10" data-purpose="motor-visual-dial">
+        <div class="relative w-36 h-36 flex items-center justify-center">
+          <div class="absolute inset-0 rounded-full bg-emerald-400/20 animate-ripple" id="ripple-1"></div>
+          <div class="absolute -inset-2 rounded-full border border-emerald-300/40 animate-spin-slow" id="rotating-border"></div>
+
+          <div class="w-32 h-32 rounded-full bg-gradient-to-br from-emerald-500 via-emerald-600 to-teal-700 text-white flex flex-col items-center justify-center shadow-button-glow transition-all duration-300 cursor-pointer tap-effect relative" id="motor-central-dial">
+            <div class="relative w-12 h-12 flex items-center justify-center">
+              <i class="fa-solid fa-fan text-3xl animate-spin-slow" id="dial-turbine-icon"></i>
+            </div>
+            <span class="text-xs font-black tracking-wider uppercase mt-1" id="dial-status-label">RUNNING</span>
+            <span class="text-[10px] font-bold text-emerald-100" id="dial-timer-label">01h 48m 22s</span>
+          </div>
+        </div>
+
+        <div class="mt-3 text-center">
+          <div class="inline-flex items-center space-x-2 bg-emerald-50 border border-emerald-200/80 px-3 py-1 rounded-full text-xs font-extrabold text-emerald-800" id="status-pill-badge">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+            <span id="status-detailed-text">Motor is Running Normally</span>
+          </div>
+          <p class="text-[11px] text-slate-500 font-medium mt-1" id="status-sub-text">Water Flow Detected • Pressure: 3.2 Bar</p>
+        </div>
+      </div>
+
+      <!-- Primary Action Buttons: Start & Stop Tactile Bar -->
+      <div class="grid grid-cols-2 gap-2.5 pt-2 border-t border-slate-100 relative z-10">
+        <button type="button" id="btn-start-motor" class="group bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white rounded-xl py-3 px-3 shadow-md shadow-emerald-500/25 flex items-center justify-center space-x-2 tap-effect transition-all font-black text-xs uppercase tracking-wider opacity-60 cursor-not-allowed">
+          <i class="fa-solid fa-play text-xs group-hover:scale-110 transition-transform"></i>
+          <span>Start Motor</span>
+        </button>
+
+        <button type="button" id="btn-stop-motor" class="group bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700 text-white rounded-xl py-3 px-3 shadow-button-glow-red flex items-center justify-center space-x-2 tap-effect transition-all font-black text-xs uppercase tracking-wider animate-pulse">
+          <i class="fa-solid fa-stop text-xs group-hover:scale-110 transition-transform"></i>
+          <span>Stop Motor</span>
+        </button>
+      </div>
+
+      <!-- Mode Selector Pills -->
+      <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs">
+        <span class="text-[11px] font-extrabold text-slate-500 uppercase tracking-wider">Control Mode:</span>
+        <div class="inline-flex bg-slate-100 p-0.5 rounded-xl border border-slate-200/60" id="mode-selector">
+          <button type="button" data-mode="manual" class="mode-pill px-2.5 py-1 rounded-lg text-[10.5px] font-extrabold bg-white text-brand-orange shadow-2xs">Manual</button>
+          <button type="button" data-mode="auto" class="mode-pill px-2.5 py-1 rounded-lg text-[10.5px] font-bold text-slate-600 hover:text-slate-900">Auto Sensor</button>
+          <button type="button" data-mode="timer" class="mode-pill px-2.5 py-1 rounded-lg text-[10.5px] font-bold text-slate-600 hover:text-slate-900">Scheduled</button>
+        </div>
+      </div>
+    </section>
+    <!-- END: Primary Hero Power Hub Card -->
+
+    <!-- BEGIN: Live 3-Phase Telemetry & Electrical Health Grid -->
+    <section class="bg-white rounded-2xl p-3.5 shadow-card border border-slate-200/80" data-purpose="3phase-telemetry-card">
+      <div class="flex items-center justify-between mb-2.5">
+        <div class="flex items-center space-x-2">
+          <div class="w-7 h-7 rounded-lg bg-orange-50 text-brand-orange flex items-center justify-center text-xs">
+            <i class="fa-solid fa-bolt"></i>
+          </div>
+          <div>
+            <h3 class="text-xs font-extrabold text-slate-900 tracking-tight">3-Phase Voltage &amp; Current</h3>
+            <p class="text-[10px] font-medium text-slate-400">Real-time IoT Starter Sensors</p>
+          </div>
+        </div>
+        <span class="text-[10px] font-extrabold text-emerald-700 bg-emerald-50 border border-emerald-200/80 px-2 py-0.5 rounded-full flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+          Balanced (415V)
+        </span>
+      </div>
+
+      <!-- 3 Phase Voltage Cards (R - Y - B) -->
+      <div class="grid grid-cols-3 gap-2">
+        <div class="bg-red-50/70 border border-red-200/80 rounded-xl p-2.5 text-center">
+          <div class="flex items-center justify-center space-x-1">
+            <span class="w-2 h-2 rounded-full bg-red-500"></span>
+            <span class="text-[10px] font-extrabold uppercase text-red-700">R Phase</span>
+          </div>
+          <div class="text-base font-black text-slate-800 mt-1" id="val-r-phase">232 V</div>
+          <span class="text-[9px] font-bold text-emerald-700 bg-emerald-100/70 px-1.5 py-0.2 rounded-full inline-block mt-0.5">Normal</span>
+        </div>
+
+        <div class="bg-amber-50/70 border border-amber-200/80 rounded-xl p-2.5 text-center">
+          <div class="flex items-center justify-center space-x-1">
+            <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+            <span class="text-[10px] font-extrabold uppercase text-amber-700">Y Phase</span>
+          </div>
+          <div class="text-base font-black text-slate-800 mt-1" id="val-y-phase">230 V</div>
+          <span class="text-[9px] font-bold text-emerald-700 bg-emerald-100/70 px-1.5 py-0.2 rounded-full inline-block mt-0.5">Normal</span>
+        </div>
+
+        <div class="bg-blue-50/70 border border-blue-200/80 rounded-xl p-2.5 text-center">
+          <div class="flex items-center justify-center space-x-1">
+            <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+            <span class="text-[10px] font-extrabold uppercase text-blue-700">B Phase</span>
+          </div>
+          <div class="text-base font-black text-slate-800 mt-1" id="val-b-phase">235 V</div>
+          <span class="text-[9px] font-bold text-emerald-700 bg-emerald-100/70 px-1.5 py-0.2 rounded-full inline-block mt-0.5">Normal</span>
+        </div>
+      </div>
+
+      <!-- Electrical Metrics Strip (Amps, PF, Hz, Runtime) -->
+      <div class="grid grid-cols-4 gap-2 mt-2.5 pt-2.5 border-t border-slate-100 text-center">
+        <div>
+          <span class="block text-[9.5px] font-bold text-slate-400 uppercase">Load Amps</span>
+          <span class="block text-xs font-black text-slate-800 mt-0.5" id="val-amps">14.8 A</span>
+        </div>
+        <div>
+          <span class="block text-[9.5px] font-bold text-slate-400 uppercase">Frequency</span>
+          <span class="block text-xs font-black text-slate-800 mt-0.5">50.0 Hz</span>
+        </div>
+        <div>
+          <span class="block text-[9.5px] font-bold text-slate-400 uppercase">Power Factor</span>
+          <span class="block text-xs font-black text-slate-800 mt-0.5">0.89</span>
+        </div>
+        <div>
+          <span class="block text-[9.5px] font-bold text-slate-400 uppercase">Today's Run</span>
+          <span class="block text-xs font-black text-brand-orange mt-0.5" id="val-today-run">3h 45m</span>
+        </div>
+      </div>
+    </section>
+    <!-- END: Live 3-Phase Telemetry Grid -->
+
+    <!-- BEGIN: Starter Protections & Health Matrix (5 Badges) -->
+    <section class="bg-white rounded-2xl p-3.5 shadow-card border border-slate-200/80" data-purpose="protections-overview">
+      <div class="flex items-center justify-between mb-2">
+        <div class="flex items-center space-x-2">
+          <div class="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-xs">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <div>
+            <h3 class="text-xs font-extrabold text-slate-900 tracking-tight">Active Protection Safeguards</h3>
+            <p class="text-[10px] font-medium text-slate-400">10 IoT Starter Hardware Trips</p>
+          </div>
+        </div>
+        <a href="../motor-settings.html" class="text-[11px] font-extrabold text-blue-600 hover:text-blue-700 flex items-center gap-0.5 tap-effect">
+          <span>Configure</span>
+          <i class="fa-solid fa-chevron-right text-[9px]"></i>
+        </a>
+      </div>
+
+      <!-- Safeguard Chips -->
+      <div class="grid grid-cols-2 gap-2 pt-1">
+        <div class="bg-emerald-50/60 border border-emerald-200/70 rounded-xl p-2 flex items-center space-x-2">
+          <i class="fa-solid fa-circle-check text-emerald-500 text-sm"></i>
+          <div>
+            <span class="block text-[10.5px] font-extrabold text-slate-800 leading-tight">Dry Run Guard</span>
+            <span class="block text-[9px] font-semibold text-emerald-700">Water Flow Safe</span>
+          </div>
+        </div>
+
+        <div class="bg-emerald-50/60 border border-emerald-200/70 rounded-xl p-2 flex items-center space-x-2">
+          <i class="fa-solid fa-circle-check text-emerald-500 text-sm"></i>
+          <div>
+            <span class="block text-[10.5px] font-extrabold text-slate-800 leading-tight">Overload Trip</span>
+            <span class="block text-[9px] font-semibold text-emerald-700">Trip Limit 22A</span>
+          </div>
+        </div>
+
+        <div class="bg-emerald-50/60 border border-emerald-200/70 rounded-xl p-2 flex items-center space-x-2">
+          <i class="fa-solid fa-circle-check text-emerald-500 text-sm"></i>
+          <div>
+            <span class="block text-[10.5px] font-extrabold text-slate-800 leading-tight">Phase Sequence</span>
+            <span class="block text-[9px] font-semibold text-emerald-700">R-Y-B Correct</span>
+          </div>
+        </div>
+
+        <div class="bg-blue-50/60 border border-blue-200/70 rounded-xl p-2 flex items-center space-x-2">
+          <i class="fa-solid fa-clock-rotate-left text-blue-500 text-sm"></i>
+          <div>
+            <span class="block text-[10.5px] font-extrabold text-slate-800 leading-tight">Auto-Restart</span>
+            <span class="block text-[9px] font-semibold text-blue-700">3 Min Timer Armed</span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- END: Starter Protections -->
+
+    <!-- BEGIN: Quick SMS Gateway Commands & IVR -->
+    <section class="grid grid-cols-3 gap-2" data-purpose="quick-sms-commands">
+      <button type="button" id="btn-check-status" class="bg-white border border-slate-200/80 hover:border-brand-orange/60 rounded-xl p-2.5 flex flex-col items-center justify-center text-center shadow-xs tap-effect group transition-all">
+        <div class="w-9 h-9 rounded-xl bg-orange-50 text-brand-orange flex items-center justify-center mb-1 group-hover:scale-105 transition-transform shadow-2xs">
+          <i class="fa-solid fa-comment-sms text-sm"></i>
+        </div>
+        <span class="text-[10px] font-extrabold text-slate-800 group-hover:text-brand-orange leading-tight">Query Status</span>
+        <span class="text-[8.5px] font-semibold text-slate-400">Via SMS</span>
+      </button>
+
+      <a href="tel:+919876543210" class="bg-white border border-slate-200/80 hover:border-emerald-400/60 rounded-xl p-2.5 flex flex-col items-center justify-center text-center shadow-xs tap-effect group transition-all">
+        <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-1 group-hover:scale-105 transition-transform shadow-2xs">
+          <i class="fa-solid fa-phone-volume text-sm"></i>
+        </div>
+        <span class="text-[10px] font-extrabold text-slate-800 group-hover:text-emerald-600 leading-tight">Call Starter</span>
+        <span class="text-[8.5px] font-semibold text-slate-400">Voice IVR</span>
+      </a>
+
+      <a href="../motor-settings.html" class="bg-white border border-slate-200/80 hover:border-blue-400/60 rounded-xl p-2.5 flex flex-col items-center justify-center text-center shadow-xs tap-effect group transition-all">
+        <div class="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-1 group-hover:scale-105 transition-transform shadow-2xs">
+          <i class="fa-solid fa-sliders text-sm"></i>
+        </div>
+        <span class="text-[10px] font-extrabold text-slate-800 group-hover:text-blue-600 leading-tight">Settings</span>
+        <span class="text-[8.5px] font-semibold text-slate-400">10 Limits</span>
+      </a>
+    </section>
+    <!-- END: Quick SMS Commands -->
+
+    <!-- BEGIN: Auto Timer Schedule Section -->
+    <section class="space-y-2.5" data-purpose="auto-timer-schedule">
+      <div class="flex items-center justify-between px-1">
+        <div class="flex items-center space-x-2">
+          <div class="w-7 h-7 rounded-lg bg-orange-50 text-brand-orange flex items-center justify-center text-xs">
+            <i class="fa-solid fa-clock"></i>
+          </div>
+          <div>
+            <h3 class="text-xs font-extrabold text-slate-900 tracking-tight">Auto Timer Schedule</h3>
+            <p class="text-[10px] font-medium text-slate-400">Automated IoT irrigation on/off cycles</p>
+          </div>
+        </div>
+        <a href="../schedule.html" class="inline-flex items-center space-x-1 px-2.5 py-1 rounded-full text-[10px] font-extrabold text-brand-orange bg-orange-50 hover:bg-orange-100/80 border border-orange-200/80 tap-effect transition-all">
+          <i class="fa-solid fa-plus text-[9px]"></i>
+          <span>Add Slot</span>
+        </a>
+      </div>
+
+      <!-- Schedule Slots Container -->
+      <div class="space-y-2.5">
+        <!-- Slot 1: Active -->
+        <div class="bg-white rounded-2xl p-3.5 border border-slate-200/90 shadow-xs hover:border-emerald-300/80 transition-all schedule-card">
+          <!-- Top Row: Slot Tag + Title + Toggle Switch -->
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <span class="slot-badge text-[9.5px] font-black uppercase tracking-wider text-emerald-800 bg-emerald-50 border border-emerald-200/80 px-2 py-0.5 rounded-md">Slot 1</span>
+              <h4 class="text-xs font-black text-slate-800">Morning Irrigation</h4>
+            </div>
+            <!-- Switch Toggle (ON) -->
+            <label class="relative inline-flex items-center cursor-pointer select-none">
+              <input type="checkbox" checked="" class="sr-only peer schedule-toggle">
+              <div class="w-10 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:bg-emerald-500 peer-checked:after:translate-x-5 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all shadow-inner"></div>
+            </label>
+          </div>
+
+          <!-- Subtle Divider -->
+          <div class="my-2.5 border-t border-slate-100"></div>
+
+          <!-- Bottom Row: Time Range, Duration Pill, Repeat Day & Edit Link -->
+          <div class="flex items-center justify-between text-xs">
+            <div class="flex items-center space-x-2">
+              <div class="flex items-center space-x-1.5 font-black text-slate-800">
+                <i class="fa-regular fa-clock text-slate-400 text-xs"></i>
+                <span class="tracking-tight">06:00 AM – 08:30 AM</span>
+              </div>
+              <span class="text-[9.5px] font-extrabold text-emerald-700 bg-emerald-50 border border-emerald-200/80 px-2 py-0.5 rounded-full">2h 30m</span>
+            </div>
+
+            <div class="flex items-center space-x-2">
+              <span class="text-[10px] font-bold text-brand-orange bg-orange-50 border border-orange-200/70 px-2.5 py-0.5 rounded-full">Everyday</span>
+              <a href="../schedule.html" class="w-7 h-7 rounded-lg bg-slate-50 hover:bg-orange-50 border border-slate-200/80 text-slate-400 hover:text-brand-orange flex items-center justify-center tap-effect transition-all" title="Edit Schedule">
+                <i class="fa-solid fa-pen text-[10px]"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slot 2: Active -->
+        <div class="bg-white rounded-2xl p-3.5 border border-slate-200/90 shadow-xs hover:border-emerald-300/80 transition-all schedule-card">
+          <!-- Top Row: Slot Tag + Title + Toggle Switch -->
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <span class="slot-badge text-[9.5px] font-black uppercase tracking-wider text-emerald-800 bg-emerald-50 border border-emerald-200/80 px-2 py-0.5 rounded-md">Slot 2</span>
+              <h4 class="text-xs font-black text-slate-800">Evening Cycle</h4>
+            </div>
+            <!-- Switch Toggle (ON) -->
+            <label class="relative inline-flex items-center cursor-pointer select-none">
+              <input type="checkbox" checked="" class="sr-only peer schedule-toggle">
+              <div class="w-10 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:bg-emerald-500 peer-checked:after:translate-x-5 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all shadow-inner"></div>
+            </label>
+          </div>
+
+          <!-- Subtle Divider -->
+          <div class="my-2.5 border-t border-slate-100"></div>
+
+          <!-- Bottom Row: Time Range, Duration Pill, Repeat Day & Edit Link -->
+          <div class="flex items-center justify-between text-xs">
+            <div class="flex items-center space-x-2">
+              <div class="flex items-center space-x-1.5 font-black text-slate-800">
+                <i class="fa-regular fa-clock text-slate-400 text-xs"></i>
+                <span class="tracking-tight">06:30 PM – 08:00 PM</span>
+              </div>
+              <span class="text-[9.5px] font-extrabold text-emerald-700 bg-emerald-50 border border-emerald-200/80 px-2 py-0.5 rounded-full">1h 30m</span>
+            </div>
+
+            <div class="flex items-center space-x-2">
+              <span class="text-[10px] font-bold text-brand-orange bg-orange-50 border border-orange-200/70 px-2.5 py-0.5 rounded-full">Everyday</span>
+              <a href="../schedule.html" class="w-7 h-7 rounded-lg bg-slate-50 hover:bg-orange-50 border border-slate-200/80 text-slate-400 hover:text-brand-orange flex items-center justify-center tap-effect transition-all" title="Edit Schedule">
+                <i class="fa-solid fa-pen text-[10px]"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slot 3: Standby / Paused -->
+        <div class="bg-white/90 rounded-2xl p-3.5 border border-slate-200/70 shadow-xs hover:border-slate-300 transition-all schedule-card opacity-85">
+          <!-- Top Row: Slot Tag + Title + Toggle Switch -->
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <span class="slot-badge text-[9.5px] font-black uppercase tracking-wider text-slate-500 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-md">Slot 3</span>
+              <h4 class="text-xs font-bold text-slate-600">Afternoon Irrigation</h4>
+            </div>
+            <!-- Switch Toggle (OFF) -->
+            <label class="relative inline-flex items-center cursor-pointer select-none">
+              <input type="checkbox" class="sr-only peer schedule-toggle">
+              <div class="w-10 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:bg-emerald-500 peer-checked:after:translate-x-5 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all shadow-inner"></div>
+            </label>
+          </div>
+
+          <!-- Subtle Divider -->
+          <div class="my-2.5 border-t border-slate-100"></div>
+
+          <!-- Bottom Row: Time Range, Duration Pill, Repeat Day & Edit Link -->
+          <div class="flex items-center justify-between text-xs">
+            <div class="flex items-center space-x-2">
+              <div class="flex items-center space-x-1.5 font-bold text-slate-500">
+                <i class="fa-regular fa-clock text-slate-300 text-xs"></i>
+                <span class="tracking-tight">01:00 PM – 02:30 PM</span>
+              </div>
+              <span class="text-[9.5px] font-bold text-slate-500 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-full">1h 30m</span>
+            </div>
+
+            <div class="flex items-center space-x-2">
+              <span class="text-[10px] font-bold text-slate-500 bg-slate-100 border border-slate-200 px-2.5 py-0.5 rounded-full">Mon, Wed, Fri</span>
+              <a href="../schedule.html" class="w-7 h-7 rounded-lg bg-slate-50 hover:bg-orange-50 border border-slate-200/80 text-slate-400 hover:text-brand-orange flex items-center justify-center tap-effect transition-all" title="Edit Schedule">
+                <i class="fa-solid fa-pen text-[10px]"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- END: Auto Timer Schedule Section -->
+
+    <!-- BEGIN: Live Activity & SMS Telemetry Log -->
+    <section class="space-y-2 pt-1" data-purpose="recent-activity-feed">
+      <div class="flex items-center justify-between px-1">
+        <h3 class="text-xs font-extrabold text-slate-900 tracking-tight">Recent Starter Logs</h3>
+        <span class="text-[10.5px] font-bold text-brand-orange cursor-pointer hover:underline" id="btn-clear-logs">SMS Gateway</span>
+      </div>
+
+      <div class="bg-white rounded-2xl border border-slate-200/80 shadow-card divide-y divide-slate-100 overflow-hidden" id="activity-log-list">
+        <div class="p-3 flex items-center justify-between hover:bg-slate-50/60 transition-colors">
+          <div class="flex items-center space-x-2.5">
+            <div class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xs flex-shrink-0">
+              <i class="fa-solid fa-play"></i>
+            </div>
+            <div>
+              <h4 class="text-xs font-bold text-slate-800">Motor Started via App</h4>
+              <p class="text-[10px] text-slate-400 font-medium" id="log-time-1">Today, 10:15 AM • 415V 14.8A</p>
+            </div>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[9.5px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200/70">
+            Confirmed
+          </span>
+        </div>
+
+        <div class="p-3 flex items-center justify-between hover:bg-slate-50/60 transition-colors">
+          <div class="flex items-center space-x-2.5">
+            <div class="w-8 h-8 rounded-xl bg-orange-50 text-brand-orange flex items-center justify-center text-xs flex-shrink-0">
+              <i class="fa-solid fa-heart-pulse"></i>
+            </div>
+            <div>
+              <h4 class="text-xs font-bold text-slate-800">Telemetry Status Query</h4>
+              <p class="text-[10px] text-slate-400 font-medium">Today, 09:30 AM • SMS ACK</p>
+            </div>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[9.5px] font-bold bg-blue-50 text-blue-700 border border-blue-200/70">
+            3-Ph Normal
+          </span>
+        </div>
+      </div>
+    </section>
+    <!-- END: Live Activity Log -->
+
+    <div class="bg-blue-50/80 border border-blue-200/70 rounded-2xl p-3 text-xs text-blue-900/90 flex items-start space-x-2.5">
+      <i class="fa-solid fa-circle-info text-blue-600 text-sm mt-0.5 flex-shrink-0"></i>
+      <p class="text-[11px] leading-relaxed text-blue-800/90">
+        Direct GSM Link: Commands execute directly on your field starter unit via cellular SMS gateway. Live confirmation updates within 3-5 seconds.
+      </p>
+    </div>
+
+  </main>
+  <!-- END: Scrollable Main Content -->
+
+  <!-- BEGIN: Bottom Navigation Bar -->
+  <nav class="fixed md:absolute bottom-0 left-0 right-0 max-w-[430px] mx-auto bg-white/95 backdrop-blur-md border-t border-slate-200/80 px-2 pt-2 z-40 shadow-lg pb-2" data-purpose="mobile-bottom-navigation">
+    <div class="grid grid-cols-5 items-center text-center">
+      <a class="flex flex-col items-center justify-center space-y-1 text-slate-500 hover:text-slate-800 tap-effect" href="../customer-home.html">
+        <svg class="w-6 h-6 stroke-[1.8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+        <span class="text-[10px] font-medium leading-none">Home</span>
+        <span class="w-5 h-0.5 bg-transparent rounded-full mt-0.5"></span>
+      </a>
+
+      <a class="flex flex-col items-center justify-center space-y-1 text-brand-orange group tap-effect" href="../motor-control.html">
+        <svg class="w-6 h-6 stroke-[2.2] stroke-brand-orange" fill="none" viewBox="0 0 24 24">
+          <rect height="16" rx="2" stroke="currentColor" width="18" x="3" y="4"></rect>
+          <path d="M7 4V2m10 2V2M7 20v2m10-2v2" stroke-linecap="round"></path>
+          <circle cx="12" cy="12" r="3.5"></circle>
+        </svg>
+        <span class="text-[10px] font-black leading-none text-brand-orange">Motor Control</span>
+        <span class="w-5 h-0.5 bg-brand-orange rounded-full mt-0.5"></span>
+      </a>
+
+      <a class="flex flex-col items-center justify-center space-y-1 text-slate-500 hover:text-slate-800 tap-effect" href="../products.html">
+        <svg class="w-6 h-6 stroke-[1.8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+        <span class="text-[10px] font-medium leading-none">Products</span>
+        <span class="w-5 h-0.5 bg-transparent rounded-full mt-0.5"></span>
+      </a>
+
+      <a class="flex flex-col items-center justify-center space-y-1 text-slate-500 hover:text-slate-800 tap-effect" href="../help-faq.html">
+        <svg class="w-6 h-6 stroke-[1.8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+        <span class="text-[10px] font-medium leading-none">FAQs</span>
+        <span class="w-5 h-0.5 bg-transparent rounded-full mt-0.5"></span>
+      </a>
+
+      <a class="flex flex-col items-center justify-center space-y-1 text-slate-500 hover:text-slate-800 tap-effect" href="../profile.html">
+        <svg class="w-6 h-6 stroke-[1.8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+        <span class="text-[10px] font-medium leading-none">Profile</span>
+        <span class="w-5 h-0.5 bg-transparent rounded-full mt-0.5"></span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Toast Notification Overlay -->
+  <div class="fixed top-14 left-1/2 -translate-x-1/2 bg-slate-900/95 text-white text-xs font-semibold px-4 py-2.5 rounded-full shadow-2xl pointer-events-none transition-all duration-300 z-50 flex items-center space-x-2 opacity-0 -translate-y-2 border border-slate-700 max-w-[90%]" id="toast-message">
+    <i class="fa-solid fa-circle-check text-emerald-400 text-sm" id="toast-icon"></i>
+    <span id="toast-text" class="truncate">Command Sent via SMS</span>
+  </div>
+
+</div>
+
+<!-- Interactive JavaScript Logic -->
+<script data-purpose="motor-control-interactivity">
+  document.addEventListener('DOMContentLoaded', () => {
+    const motorsData = {
+      '1': {
+        title: 'Motor 1 - Farm Borewell',
+        type: '3-Phase 5 HP Borewell',
+        location: 'Wagholi, Pune',
+        sim: '+91 98765 43210',
+        isRunning: true,
+        r: 232, y: 230, b: 235, amps: 14.8, todayRun: '3h 45m',
+        runtimeSeconds: 6502
+      },
+      '2': {
+        title: 'Motor 2 - River Openwell',
+        type: '3-Phase 7.5 HP Openwell',
+        location: 'River Plot, Pune',
+        sim: '+91 98765 43211',
+        isRunning: false,
+        r: 228, y: 226, b: 231, amps: 0.0, todayRun: '1h 15m',
+        runtimeSeconds: 0
+      },
+      '3': {
+        title: 'Motor 3 - Polyhouse Drip',
+        type: 'Single Phase 3 HP Drip',
+        location: 'Polyhouse 2, Pune',
+        sim: '+91 98765 43212',
+        isRunning: false,
+        r: 230, y: 0, b: 0, amps: 0.0, todayRun: '2h 10m',
+        runtimeSeconds: 0
+      },
+      '4': {
+        title: 'Motor 4 - Overhead Feeder',
+        type: 'Single Phase 2 HP Feeder',
+        location: 'Farm House, Pune',
+        sim: '+91 98765 43213',
+        isRunning: false,
+        r: 234, y: 0, b: 0, amps: 0.0, todayRun: '45m',
+        runtimeSeconds: 0
+      }
+    };
+
+    const urlParams = new URLSearchParams(window.location.search);
+    let currentMotorId = urlParams.get('motor') || '1';
+    if (!motorsData[currentMotorId]) currentMotorId = '1';
+
+    const titleEl = document.getElementById('label-motor-title');
+    const typeEl = document.getElementById('badge-motor-type');
+    const locEl = document.getElementById('label-motor-location');
+    const simEl = document.getElementById('label-motor-sim');
+    const dialContainer = document.getElementById('motor-central-dial');
+    const dialLabel = document.getElementById('dial-status-label');
+    const dialTimer = document.getElementById('dial-timer-label');
+    const dialTurbine = document.getElementById('dial-turbine-icon');
+    const rippleEl = document.getElementById('ripple-1');
+    const rotatingBorderEl = document.getElementById('rotating-border');
+    const statusPillBadge = document.getElementById('status-pill-badge');
+    const statusDetailedText = document.getElementById('status-detailed-text');
+    const statusSubText = document.getElementById('status-sub-text');
+    const btnStart = document.getElementById('btn-start-motor');
+    const btnStop = document.getElementById('btn-stop-motor');
+    const btnRefresh = document.getElementById('btn-refresh');
+    const btnCheckStatus = document.getElementById('btn-check-status');
+    const rPhaseEl = document.getElementById('val-r-phase');
+    const yPhaseEl = document.getElementById('val-y-phase');
+    const bPhaseEl = document.getElementById('val-b-phase');
+    const ampsEl = document.getElementById('val-amps');
+    const todayRunEl = document.getElementById('val-today-run');
+    const toast = document.getElementById('toast-message');
+    const toastText = document.getElementById('toast-text');
+    const toastIcon = document.getElementById('toast-icon');
+    const activityLog = document.getElementById('activity-log-list');
+
+    let timerInterval = null;
+
+    function formatSeconds(sec) {
+      const h = Math.floor(sec / 3600);
+      const m = Math.floor((sec % 3600) / 60);
+      const s = sec % 60;
+      return `${String(h).padStart(2, '0')}h ${String(m).padStart(2, '0')}m ${String(s).padStart(2, '0')}s`;
+    }
+
+    function showToast(msg, iconClass = 'fa-solid fa-circle-check text-emerald-400') {
+      toastText.textContent = msg;
+      toastIcon.className = iconClass + ' text-sm';
+      toast.classList.remove('opacity-0', '-translate-y-2');
+      toast.classList.add('opacity-100', 'translate-y-0');
+      setTimeout(() => {
+        toast.classList.remove('opacity-100', 'translate-y-0');
+        toast.classList.add('opacity-0', '-translate-y-2');
+      }, 2500);
+    }
+
+    function addLogEntry(title, desc, status = 'Confirmed', isGreen = true) {
+      const row = document.createElement('div');
+      row.className = "p-3 flex items-center justify-between hover:bg-slate-50/60 transition-colors animate-fadeIn";
+      const badgeClass = isGreen 
+        ? "bg-emerald-50 text-emerald-700 border-emerald-200/70" 
+        : "bg-red-50 text-red-700 border-red-200/70";
+      const iconClass = isGreen 
+        ? "bg-emerald-50 text-emerald-600 fa-play" 
+        : "bg-red-50 text-red-500 fa-stop";
+
+      row.innerHTML = `
+        <div class="flex items-center space-x-2.5">
+          <div class="w-8 h-8 rounded-xl ${iconClass.split(' ')[0]} ${iconClass.split(' ')[1]} flex items-center justify-center text-xs flex-shrink-0">
+            <i class="fa-solid ${iconClass.split(' ')[2]}"></i>
+          </div>
+          <div>
+            <h4 class="text-xs font-bold text-slate-800">${title}</h4>
+            <p class="text-[10px] text-slate-400 font-medium">${desc}</p>
+          </div>
+        </div>
+        <span class="px-2 py-0.5 rounded-full text-[9.5px] font-bold ${badgeClass} border">
+          ${status}
+        </span>
+      `;
+      if (activityLog.firstChild) {
+        activityLog.insertBefore(row, activityLog.firstChild);
+      } else {
+        activityLog.appendChild(row);
+      }
+    }
+
+    function renderMotor(id) {
+      const data = motorsData[id];
+      currentMotorId = id;
+
+      document.querySelectorAll('.motor-tab-btn').forEach(btn => {
+        if (btn.getAttribute('data-motor') === id) {
+          btn.className = "motor-tab-btn active border-2 border-brand-orange bg-orange-50/80 text-brand-orange rounded-xl py-1.5 px-1 text-center tap-effect transition-all flex flex-col items-center";
+        } else {
+          btn.className = "motor-tab-btn border border-slate-200/90 bg-white text-slate-700 hover:bg-slate-50 rounded-xl py-1.5 px-1 text-center tap-effect transition-all flex flex-col items-center";
+        }
+      });
+
+      titleEl.textContent = data.title;
+      typeEl.textContent = data.type;
+      locEl.textContent = data.location;
+      simEl.textContent = data.sim;
+      rPhaseEl.textContent = data.r ? data.r + ' V' : '--';
+      yPhaseEl.textContent = data.y ? data.y + ' V' : '--';
+      bPhaseEl.textContent = data.b ? data.b + ' V' : '--';
+      ampsEl.textContent = data.amps ? data.amps + ' A' : '0.0 A';
+      todayRunEl.textContent = data.todayRun;
+
+      updateStateVisuals(data.isRunning);
+    }
+
+    function updateStateVisuals(isRunning) {
+      if (timerInterval) clearInterval(timerInterval);
+
+      if (isRunning) {
+        dialContainer.className = "w-32 h-32 rounded-full bg-gradient-to-br from-emerald-500 via-emerald-600 to-teal-700 text-white flex flex-col items-center justify-center shadow-button-glow transition-all duration-300 cursor-pointer tap-effect relative";
+        dialLabel.textContent = "RUNNING";
+        dialTurbine.className = "fa-solid fa-fan text-3xl animate-spin-slow";
+        rippleEl.style.display = 'block';
+        rotatingBorderEl.style.display = 'block';
+
+        statusPillBadge.className = "inline-flex items-center space-x-2 bg-emerald-50 border border-emerald-200/80 px-3 py-1 rounded-full text-xs font-extrabold text-emerald-800";
+        statusDetailedText.textContent = "Motor is Running Normally";
+        statusSubText.textContent = "Water Flow Detected • Pressure: 3.2 Bar";
+
+        btnStart.classList.add('opacity-50', 'cursor-not-allowed');
+        btnStart.classList.remove('shadow-button-glow', 'animate-pulse');
+        btnStop.classList.remove('opacity-50', 'cursor-not-allowed');
+        btnStop.classList.add('shadow-button-glow-red', 'animate-pulse');
+
+        let seconds = motorsData[currentMotorId].runtimeSeconds || 6500;
+        dialTimer.textContent = formatSeconds(seconds);
+        timerInterval = setInterval(() => {
+          seconds++;
+          motorsData[currentMotorId].runtimeSeconds = seconds;
+          dialTimer.textContent = formatSeconds(seconds);
+        }, 1000);
+
+      } else {
+        dialContainer.className = "w-32 h-32 rounded-full bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 text-slate-300 flex flex-col items-center justify-center shadow-card transition-all duration-300 cursor-pointer tap-effect relative";
+        dialLabel.textContent = "STANDBY";
+        dialTimer.textContent = "Tap to Start";
+        dialTurbine.className = "fa-solid fa-power-off text-3xl text-slate-400";
+        rippleEl.style.display = 'none';
+        rotatingBorderEl.style.display = 'none';
+
+        statusPillBadge.className = "inline-flex items-center space-x-2 bg-slate-100 border border-slate-200/80 px-3 py-1 rounded-full text-xs font-bold text-slate-700";
+        statusDetailedText.textContent = "Motor is Stopped (Standby)";
+        statusSubText.textContent = "Ready to start • Power Supply Normal";
+
+        btnStart.classList.remove('opacity-50', 'cursor-not-allowed');
+        btnStart.classList.add('shadow-button-glow', 'animate-pulse');
+        btnStop.classList.add('opacity-50', 'cursor-not-allowed');
+        btnStop.classList.remove('shadow-button-glow-red', 'animate-pulse');
+      }
+    }
+
+    document.querySelectorAll('.motor-tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-motor');
+        renderMotor(id);
+        showToast(`Switched to Motor ${id} Telemetry`, 'fa-solid fa-arrows-split-up-and-left text-brand-orange');
+      });
+    });
+
+    btnStart.addEventListener('click', () => {
+      if (motorsData[currentMotorId].isRunning) return;
+      motorsData[currentMotorId].isRunning = true;
+      motorsData[currentMotorId].amps = 14.8;
+      ampsEl.textContent = '14.8 A';
+      updateStateVisuals(true);
+      showToast(`START command dispatched to Motor ${currentMotorId} via SMS`, 'fa-solid fa-play text-emerald-400');
+      const now = new Date();
+      const timeStr = 'Today, ' + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      addLogEntry(`Motor ${currentMotorId} Started via App`, `${timeStr} • SMS Command Sent`, 'Confirmed', true);
+    });
+
+    btnStop.addEventListener('click', () => {
+      if (!motorsData[currentMotorId].isRunning) return;
+      motorsData[currentMotorId].isRunning = false;
+      motorsData[currentMotorId].amps = 0.0;
+      ampsEl.textContent = '0.0 A';
+      updateStateVisuals(false);
+      showToast(`STOP command dispatched to Motor ${currentMotorId} via SMS`, 'fa-solid fa-stop text-red-400');
+      const now = new Date();
+      const timeStr = 'Today, ' + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      addLogEntry(`Motor ${currentMotorId} Stopped via App`, `${timeStr} • Normal Stop`, 'Confirmed', false);
+    });
+
+    dialContainer.addEventListener('click', () => {
+      if (motorsData[currentMotorId].isRunning) {
+        btnStop.click();
+      } else {
+        btnStart.click();
+      }
+    });
+
+    btnCheckStatus.addEventListener('click', () => {
+      showToast(`Querying Motor ${currentMotorId} status via SMS...`, 'fa-solid fa-satellite-dish text-brand-orange');
+      setTimeout(() => {
+        showToast(`Motor ${currentMotorId}: 3-Ph 415V Normal, Amps: ${motorsData[currentMotorId].amps}A`, 'fa-solid fa-circle-check text-emerald-400');
+      }, 1500);
+    });
+
+    btnRefresh.addEventListener('click', () => {
+      btnRefresh.querySelector('i').classList.add('animate-spin');
+      showToast(`Refreshing Motor ${currentMotorId} telemetry...`, 'fa-solid fa-arrows-rotate text-brand-orange');
+      setTimeout(() => {
+        btnRefresh.querySelector('i').classList.remove('animate-spin');
+        showToast('Telemetry diagnostics up to date', 'fa-solid fa-circle-check text-emerald-400');
+      }, 800);
+    });
+
+    document.querySelectorAll('.mode-pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        document.querySelectorAll('.mode-pill').forEach(p => {
+          p.className = "mode-pill px-2.5 py-1 rounded-lg text-[10.5px] font-bold text-slate-600 hover:text-slate-900";
+        });
+        pill.className = "mode-pill px-2.5 py-1 rounded-lg text-[10.5px] font-extrabold bg-white text-brand-orange shadow-2xs";
+        const mode = pill.getAttribute('data-mode');
+        showToast(`Switched to ${mode.toUpperCase()} Mode`, 'fa-solid fa-sliders text-brand-orange');
+      });
+    });
+
+    document.querySelectorAll('.schedule-toggle').forEach((chk, idx) => {
+      chk.addEventListener('change', () => {
+        const slotName = idx === 0 ? 'Morning Irrigation' : 'Evening Cycle';
+        if (chk.checked) {
+          showToast(`${slotName} enabled`, 'fa-solid fa-check text-emerald-400');
+        } else {
+          showToast(`${slotName} disabled`, 'fa-solid fa-xmark text-slate-400');
+        }
+      });
+    });
+
+    renderMotor(currentMotorId);
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,585 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<title>Esston Technology - Product Catalogue</title>
+<!-- Tailwind CSS CDN with forms and container queries plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Custom Configuration -->
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              orange: '#f3691f',
+              orangeDark: '#e05912',
+              orangeLight: '#fff2eb',
+              green: '#00a352',
+              greenDark: '#008743',
+              dark: '#111827',
+              graySub: '#6b7280',
+              borderLight: '#f0f2f5',
+              cardBg: '#ffffff',
+              pillGray: '#eef2f6'
+            }
+          },
+          fontFamily: {
+            sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Text"', '"SF Pro Display"', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', 'sans-serif']
+          },
+          boxShadow: {
+            card: '0 2px 10px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02)',
+            banner: '0 6px 20px rgba(0, 163, 82, 0.12)'
+          }
+        }
+      }
+    }
+  </script>
+<!-- Custom CSS for layout refinements and fine details -->
+<style data-purpose="custom-scrollbars-and-reset">
+    /* Hide scrollbar for category horizontal scroll */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    body {
+      -webkit-tap-highlight-color: transparent;
+      background-color: #f7f9fb;
+    }
+  </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer"></head>
+<body class="bg-[#f7f9fb] text-slate-800 font-sans antialiased pb-28">
+<!-- BEGIN: MainHeader -->
+<header class="bg-white px-5 pt-5 pb-4 border-b border-slate-100 flex items-center justify-between sticky top-0 z-50 shadow-sm">
+  <div class="flex items-center gap-2">
+    <div class="w-10 h-9 relative flex items-center justify-center">
+      <svg viewBox="0 0 100 80" class="w-full h-full drop-shadow-sm" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 20H48L38 42H22L18 52H42L36 64H6L12 20Z" fill="#F95A08"></path>
+        <path d="M42 20H84L76 34H48L44 42H70L62 56H38L32 68H20L32 42L42 20Z" fill="#0E2F44"></path>
+        <path d="M72 10L88 10L88 26L82 22L82 16L76 16L72 10Z" fill="#F95A08"></path>
+      </svg>
+    </div>
+    <div class="flex flex-col">
+      <div class="flex items-center">
+        <span class="font-black text-slate-900 tracking-tight text-sm font-sans">ESSTON TECHNOLOGY</span>
+        <span class="text-[9px] font-bold text-slate-700 ml-0.5">®</span>
+      </div>
+    </div>
+  </div>
+  <div class="flex items-center gap-3">
+    <!-- Notification Bell -->
+    <button class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center relative hover:bg-slate-200 transition-colors" type="button">
+      <i class="fa-regular fa-bell text-slate-700 text-lg"></i>
+      <span class="absolute top-2 right-2 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white"></span>
+    </button>
+    <!-- User Profile Pill -->
+    <div class="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-full py-1 px-1.5 pr-2.5">
+      <img src="https://lh3.googleusercontent.com/aida/AEtjO1VUIrLo1IYlxG80yveIjhvHHtmNWcEt6pLzN30SH47j-oFwqxmTfa5BewR2SwevG4YTAHIMo3ufEOMSn3qjI9412KenJIwQRE7ZV-JTezABbxRq_aDie7aJkHlqWVUOh4Ay2hIy2qtRKm-qtseSNKuMxILzThZaipl11Me2MjkXLIkSAbtbyc7ZEEntCkr3SmhFykG8wl0Ay9y9nWRRbg26U7q6bmCHQkd-muDTttkgN6CTxX-65u0m-Do" alt="Aditya" class="w-8 h-8 rounded-full object-cover border border-slate-200 shadow-sm">
+      <div class="flex flex-col text-left">
+        <div class="flex items-center gap-1">
+          <span class="text-xs font-bold text-slate-800">Hello, Aditya</span>
+        </div>
+        <div class="flex items-center gap-1">
+          <span class="text-[10px] text-slate-500 font-medium">Customer</span>
+          <i class="fa-solid fa-chevron-down text-[8px] text-slate-400"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: MainContent -->
+<main class="max-w-md mx-auto px-3.5 space-y-3 pt-1">
+<!-- BEGIN: HeroBanner -->
+<section class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#d8f0ff] via-[#d5eefb] to-[#c6e9ff] shadow-sm p-4 text-slate-900 border border-sky-100 min-h-[168px] flex flex-col justify-between" data-purpose="hero-banner">
+<!-- Background Farm Pumping & Starter Visual -->
+<div class="absolute inset-0 pointer-events-none overflow-hidden">
+<img alt="Esston Motor Starter field pump" class="absolute right-0 top-0 h-full w-[62%] object-cover object-left mask-gradient" src="https://lh3.googleusercontent.com/aida/AEtjO1Uu3vdsz8UJuQrUvX1FhFrF-dx8aDz96lx6p4rzX1XQmWRExEZyz7F2vw5ouS_oAjZcGvoiCN8Qfpwy7MLbZ6fYiJ8T446cw8TPkT1apCtNsPjEa6R_LH7XISRH9dc0d5R96YNb1W7zZmIBZ4vvcZwIn-vluN4Ymj89nDsP10e9JpFH3xZpGhsM5ETMH3EEBopeeg9DfIQD4KFGEf8cRTUxIMT40fkvtT5IB57eF6tT_PjiBy-gsovIGw" style="-webkit-mask-image: linear-gradient(to right, transparent 0%, black 28%); mask-image: linear-gradient(to right, transparent 0%, black 28%);">
+<!-- Overlaid Motor Unit matching Reference 1 -->
+<div class="absolute right-2 -bottom-1 w-28 h-32 rounded-lg bg-white/10 backdrop-blur-[0.5px] p-0.5">
+<img alt="Esston Starter Unit" class="w-full h-full object-contain drop-shadow-xl" src="https://lh3.googleusercontent.com/aida/AEtjO1WiVXpLXlO3__F8yBSdll4MbEz6it7hJBnp7mTvV5tPd7zQm1aLKhwlHrm0g7m8ibpwTZKVLp9xe2onqfTqjW65PQans1IL68cKSD0B9zZqK0uHfhmQkkyfWGVIJTROae4DY3tquuhrfWv66rKaOmRbm5vs_OGHv_FpWV8Nno1sHHs6cfxlVl-eBOUypbNRjQH5RfoI7GWSKBzkVJbt62QyM7Kn3lJslPMRi4K25UOdYpDticieHBIojlU">
+</div>
+</div>
+<!-- Banner Text Content -->
+<div class="relative z-10 max-w-[215px]">
+<h2 class="text-[16.5px] font-extrabold text-slate-900 leading-snug tracking-tight">
+          Smart Motor Starters <br><span class="text-slate-900">for a Smarter Tomorrow</span>
+</h2>
+<p class="text-[10px] font-medium text-slate-600 mt-1.5 mb-3.5 leading-tight tracking-tight">
+          Reliable • Remote Controlled • Built for Farmers
+        </p>
+<!-- Explore Products Button -->
+<button class="inline-flex items-center gap-1.5 bg-brand-green hover:bg-brand-greenDark active:scale-95 text-white px-3.5 py-1.5 rounded-full text-[11.5px] font-bold shadow-sm transition-all duration-150" type="button">
+<span class="">Explore Products</span>
+<svg class="w-3.5 h-3.5 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+</div>
+</section>
+<!-- END: HeroBanner -->
+<!-- BEGIN: CategoryTabs -->
+<nav aria-label="Product Categories" class="overflow-x-auto no-scrollbar -mx-3.5 px-3.5 pt-0.5">
+<div class="flex items-center space-x-2 w-max py-0.5">
+<!-- Tab: All Products (Active) -->
+<button class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-brand-orange text-white text-[12px] font-semibold shadow-sm shadow-orange-500/20 active:scale-95 transition-transform" type="button">
+<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+<path d="M5 4h14v4H5zm-1 6h16a2 2 0 012 2v6h-4v3H6v-3H2v-6a2 2 0 012-2zm4 9h8v-3H8v3z"></path>
+</svg>
+<span class="">All Products</span>
+</button>
+<!-- Tab: Motor Starters -->
+<button class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-brand-pillGray hover:bg-slate-200/80 text-slate-700 text-[12px] font-semibold active:scale-95 transition-all" type="button">
+<svg class="w-4 h-4 text-slate-500" fill="currentColor" viewBox="0 0 24 24">
+<path d="M12 2a10 10 0 00-10 10 9.98 9.98 0 005 8.65V22h10v-1.35A10 10 0 0012 2zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z"></path>
+</svg>
+<span class="">Motor Starters</span>
+</button>
+<!-- Tab: Control Panels -->
+<button class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-brand-pillGray hover:bg-slate-200/80 text-slate-700 text-[12px] font-semibold active:scale-95 transition-all" type="button">
+<svg class="w-4 h-4 text-slate-500" fill="currentColor" viewBox="0 0 24 24">
+<path d="M4 3h16a2 2 0 012 2v14a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2zm2 4h4v4H6V7zm6 0h6v2h-6V7zm0 4h6v2h-6v-2zm-6 4h4v4H6v-4zm6 0h6v4h-6v-4z"></path>
+</svg>
+<span class="">Control Panels</span>
+</button>
+<!-- Tab: Accessories -->
+<button class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-brand-pillGray hover:bg-slate-200/80 text-slate-700 text-[12px] font-semibold active:scale-95 transition-all" type="button">
+<svg class="w-4 h-4 text-slate-500" fill="currentColor" viewBox="0 0 24 24">
+<path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"></path>
+</svg>
+<span class="">Accessories</span>
+</button>
+</div>
+</nav>
+<!-- END: CategoryTabs -->
+<!-- BEGIN: SearchBar -->
+<div class="relative pt-0.5">
+<div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+<svg class="w-4 h-4 text-slate-400 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<input class="w-full bg-white border border-slate-200 text-slate-800 placeholder-slate-400 text-[13px] rounded-xl pl-10 pr-4 py-2 focus:ring-2 focus:ring-brand-orange/20 focus:border-brand-orange focus:outline-none transition-all shadow-sm" placeholder="Search products..." type="search">
+</div>
+<!-- END: SearchBar -->
+<!-- BEGIN: ProductListSection -->
+<div class="space-y-3 pt-1">
+<!-- Product Card 1: Esston GSM Motor Starter (1 Phase) -->
+<article class="bg-white rounded-2xl p-3 border border-slate-100 shadow-card relative overflow-hidden transition-all duration-200 hover:shadow-md" data-purpose="product-card">
+<div class="flex gap-3">
+<!-- Image Box with Badge -->
+<div class="relative w-32 h-36 flex-shrink-0 rounded-xl overflow-hidden bg-white border border-slate-100 flex items-center justify-center">
+<!-- Most Popular Ribbon Badge -->
+<div class="absolute top-2 left-2 z-10 flex items-center gap-1 bg-[#fff6e6] text-[#d97706] px-2 py-0.5 rounded-full shadow-xs border border-amber-200/90">
+<span class="text-[9.5px]">👑</span>
+<span class="text-[8.5px] font-bold">Most Popular</span>
+</div>
+<!-- Photo container -->
+<img alt="Esston GSM Motor Starter (1 Phase)" class="w-full h-full object-cover rounded-xl" src="https://lh3.googleusercontent.com/aida/AEtjO1WiVXpLXlO3__F8yBSdll4MbEz6it7hJBnp7mTvV5tPd7zQm1aLKhwlHrm0g7m8ibpwTZKVLp9xe2onqfTqjW65PQans1IL68cKSD0B9zZqK0uHfhmQkkyfWGVIJTROae4DY3tquuhrfWv66rKaOmRbm5vs_OGHv_FpWV8Nno1sHHs6cfxlVl-eBOUypbNRjQH5RfoI7GWSKBzkVJbt62QyM7Kn3lJslPMRi4K25UOdYpDticieHBIojlU">
+</div>
+<!-- Product Details -->
+<div class="flex-1 flex flex-col justify-between py-0.5 min-w-0">
+<div>
+<div class="flex items-start justify-between gap-1">
+<h3 class="text-[13.5px] font-bold text-slate-900 leading-snug">
+                  Esston GSM Motor Starter <br>(1 Phase)
+                </h3>
+<svg class="w-4 h-4 text-slate-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<p class="text-[11px] text-slate-500 mt-1 leading-tight line-clamp-2">
+                Control your single phase motor remotely via SMS
+              </p>
+</div>
+<!-- Specs Grid -->
+<div class="grid grid-cols-3 gap-1.5 pt-2 border-t border-slate-50 mt-1">
+<!-- Spec 1 -->
+<div class="flex items-start gap-1">
+<div class="w-4 h-4 rounded-full bg-emerald-50 text-brand-green flex items-center justify-center flex-shrink-0 mt-0.5">
+<svg class="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+</div>
+<div class="min-w-0">
+<div class="text-[10px] font-bold text-slate-800 leading-none whitespace-nowrap">1 HP - 2 HP</div>
+<div class="text-[8px] text-slate-400 truncate leading-tight mt-0.5">Motor Rating</div>
+</div>
+</div>
+<!-- Spec 2 -->
+<div class="flex items-start gap-1">
+<div class="w-4 h-4 rounded-full bg-sky-50 text-sky-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+<svg class="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"></path></svg>
+</div>
+<div class="min-w-0">
+<div class="text-[10px] font-bold text-slate-800 leading-none">GSM</div>
+<div class="text-[8px] text-slate-400 truncate leading-tight mt-0.5">Control</div>
+</div>
+</div>
+<!-- Spec 3 -->
+<div class="flex items-start gap-1">
+<div class="w-4 h-4 rounded-full bg-amber-50 text-brand-orange flex items-center justify-center flex-shrink-0 mt-0.5">
+<svg class="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"></path></svg>
+</div>
+<div class="min-w-0">
+<div class="text-[10px] font-bold text-slate-800 leading-none">Overload</div>
+<div class="text-[8px] text-slate-400 truncate leading-tight mt-0.5">Protection</div>
+</div>
+</div>
+</div>
+<!-- View Details Button -->
+<div class="flex justify-end pt-2">
+<button class="inline-flex items-center gap-1 px-3 py-1 border border-brand-orange text-brand-orange rounded-lg text-[11px] font-bold hover:bg-brand-orange hover:text-white transition-colors duration-150 active:scale-95" type="button">
+<span class="">View Details</span>
+<svg class="w-3 h-3 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</article>
+<!-- Product Card 2: Esston GSM Motor Starter (3 Phase) -->
+<article class="bg-white rounded-2xl p-3 border border-slate-100 shadow-card relative overflow-hidden transition-all duration-200 hover:shadow-md" data-purpose="product-card">
+<div class="flex gap-3">
+<!-- Image Box (3-Phase Heavy Panel) -->
+<div class="relative w-32 h-36 flex-shrink-0 rounded-xl overflow-hidden bg-white border border-slate-100 flex items-center justify-center">
+<img alt="Esston GSM Motor Starter (3 Phase)" class="w-full h-full object-cover rounded-xl" src="https://lh3.googleusercontent.com/aida/AEtjO1Wn29zjz73eancvezXPyJdHNkJU5ac06Eunsk4YP_BbTpw6YgRNIb397fAnk4jA-HpKRCGcvW_QuzHlwhdjfCYBCNS4RQ_paEmtX7t_w-6VXZIIKl3kN6u-LBKAqyI_xN8s1bJoarEhJwKZr8AhMve6Z-A2XHpYdMf71dja40jmwaxxmKUJBlpLliZm4ZKXX1mt3qEKN-Hem9cfOkPbraa8aySnviHUMrBjDFDrtnkKYO9anapBdySMmWg">
+</div>
+<!-- Product Details -->
+<div class="flex-1 flex flex-col justify-between py-0.5 min-w-0">
+<div>
+<div class="flex items-start justify-between gap-1">
+<h3 class="text-[13.5px] font-bold text-slate-900 leading-snug">
+                  Esston GSM Motor Starter <br>(3 Phase)
+                </h3>
+<svg class="w-4 h-4 text-slate-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<p class="text-[11px] text-slate-500 mt-1 leading-tight line-clamp-2">
+                Reliable remote control for 3 phase motors
+              </p>
+</div>
+<!-- Specs Grid -->
+<div class="grid grid-cols-3 gap-1.5 pt-2 border-t border-slate-50 mt-1">
+<!-- Spec 1 -->
+<div class="flex items-start gap-1">
+<div class="w-4 h-4 rounded-full bg-emerald-50 text-brand-green flex items-center justify-center flex-shrink-0 mt-0.5">
+<svg class="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+</div>
+<div class="min-w-0">
+<div class="text-[10px] font-bold text-slate-800 leading-none whitespace-nowrap">3 HP - 10 HP</div>
+<div class="text-[8px] text-slate-400 truncate leading-tight mt-0.5">Motor Rating</div>
+</div>
+</div>
+<!-- Spec 2 -->
+<div class="flex items-start gap-1">
+<div class="w-4 h-4 rounded-full bg-sky-50 text-sky-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+<svg class="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"></path></svg>
+</div>
+<div class="min-w-0">
+<div class="text-[10px] font-bold text-slate-800 leading-none">GSM</div>
+<div class="text-[8px] text-slate-400 truncate leading-tight mt-0.5">Control</div>
+</div>
+</div>
+<!-- Spec 3 -->
+<div class="flex items-start gap-1">
+<div class="w-4 h-4 rounded-full bg-amber-50 text-brand-orange flex items-center justify-center flex-shrink-0 mt-0.5">
+<svg class="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"></path></svg>
+</div>
+<div class="min-w-0">
+<div class="text-[10px] font-bold text-slate-800 leading-none">Phase</div>
+<div class="text-[8px] text-slate-400 truncate leading-tight mt-0.5">Protection</div>
+</div>
+</div>
+</div>
+<!-- View Details Button -->
+<div class="flex justify-end pt-2">
+<button class="inline-flex items-center gap-1 px-3 py-1 border border-brand-orange text-brand-orange rounded-lg text-[11px] font-bold hover:bg-brand-orange hover:text-white transition-colors duration-150 active:scale-95" type="button">
+<span class="">View Details</span>
+<svg class="w-3 h-3 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</article>
+<!-- Product Card 3: Esston Solar Motor Starter -->
+<article class="bg-white rounded-2xl p-3 border border-slate-100 shadow-card relative overflow-hidden transition-all duration-200 hover:shadow-md" data-purpose="product-card">
+<div class="flex gap-3">
+<!-- Image Box (Solar Panels & Starter) -->
+<div class="relative w-32 h-36 flex-shrink-0 rounded-xl overflow-hidden bg-white border border-slate-100 flex items-center justify-center">
+<img alt="Esston Solar Motor Starter" class="w-full h-full object-cover rounded-xl" src="https://lh3.googleusercontent.com/aida/AEtjO1XE2JCwmAD-fWWtsq-M7OInB0qrXisEO4pdh1K98tF4wIYHBq03FK8AcJSK_Wor25uo_ihvmxwiuNdGdCiqhenyTXCkxuBF_tdFtAMxBxcesc8i1jWNahW88cuMNDRdYjRHSZYRxf4l_Ml0zb7UlQBkJpduOceLxvGQprRe5T_A1Lq1MM04yrBP46WqbgVF8Ti_SqrmtFRKy76YJq6tXgHNSspdqS77kQ8XJk4_AvtTDEMD9dFKPlkdtjg">
+</div>
+<!-- Product Details -->
+<div class="flex-1 flex flex-col justify-between py-0.5 min-w-0">
+<div>
+<div class="flex items-start justify-between gap-1">
+<h3 class="text-[13.5px] font-bold text-slate-900 leading-snug">
+                  Esston Solar Motor Starter
+                </h3>
+<svg class="w-4 h-4 text-slate-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<p class="text-[11px] text-slate-500 mt-1 leading-tight line-clamp-2">
+                Smart solution for solar water pumps
+              </p>
+</div>
+<!-- Specs Grid -->
+<div class="grid grid-cols-3 gap-1.5 pt-2 border-t border-slate-50 mt-1">
+<!-- Spec 1 -->
+<div class="flex items-start gap-1">
+<div class="w-4 h-4 rounded-full bg-amber-50 text-amber-500 flex items-center justify-center flex-shrink-0 mt-0.5">
+<svg class="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1z"></path></svg>
+</div>
+<div class="min-w-0">
+<div class="text-[10px] font-bold text-slate-800 leading-none">Solar</div>
+<div class="text-[8px] text-slate-400 truncate leading-tight mt-0.5">Compatible</div>
+</div>
+</div>
+<!-- Spec 2 -->
+<div class="flex items-start gap-1">
+<div class="w-4 h-4 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+<svg class="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66l.95-2.3c.48.17.98.3 1.34.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.75C6.5 7.5 4 10 4 13c0 2 1.5 3 2.5 3.5C8 13.5 12 11 17 8z"></path></svg>
+</div>
+<div class="min-w-0">
+<div class="text-[10px] font-bold text-slate-800 leading-none">Energy</div>
+<div class="text-[8px] text-slate-400 truncate leading-tight mt-0.5">Efficient</div>
+</div>
+</div>
+<!-- Spec 3 -->
+<div class="flex items-start gap-1">
+<div class="w-4 h-4 rounded-full bg-sky-50 text-sky-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+<svg class="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"></path></svg>
+</div>
+<div class="min-w-0">
+<div class="text-[10px] font-bold text-slate-800 leading-none">Remote</div>
+<div class="text-[8px] text-slate-400 truncate leading-tight mt-0.5">Control</div>
+</div>
+</div>
+</div>
+<!-- View Details Button -->
+<div class="flex justify-end pt-2">
+<button class="inline-flex items-center gap-1 px-3 py-1 border border-brand-orange text-brand-orange rounded-lg text-[11px] font-bold hover:bg-brand-orange hover:text-white transition-colors duration-150 active:scale-95" type="button">
+<span class="">View Details</span>
+<svg class="w-3 h-3 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</article>
+<!-- Product Card 4: Accessories -->
+<article class="bg-white rounded-2xl p-3 border border-slate-100 shadow-card relative overflow-hidden transition-all duration-200 hover:shadow-md" data-purpose="product-card">
+<div class="flex gap-3">
+<!-- Image Box (Accessories: Coiled Cable, Antenna, Weatherproof box) -->
+<div class="relative w-32 h-36 flex-shrink-0 rounded-xl overflow-hidden bg-slate-50 border border-slate-100 flex items-center justify-center p-1.5">
+<!-- Real photograph-style layout of starter accessories matching Reference 1 -->
+<div class="relative w-full h-full bg-[#f4f6f8] rounded-lg p-1.5 flex flex-col justify-between items-center">
+<div class="flex w-full justify-between items-center px-1 pt-1">
+<!-- Tall Black Antenna with Brass Mount -->
+<div class="flex flex-col items-center">
+<div class="w-1.5 h-16 bg-slate-900 rounded-t-full shadow-xs"></div>
+<div class="w-3.5 h-2.5 bg-amber-600 rounded-sm shadow-xs -mt-0.5"></div>
+</div>
+<!-- Dual Weatherproof Junction Enclosures -->
+<div class="flex flex-col gap-1.5">
+<div class="w-11 h-8 bg-white border border-slate-300 rounded shadow-sm flex items-center justify-center">
+<div class="w-2 h-2 rounded-full border border-slate-300 bg-slate-100"></div>
+</div>
+<div class="w-10 h-7 bg-slate-200 border border-slate-300 rounded shadow-xs flex items-center justify-center">
+<span class="text-[5.5px] font-bold tracking-tight text-slate-500 uppercase">Dactons</span>
+</div>
+</div>
+</div>
+<!-- Coiled Heavy Duty Cable & Metal Mounting Clips -->
+<div class="flex items-center justify-between w-full px-1 pb-1">
+<div class="w-12 h-6 rounded-full border-[3.5px] border-slate-900 bg-slate-100 flex items-center justify-center shadow-xs">
+<div class="w-7 h-2.5 rounded-full border border-slate-700"></div>
+</div>
+<div class="flex gap-0.5">
+<div class="w-2.5 h-4 bg-slate-700 rounded-[2px]"></div>
+<div class="w-2.5 h-4 bg-slate-700 rounded-[2px]"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Product Details -->
+<div class="flex-1 flex flex-col justify-between py-0.5 min-w-0">
+<div>
+<div class="flex items-start justify-between gap-1">
+<h3 class="text-[13.5px] font-bold text-slate-900 leading-snug">
+                  Accessories
+                </h3>
+<svg class="w-4 h-4 text-slate-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<p class="text-[11px] text-slate-500 mt-1 leading-tight line-clamp-2">
+                Cables, Antennas, Enclosures and more
+              </p>
+</div>
+<!-- Specs Grid -->
+<div class="grid grid-cols-3 gap-1.5 pt-2 border-t border-slate-50 mt-1">
+<!-- Spec 1 -->
+<div class="flex items-start gap-1">
+<div class="w-4 h-4 rounded-full bg-sky-50 text-sky-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+<svg class="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"></path></svg>
+</div>
+<div class="min-w-0">
+<div class="text-[10px] font-bold text-slate-800 leading-none">Wide Range</div>
+<div class="text-[8px] text-slate-400 truncate leading-tight mt-0.5">Accessories</div>
+</div>
+</div>
+<!-- Spec 2 -->
+<div class="flex items-start gap-1">
+<div class="w-4 h-4 rounded-full bg-amber-50 text-brand-orange flex items-center justify-center flex-shrink-0 mt-0.5">
+<svg class="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"></path></svg>
+</div>
+<div class="min-w-0">
+<div class="text-[10px] font-bold text-slate-800 leading-none">Original</div>
+<div class="text-[8px] text-slate-400 truncate leading-tight mt-0.5">Esston Quality</div>
+</div>
+</div>
+<!-- Spec 3 -->
+<div class="flex items-start gap-1">
+<div class="w-4 h-4 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+<svg class="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 24 24"><path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"></path></svg>
+</div>
+<div class="min-w-0">
+<div class="text-[10px] font-bold text-slate-800 leading-none">Easy</div>
+<div class="text-[8px] text-slate-400 truncate leading-tight mt-0.5">Installation</div>
+</div>
+</div>
+</div>
+<!-- View Details Button -->
+<div class="flex justify-end pt-2">
+<button class="inline-flex items-center gap-1 px-3 py-1 border border-brand-orange text-brand-orange rounded-lg text-[11px] font-bold hover:bg-brand-orange hover:text-white transition-colors duration-150 active:scale-95" type="button">
+<span class="">View Details</span>
+<svg class="w-3 h-3 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</article>
+</div>
+<!-- END: ProductListSection -->
+</main>
+<!-- END: MainContent -->
+<!-- BEGIN: BottomNavigation -->
+<footer class="fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-t border-slate-200/80 px-2 pb-5 pt-2">
+<nav class="max-w-md mx-auto grid grid-cols-5 text-center">
+<!-- Nav Item 1: Home -->
+<a class="flex flex-col items-center justify-center py-1 text-slate-500 hover:text-slate-800 active:scale-95 transition-all" href="#">
+<svg class="w-6 h-6 stroke-[1.8]" fill="currentColor" viewBox="0 0 24 24">
+<path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path>
+</svg>
+<span class="text-[10.5px] font-medium tracking-tight mt-0.5">Home</span>
+</a>
+<!-- Nav Item 2: Products (Active) -->
+<a class="flex flex-col items-center justify-center py-1 text-brand-orange relative active:scale-95 transition-all" href="#">
+<svg class="w-6 h-6 stroke-[1.8]" fill="currentColor" viewBox="0 0 24 24">
+<path d="M12 2l-8 4.5v11L12 22l8-4.5v-11L12 2zm0 2.25l5.88 3.31L12 10.87 6.12 7.56 12 4.25zM5.5 9.07l5.5 3.09v6.59l-5.5-3.09V9.07zm13 6.59l-5.5 3.09v-6.59l5.5-3.09v6.59z"></path>
+</svg>
+<span class="text-[10.5px] font-bold tracking-tight mt-0.5">Products</span>
+<!-- Underline active tab indicator -->
+<span class="absolute bottom-0 w-8 h-[2.5px] bg-brand-orange rounded-full"></span>
+</a>
+<!-- Nav Item 3: Motor Control -->
+<a class="flex flex-col items-center justify-center py-1 text-slate-500 hover:text-slate-800 active:scale-95 transition-all" href="#">
+<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+<path d="M4 6h3v12H4V6zm6-3h4v18h-4V3zm7 7h3v8h-3v-8z"></path>
+</svg>
+<span class="text-[10.5px] font-medium tracking-tight mt-0.5 whitespace-nowrap">Motor Control</span>
+</a>
+<!-- Nav Item 4: FAQs -->
+<a class="flex flex-col items-center justify-center py-1 text-slate-500 hover:text-slate-800 active:scale-95 transition-all" href="#">
+<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+<path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 12h-2v-2h2v2zm0-4h-2V6h2v4z"></path>
+</svg>
+<span class="text-[10.5px] font-medium tracking-tight mt-0.5">FAQs</span>
+</a>
+<!-- Nav Item 5: Enquiry -->
+<a class="flex flex-col items-center justify-center py-1 text-slate-500 hover:text-slate-800 active:scale-95 transition-all" href="#">
+<svg class="w-6 h-6 stroke-[1.8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="text-[10.5px] font-medium tracking-tight mt-0.5">Enquiry</span>
+</a>
+</nav>
+<!-- iOS Home Indicator Pill -->
+<div class="w-32 h-1 bg-slate-400/80 rounded-full mx-auto mt-2.5"></div>
+</footer>
+<!-- END: BottomNavigation -->
+<!-- BEGIN: InteractiveHandlers -->
+<script data-purpose="tab-filtering-and-search">
+    document.addEventListener('DOMContentLoaded', () => {
+      // Search filter logic
+      const searchInput = document.querySelector('input[type="search"]');
+      const productCards = document.querySelectorAll('[data-purpose="product-card"]');
+
+      if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+          const query = e.target.value.toLowerCase().trim();
+          productCards.forEach((card) => {
+            const text = card.textContent.toLowerCase();
+            if (text.includes(query)) {
+              card.style.display = 'block';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      }
+    });
+  </script>
+<!-- END: InteractiveHandlers -->
+
+
+<script id="esston-global-navigation">
+(function(){
+ const R={home:'customer-home.html',dashboard:'dealer-dashboard.html',products:'catalogue.html',dealerproducts:'dealer-catalogue.html',details:'product-details.html',starter:'my-starter.html',control:'motor-control.html',schedule:'schedule.html',faq:'help-faq.html',enquiry:'contact-enquiry.html',auth:'auth.html',splash:'splash.html',otp:'dealer-otp.html',dealerEnquiries:'dealer-enquiries.html'};
+ const p=(location.pathname.split('/').pop()||'index.html').toLowerCase();
+ const isDealer=/dealer-dashboard|dealer-catalogue|dealer-enquiries/.test(p);
+ const go=(key)=>{if(R[key]) location.href=R[key];};
+ const txt=e=>(e.innerText||e.textContent||'').replace(/\s+/g,' ').trim().toLowerCase();
+ // Route the existing bottom navigation and clearly named action buttons to the corresponding screens.
+ document.addEventListener('click',function(ev){
+   const el=ev.target.closest('a,button,[role="button"]'); if(!el) return;
+   const t=txt(el); const page=p;
+   // Common bottom/navigation links
+   if(/^(home|dashboard)$/.test(t) || t.startsWith('home ')){ev.preventDefault();go(isDealer?'dashboard':'home');return;}
+   if(t==='products' || t.includes('browse products') || t.includes('view products') || t==='all products' || t==='product catalogue'){ev.preventDefault();go(isDealer?'dealerproducts':'products');return;}
+   if(t==='enquiry' || t==='enquiries' || t.includes('my enquiries') || t.includes('recent enquiries') || t.includes('view all enquiries')){ev.preventDefault();go(isDealer?'dealerEnquiries':'enquiry');return;}
+   if(t==='faqs' || t==='help & faq' || t==='help & support' || t.includes('chat with faq bot') || t.includes('need help')){ev.preventDefault();go('faq');return;}
+   if(t==='motor control' || t==='control' || t.includes('check status') || t.includes('tap to start motor')){ if(!/motor_control|motor-control/.test(page)){ev.preventDefault();go('control');return;} }
+   if(t==='my starter' || t.includes('view my starter') || t.includes('starter details')){ev.preventDefault();go('starter');return;}
+   if(t.includes('motor schedule') || t.includes('set schedule') || t==='add slot' || t.includes('auto timer schedule')){ev.preventDefault();go('schedule');return;}
+   if(t==='view details' || t==='view product details' || t.includes('product details')){ev.preventDefault();go('details');return;}
+   if(t.includes('send enquiry') || t.includes('add to enquiry') || t==='submit enquiry' || t==='contact support' || t==='contact / enquiry'){ev.preventDefault();go('enquiry');return;}
+   if(t.includes('dealer b2b portal')){ev.preventDefault();go('auth');return;}
+   if(t.includes('customer iot app')){ev.preventDefault();go('auth');return;}
+   // Splash screen progresses to role selection when user taps the page.
+   if(page==='splash.html' && !el.closest('a[href^="http"]')){ev.preventDefault();go('auth');return;}
+   // Login: customer enters customer home; dealer login enters the OTP screen.
+   if(page==='auth.html' && (t.includes('login') || t.includes('continue'))){
+     const dealer=!!el.closest('section,form,div') && (el.closest('section,form,div').innerText||'').toLowerCase().includes('dealer login');
+     if(dealer || t.includes('dealer')){ev.preventDefault();go('otp');return;}
+     if(t.includes('login')){ev.preventDefault();go('home');return;}
+   }
+   if(page==='dealer-dashboard.html' && (t.includes('share quote') || t.includes('quick order'))){ev.preventDefault();go('dealerEnquiries');return;}
+ },true);
+ // Make all placeholder bottom-nav links meaningful even when their labels are nested in icon wrappers.
+ document.querySelectorAll('a[href="#"]').forEach(a=>{
+   const t=txt(a);
+   if(t==='home') a.href=R.home; else if(t==='dashboard') a.href=R.dashboard; else if(t==='products') a.href=isDealer?R.dealerproducts:R.products; else if(t==='motor control'||t==='control') a.href=R.control; else if(t==='my starter') a.href=R.starter; else if(t==='faqs'||t==='help & faq') a.href=R.faq; else if(t==='enquiry'||t==='enquiries') a.href=isDealer?R.dealerEnquiries:R.enquiry; else if(t==='more') a.href=R.faq;
+ });
+})();
+</script>
+</body></html>
